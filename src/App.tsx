@@ -1,4 +1,16 @@
 import React from 'react';
+import AppHeader from './components/app-header/app-header.js';
+
+
+function App() {
+  return (
+  <AppHeader/>  
+      );
+}
+
+export default App;
+
+/*
 import logo from './logo.svg';
 import './App.css';
 
@@ -22,5 +34,4 @@ function App() {
     </div>
   );
 }
-
-export default App;
+*/
