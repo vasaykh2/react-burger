@@ -1,11 +1,14 @@
 import React from 'react';
 import AppHeader from './components/app-header/app-header.js';
-
+import BurgerMain from './components/burger-main/burger-main.js';
 
 function App() {
   return (
-  <AppHeader/>  
-      );
+    <>
+      < AppHeader />      
+      < BurgerMain />
+    </>
+  );
 }
 
 export default App;
