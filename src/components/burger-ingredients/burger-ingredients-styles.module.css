@@ -1,35 +1,44 @@
 .section {
   display: flex;
   flex-direction: column;
-  justify-content:flex-start;
-  align-items:stretch;
+  justify-content: flex-start;
+  align-items: stretch;
   max-width: 600px;
-}
-
-.blockTitleGrid {
-  width: 100%; 
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fit, 56px);
-  list-style-type: none;
-  justify-content: center;
-  align-items: center;
+  /*outline: 1px solid red;*/
 }
 
 .blockCenter {
   text-align: center;
 }
 
-.blockTitles {
+.blockTipes {
   list-style-type: none;
   padding: 0;
   margin: 0;
+
+  max-height: 830px;
+  overflow-y: auto;  
+}
+
+.blockTipes::-webkit-scrollbar {
+  width: 8px;  
+}
+
+.blockTipes::-webkit-scrollbar-track {
+  background-color: #2F2F37; 
+  margin-top: 40px;
+  margin-bottom: 60px;
+  
+}
+
+.blockTipes::-webkit-scrollbar-thumb {  
+  background-color: #8585AD;
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+  height: 492px;
 }
 
 .blockCardsGrid {
-  width: 100%; 
+  max-width: 600px;
   padding: 24px 16px;
   margin: 0;
   display: grid;
@@ -40,4 +49,19 @@
   list-style-type: none;
   justify-content: center;
   align-items: center;
+}
+
+.discriptionIngredients {
+  width: 272px;
+}
+
+.cardIngredients {
+  position: relative;
+}
+
+.blockDiscriptionCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }

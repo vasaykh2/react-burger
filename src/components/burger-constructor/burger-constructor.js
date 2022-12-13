@@ -8,7 +8,7 @@ import burgerConstructorStyles from './burger-constructor-styles.module.css';
 function BurgerConstructor() {
   return (
     <>
-      <div>
+      <div className={burgerConstructorStyles.blocks}>
         <ConstructorElement
           text="string"
           thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
