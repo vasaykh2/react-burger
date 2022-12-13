@@ -3,10 +3,10 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
 import burgerMainStyles from './burger-main-styles.module.css';
 
-function BurgerMain() {
+function BurgerMain(props) {
   return (
     <main className={burgerMainStyles.blocks}>
-      <BurgerIngredients />
+      <BurgerIngredients data={props.data} />
       <BurgerConstructor />
     </main>
   );

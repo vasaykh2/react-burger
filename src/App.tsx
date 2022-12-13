@@ -1,12 +1,13 @@
 import React from 'react';
 import AppHeader from './components/app-header/app-header.js';
 import BurgerMain from './components/burger-main/burger-main.js';
+import { data } from './components/utils/data';
 
 function App() {
   return (
     <>
-      < AppHeader />      
-      < BurgerMain />
+      <AppHeader />
+      <BurgerMain data={data} />
     </>
   );
 }

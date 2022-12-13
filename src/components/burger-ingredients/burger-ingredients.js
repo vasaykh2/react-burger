@@ -2,11 +2,11 @@ import React from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from '../utils/data';
+/*import { data } from '../utils/data';*/
 
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-function BurgerIngredients() {
+function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('Булки');
 
   return (
@@ -27,7 +27,7 @@ function BurgerIngredients() {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Булки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {data.map(
+            {props.data.map(
               (ingredient) =>
                 ingredient.type === 'bun' && (
                   <li className={burgerIngredientsStyles.cardIngredients}>
@@ -63,7 +63,7 @@ function BurgerIngredients() {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Соусы</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {data.map(
+            {props.data.map(
               (ingredient) =>
                 ingredient.type === 'sauce' && (
                   <li className={burgerIngredientsStyles.cardIngredients}>
@@ -99,7 +99,7 @@ function BurgerIngredients() {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Начинки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {data.map(
+            {props.data.map(
               (ingredient) =>
                 ingredient.type === 'main' && (
                   <li className={burgerIngredientsStyles.cardIngredients}>
