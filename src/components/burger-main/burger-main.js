@@ -7,7 +7,7 @@ function BurgerMain(props) {
   return (
     <main className={burgerMainStyles.blocks}>
       <BurgerIngredients data={props.data} />
-      <BurgerConstructor />
+      <BurgerConstructor data={props.data} />
     </main>
   );
 }

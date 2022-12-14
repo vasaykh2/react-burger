@@ -1,61 +1,63 @@
 import React from 'react';
-import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
-function BurgerConstructor() {
+function BurgerConstructor(props) {
   return (
-    <>
-      <div className={burgerConstructorStyles.blocks}>
-        <ConstructorElement
-          text="string"
-          thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-          price="20"
-          type="top"
-          isLocked="undefined"
-          extraClass="undefined"
-          handleClose="(() => void)"
-        />
-        <ConstructorElement
-          text="string"
-          thumbnail="string"
-          price="number"
-          type="undefined"
-          isLocked=""
-          extraClass="undefined"
-          handleClose="(undefined)"
-        />
-        <ConstructorElement
-          text="string"
-          thumbnail="string"
-          price="number"
-          type="undefined"
-          isLocked=""
-          extraClass="undefined"
-          handleClose="undefined"
-        />
-        <ConstructorElement
-          text="string"
-          thumbnail="string"
-          price="number"
-          type="undefined"
-          isLocked=""
-          extraClass="undefined"
-          handleClose="undefined"
-        />
-        <ConstructorElement
-          text="string"
-          thumbnail="string"
-          price="number"
-          type="bottom"
-          isLocked="undefined"
-          extraClass="undefined"
-          handleClose="(() => void)"
-        />
+    <section className={burgerConstructorStyles.section}>
+      <ul className={burgerConstructorStyles.blockTipes}>
+        {props.data.map((item, index, array) => {
+          let typeItem;
+          let isLockedItem;
+          let visibilDrag;
+          if (index === 0) {
+            typeItem = 'top';
+            isLockedItem = 'undefined';
+            visibilDrag = burgerConstructorStyles.blockDrag;
+          } else {
+            if (index === array.length - 1) {
+              typeItem = 'bottom';
+              isLockedItem = 'undefined';
+              visibilDrag = burgerConstructorStyles.blockDrag;
+            } else {
+              typeItem = 'undefined';
+              isLockedItem = '';
+              visibilDrag = '';
+            }
+          }
+          return (
+            <li className={burgerConstructorStyles.blockString + ' pr-2'}>
+              <div className={visibilDrag}>
+              <DragIcon type='primary'  />
+              </div>
+              <div className={burgerConstructorStyles.blockItem}>
+                <ConstructorElement
+                  text={item.name}
+                  thumbnail={item.image}
+                  price={item.price}
+                  type={typeItem}
+                  isLocked={isLockedItem}
+                  extraClass='undefined'
+                  handleClose='(() => void)'
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <div className={burgerConstructorStyles.blockPrice + ' mt-10 mb-10 pr-4'}>
+        <p className='text text_type_digits-medium pr-2'>610</p>
+        <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
+          <CurrencyIcon type='primary' />
+        </div>
+        <button className={burgerConstructorStyles.button}>
+          Оформить заказ
+        </button>
       </div>
-    </>
+    </section>
   );
 }
 

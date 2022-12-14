@@ -7,19 +7,19 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 function BurgerIngredients(props) {
-  const [current, setCurrent] = React.useState('Булки');
-
+  const [current, setCurrent] = React.useState('one');
+  
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
       <div style={{ display: 'flex' }}>
-        <Tab value='one' active={current === 'Булки'} onClick={setCurrent}>
+        <Tab value='one' active={current === 'one'} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value='two' active={current === 'Соусы'} onClick={setCurrent}>
+        <Tab value='two' active={current === 'two'} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab value='three' active={current === 'Начинки'} onClick={setCurrent}>
+        <Tab value='three' active={current === 'three'} onClick={setCurrent}>
           Начинки
         </Tab>
       </div>
