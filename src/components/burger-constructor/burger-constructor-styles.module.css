@@ -8,6 +8,10 @@
   padding-top: 100px;
 }
 
+.blockBun {
+  margin-left: 32px;
+}
+
 .blockTipes {
   display: flex;
   flex-direction: column;
@@ -15,8 +19,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-
-  max-height: 650px;
+  max-height: 465px;
   overflow-y: auto;
 }
 
@@ -26,8 +29,7 @@
 
 .blockTipes::-webkit-scrollbar-track {
   background-color: #2f2f37;
-  margin-top: 96px;
-  margin-bottom: 80px;
+    
 }
 
 .blockTipes::-webkit-scrollbar-thumb {
@@ -38,9 +40,7 @@
 
 .blockItem {
   max-width: 536px;
-  min-height: 80px;
-  display: inline-block;
-  text-align: center;
+  min-height: 80px;  
 }
 
 .blockString {
@@ -50,10 +50,6 @@
   column-gap: 8px;
   justify-content: center;
   align-items: center;
-}
-
-.blockDrag {
-  visibility: hidden;
 }
 
 .blockPrice {
@@ -88,3 +84,8 @@
   height: 24px;
   transform: scale(1.5, 1.5);
 }
+
+/*
+.blockDrag {
+  visibility: hidden;
+} */
