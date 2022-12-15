@@ -11,6 +11,10 @@
   text-align: center;
 }
 
+.blockTab {
+  display: flex;
+}
+
 .blockTipes {
   list-style-type: none;
   padding: 0;

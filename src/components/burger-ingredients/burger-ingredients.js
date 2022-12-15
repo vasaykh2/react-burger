@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-/*import { data } from '../utils/data';*/
 
+import { ingredientType } from '../../utils/types'
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 function BurgerIngredients(props) {
@@ -13,7 +13,7 @@ function BurgerIngredients(props) {
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
-      <div style={{ display: 'flex' }}>
+      <div className={burgerIngredientsStyles.blockTab}>
         <Tab value='one' active={current === 'one'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -142,22 +142,7 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
+  data: PropTypes.arrayOf(ingredientType).isRequired,
 };
 
 export default BurgerIngredients;

@@ -4,9 +4,9 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { ingredientType } from '../../utils/types'
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 function BurgerConstructor(props) {
-  const hc = () => props.void;
   return (
     <section className={burgerConstructorStyles.section}>
       <ul className={burgerConstructorStyles.blockTipes}>
@@ -30,7 +30,10 @@ function BurgerConstructor(props) {
             }
           }
           return (
-            <li className={burgerConstructorStyles.blockString + ' pr-2'} key={item._id}>
+            <li
+              className={burgerConstructorStyles.blockString + ' pr-2'}
+              key={item._id}
+            >
               <div className={visibilDrag}>
                 <DragIcon type='primary' />
               </div>
@@ -41,8 +44,6 @@ function BurgerConstructor(props) {
                   price={item.price}
                   type={typeItem}
                   isLocked={isLockedItem}
-                  extraClass='undefined'
-                  handleClose={hc}
                 />
               </div>
             </li>
@@ -63,22 +64,7 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
+  data: PropTypes.arrayOf(ingredientType).isRequired,
 };
 
 export default BurgerConstructor;
