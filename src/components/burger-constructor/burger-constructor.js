@@ -5,8 +5,8 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
-
 function BurgerConstructor(props) {
+  const hc = () => props.void;
   return (
     <section className={burgerConstructorStyles.section}>
       <ul className={burgerConstructorStyles.blockTipes}>
@@ -30,7 +30,7 @@ function BurgerConstructor(props) {
             }
           }
           return (
-            <li className={burgerConstructorStyles.blockString + ' pr-2'}>
+            <li className={burgerConstructorStyles.blockString + ' pr-2'} key={item._id}>
               <div className={visibilDrag}>
                 <DragIcon type='primary' />
               </div>
@@ -42,7 +42,7 @@ function BurgerConstructor(props) {
                   type={typeItem}
                   isLocked={isLockedItem}
                   extraClass='undefined'
-                  handleClose='(() => void)'
+                  handleClose={hc}
                 />
               </div>
             </li>

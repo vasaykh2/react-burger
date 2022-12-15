@@ -31,7 +31,7 @@ function BurgerIngredients(props) {
             {props.data.map(
               (ingredient) =>
                 ingredient.type === 'bun' && (
-                  <li className={burgerIngredientsStyles.cardIngredients}>
+                  <li className={burgerIngredientsStyles.cardIngredients} key={ingredient._id}>
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
                       src={ingredient.image}
@@ -67,7 +67,7 @@ function BurgerIngredients(props) {
             {props.data.map(
               (ingredient) =>
                 ingredient.type === 'sauce' && (
-                  <li className={burgerIngredientsStyles.cardIngredients}>
+                  <li className={burgerIngredientsStyles.cardIngredients} key={ingredient._id}>
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
                       src={ingredient.image}
@@ -103,7 +103,10 @@ function BurgerIngredients(props) {
             {props.data.map(
               (ingredient) =>
                 ingredient.type === 'main' && (
-                  <li className={burgerIngredientsStyles.cardIngredients}>
+                  <li
+                    className={burgerIngredientsStyles.cardIngredients}
+                    key={ingredient._id}
+                  >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
                       src={ingredient.image}
