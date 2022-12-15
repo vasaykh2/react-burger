@@ -4,7 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../utils/types'
+import { ingredientType } from '../../utils/types';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 function BurgerConstructor(props) {
   return (

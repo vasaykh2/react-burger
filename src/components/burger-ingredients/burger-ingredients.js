@@ -4,7 +4,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../utils/types'
+import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 function BurgerIngredients(props) {
@@ -31,7 +31,10 @@ function BurgerIngredients(props) {
             {props.data.map(
               (ingredient) =>
                 ingredient.type === 'bun' && (
-                  <li className={burgerIngredientsStyles.cardIngredients} key={ingredient._id}>
+                  <li
+                    className={burgerIngredientsStyles.cardIngredients}
+                    key={ingredient._id}
+                  >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
                       src={ingredient.image}
@@ -67,7 +70,10 @@ function BurgerIngredients(props) {
             {props.data.map(
               (ingredient) =>
                 ingredient.type === 'sauce' && (
-                  <li className={burgerIngredientsStyles.cardIngredients} key={ingredient._id}>
+                  <li
+                    className={burgerIngredientsStyles.cardIngredients}
+                    key={ingredient._id}
+                  >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
                       src={ingredient.image}
