@@ -11,9 +11,7 @@ function BurgerConstructor(props) {
     <section className={burgerConstructorStyles.section}>
       <div
         className={
-          burgerConstructorStyles.blockBun +
-          ' pr-4 ' +
-          burgerConstructorStyles.blockItem
+          burgerConstructorStyles.blockItem + ' pl-8 pr-4'
         }
       >
         <ConstructorElement
@@ -49,9 +47,7 @@ function BurgerConstructor(props) {
       </ul>
       <div
         className={
-          burgerConstructorStyles.blockBun +
-          ' pr-4 ' +
-          burgerConstructorStyles.blockItem
+          burgerConstructorStyles.blockItem + ' pl-8 pr-4'
         }
       >
         <ConstructorElement

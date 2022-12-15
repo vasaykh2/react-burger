@@ -8,10 +8,6 @@
   padding-top: 100px;
 }
 
-.blockBun {
-  margin-left: 32px;
-}
-
 .blockTipes {
   display: flex;
   flex-direction: column;
