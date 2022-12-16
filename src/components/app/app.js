@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
-//import { data } from '../../utils/data';
+import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import appStyles from './app-styles.module.css';
 
 const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
@@ -43,6 +43,10 @@ function App() {
         <>
           <AppHeader />
           <BurgerMain data={state.data} />
+          <ModalOverlay header='Внимание!'>
+            <p>Спасибо за внимание!</p>
+            <p>Открывай меня, если станет скучно :)</p>
+          </ModalOverlay>
         </>
       )}
     </>

@@ -1,0 +1,7 @@
+.blocks {
+  max-width: 1243px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 0 auto;
+}
