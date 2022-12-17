@@ -1,7 +1,63 @@
-.blocks {
-  max-width: 1243px;
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 40px;
-  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation-name: appear;
+  animation-duration: 300ms;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.6s linear, opacity 0.6s linear;
+  pointer-events: all;
+}
+
+.modalClosed{
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear, opacity 0.6s linear;
+  pointer-events: none;
+}
+
+.block {
+  width: 100%;
+  max-width: 720px;
+  padding: 40px 40px 60px;
+  box-sizing: border-box;  
+  background: #1C1C21;
+  overflow: hidden;
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.modalClose {
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.modalClose:hover{
+  opacity: 0.6
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
+import { Notifications } from '../notifications/notifications';
 import appStyles from './app-styles.module.css';
 
 const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
@@ -37,8 +38,8 @@ function App() {
 
   return (
     <>
-      {state.isLoading && 'Загрузка...'}
-      {state.hasError && 'Произошла ошибка'}
+      <Notifications>{state.isLoading && ( 'Загрузка...')}
+      {state.hasError && 'Произошла ошибка'}</Notifications>
       {!state.isLoading && !state.hasError && state.data.length && (
         <>
           <AppHeader />

@@ -1,31 +1,64 @@
 import React from 'react';
-import ReactDOM  from 'react-dom';
-//import PropTypes from 'prop-types';
-//import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
-//import BurgerConstructor from '../burger-constructor/burger-constructor.js';
-//import { ingredientType } from '../../utils/types';
-//import burgerMainStyles from './burger-main-styles.module.css';
+import ReactDOM from 'react-dom';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const modalRoot = document.getElementById("react-modals");
+import modalOverlayStyles from './modal-overlay-styles.module.css';
 
+const modalRoot = document.getElementById('react-modals');
 
-export function ModalOverlay(props) {
+export function ModalOverlay({ isVisible = false, onClose, ...props }) {
+  const keydownHandler = ({ key }) => {
+    switch (key) {
+      case 'Escape':
+        onClose();
+        break;
+      default:
+    }
+  };
 
-  //const onClose = () =>{};
+  React.useEffect(() => {
+    document.addEventListener('keydown', keydownHandler);
+    return () => document.removeEventListener('keydown', keydownHandler);
+  });
 
-  return ReactDOM.createPortal(
-    (
+  return !isVisible
+    ? null
+    : ReactDOM.createPortal(
         <>
-            <div className="Modal">
-                            {props.children}
+          <section className={modalOverlayStyles.modal} onClick={onClose}>
+            <div className={modalOverlayStyles.block}>
+              <div className={modalOverlayStyles.header}>
+                <p className='text text_type_main-large'>{props.header}</p>
+                <div
+                  className={modalOverlayStyles.modalClose}
+                  onClick={onClose}
+                >
+                  <CloseIcon type='primary' />
+                </div>
+              </div>
+              {props.children}
             </div>
-            
-        </>
-    ), 
-    modalRoot
-);
+          </section>
+        </>,
+        modalRoot
+      );
 }
 
+/*
+const App = () => {
+  const [isModal, setModal] = React.useState(false);
+  return (
+    <>
+      <button onClick={() => setModal(true)}>Click Here</button>
+      <Modal
 
-
-
+        isVisible={isModal}
+        title="Modal Title"
+        content={<p>Add your content here</p>}
+        footer={<button>Cancel</button>}
+        onClose={() => setModal(false)}
+      />
+    </>
+  );
+};
+*/
