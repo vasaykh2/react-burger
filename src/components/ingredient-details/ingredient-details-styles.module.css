@@ -1,0 +1,14 @@
+
+.block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+}
+
+.contentString {
+  display: flex;
+}
+.content {
+  
+}

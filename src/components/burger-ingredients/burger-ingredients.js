@@ -4,11 +4,23 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { IngredientDetails } from '../ingredient-details/ingredient-details'
 import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('one');
+
+  const [isModalIngredientDetails, setModalIngredientDetails] = React.useState(false);
+
+  const handlerIngredientDetails = () => {
+    setModalIngredientDetails(true);
+  };
+
+  const handlerClose = () => {
+    setModalIngredientDetails(false);
+  };
+
 
   return (
     <section className={burgerIngredientsStyles.section}>
@@ -33,7 +45,7 @@ function BurgerIngredients(props) {
                 ingredient.type === 'bun' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
+                    key={ingredient._id} onClick={handlerIngredientDetails}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -72,7 +84,7 @@ function BurgerIngredients(props) {
                 ingredient.type === 'sauce' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
+                    key={ingredient._id} onClick={handlerIngredientDetails}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -111,7 +123,7 @@ function BurgerIngredients(props) {
                 ingredient.type === 'main' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
+                    key={ingredient._id} onClick={handlerIngredientDetails}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -143,6 +155,7 @@ function BurgerIngredients(props) {
           </ul>
         </li>
       </ul>
+      <IngredientDetails isVisible={isModalIngredientDetails} onClose={handlerClose} />
     </section>
   );
 }
