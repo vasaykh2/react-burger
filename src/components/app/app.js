@@ -43,11 +43,7 @@ function App() {
       {!state.isLoading && !state.hasError && state.data.length && (
         <>
           <AppHeader />
-          <BurgerMain data={state.data} />
-          <ModalOverlay header='Внимание!'>
-            <p>Спасибо за внимание!</p>
-            <p>Открывай меня, если станет скучно :)</p>
-          </ModalOverlay>
+          <BurgerMain data={state.data} />          
         </>
       )}
     </>

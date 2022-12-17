@@ -16,6 +16,18 @@ export function ModalOverlay({ isVisible = false, onClose, ...props }) {
     }
   };
 
+  const handlerClickOverlay = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    e.target.classList.contains(modalOverlayStyles.modal) && onClose();
+  };
+
+  const handlerClickClose = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onClose();
+  };
+
   React.useEffect(() => {
     document.addEventListener('keydown', keydownHandler);
     return () => document.removeEventListener('keydown', keydownHandler);
@@ -25,13 +37,16 @@ export function ModalOverlay({ isVisible = false, onClose, ...props }) {
     ? null
     : ReactDOM.createPortal(
         <>
-          <section className={modalOverlayStyles.modal} onClick={onClose}>
+          <section
+            className={modalOverlayStyles.modal}
+            onClick={handlerClickOverlay}
+          >
             <div className={modalOverlayStyles.block}>
               <div className={modalOverlayStyles.header}>
                 <p className='text text_type_main-large'>{props.header}</p>
                 <div
                   className={modalOverlayStyles.modalClose}
-                  onClick={onClose}
+                  onClick={handlerClickClose}
                 >
                   <CloseIcon type='primary' />
                 </div>
@@ -43,22 +58,3 @@ export function ModalOverlay({ isVisible = false, onClose, ...props }) {
         modalRoot
       );
 }
-
-/*
-const App = () => {
-  const [isModal, setModal] = React.useState(false);
-  return (
-    <>
-      <button onClick={() => setModal(true)}>Click Here</button>
-      <Modal
-
-        isVisible={isModal}
-        title="Modal Title"
-        content={<p>Add your content here</p>}
-        footer={<button>Cancel</button>}
-        onClose={() => setModal(false)}
-      />
-    </>
-  );
-};
-*/
