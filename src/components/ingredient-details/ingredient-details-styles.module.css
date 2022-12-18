@@ -1,14 +1,27 @@
-
 .block {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
 .contentString {
   display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  gap: 46px; 
 }
 .content {
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.textValue {
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
 }

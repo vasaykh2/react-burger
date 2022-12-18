@@ -38,12 +38,14 @@ function App() {
 
   return (
     <>
-      <Notifications>{state.isLoading && ( 'Загрузка...')}
-      {state.hasError && 'Произошла ошибка'}</Notifications>
+      <Notifications>
+        {state.isLoading && 'Загрузка...'}
+        {state.hasError && 'Произошла ошибка'}
+      </Notifications>
       {!state.isLoading && !state.hasError && state.data.length && (
         <>
           <AppHeader />
-          <BurgerMain data={state.data} />          
+          <BurgerMain data={state.data} />
         </>
       )}
     </>

@@ -4,23 +4,41 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { IngredientDetails } from '../ingredient-details/ingredient-details'
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('one');
 
-  const [isModalIngredientDetails, setModalIngredientDetails] = React.useState(false);
+  const [isModalIngredientDetails, setModalIngredientDetails] =
+    React.useState(false);
 
-  const handlerIngredientDetails = () => {
+  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
+    React.useState({
+      _id: props.data[0]._id,
+      image_large: props.data[0].image_large,
+      name: props.data[0].name,
+      calories: props.data[0].calories,
+      proteins: props.data[0].proteins,
+      fat: props.data[0].fat,
+      carbohydrates: props.data[0].carbohydrates,
+    });
+
+  const handlerIngredientDetails = (id) => {
     setModalIngredientDetails(true);
+    //console.log(id);
+    let currentIngredient = props.data.find((item) => item._id == id);
+    const currentModalIngredient = {};
+    for (let i in currentModalIngredientDetails) {
+      currentModalIngredient[i] = currentIngredient[i];
+    }
+    setcurrentModalIngredientDetails(currentModalIngredient);
   };
 
   const handlerClose = () => {
     setModalIngredientDetails(false);
   };
-
 
   return (
     <section className={burgerIngredientsStyles.section}>
@@ -45,7 +63,8 @@ function BurgerIngredients(props) {
                 ingredient.type === 'bun' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id} onClick={handlerIngredientDetails}
+                    key={ingredient._id}
+                    onClick={() => handlerIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -84,7 +103,8 @@ function BurgerIngredients(props) {
                 ingredient.type === 'sauce' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id} onClick={handlerIngredientDetails}
+                    key={ingredient._id}
+                    onClick={() => handlerIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -123,7 +143,8 @@ function BurgerIngredients(props) {
                 ingredient.type === 'main' && (
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id} onClick={handlerIngredientDetails}
+                    key={ingredient._id}
+                    onClick={() => handlerIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -155,7 +176,16 @@ function BurgerIngredients(props) {
           </ul>
         </li>
       </ul>
-      <IngredientDetails isVisible={isModalIngredientDetails} onClose={handlerClose} />
+      <IngredientDetails
+        isVisible={isModalIngredientDetails}
+        onClose={handlerClose}
+        img={currentModalIngredientDetails.image_large}
+        name={currentModalIngredientDetails.name}
+        calories={currentModalIngredientDetails.calories}
+        proteins={currentModalIngredientDetails.proteins}
+        fat={currentModalIngredientDetails.fat}
+        carbohydrates={currentModalIngredientDetails.carbohydrates}
+      />
     </section>
   );
 }
