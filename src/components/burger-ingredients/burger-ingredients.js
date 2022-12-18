@@ -78,7 +78,7 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>20</p>
+                      <p className='text text_type_digits-default'>{ingredient.price}</p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -118,7 +118,7 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>30</p>
+                      <p className='text text_type_digits-default'>{ingredient.price}</p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -158,7 +158,7 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>40</p>
+                      <p className='text text_type_digits-default'>{ingredient.price}</p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p

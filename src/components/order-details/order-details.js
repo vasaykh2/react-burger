@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import orderAccpetedDone from '../../images/order accpeted-done.png';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import OrderDetailsStyles from './order-details-styles.module.css';
@@ -18,3 +19,8 @@ export function OrderDetails({ isVisible = false, onClose, ...props }) {
     </ModalOverlay>
   );
 }
+
+OrderDetails.propTypes = PropTypes.shape({
+  isVisible: PropTypes.bool, 
+  onClose: PropTypes.func, 
+}).isRequired;

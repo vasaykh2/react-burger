@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
 
@@ -67,3 +67,14 @@ export function IngredientDetails({ isVisible = false, onClose, ...props }) {
     </ModalOverlay>
   );
 }
+
+IngredientDetails.propTypes = PropTypes.shape({
+  calories: PropTypes.number,
+  carbohydrates: PropTypes.number,
+  fat: PropTypes.number,
+  img: PropTypes.string,
+  isVisible: PropTypes.bool,
+  name: PropTypes.string,
+  onClose: PropTypes.func,
+  proteins: PropTypes.number,
+}).isRequired;
