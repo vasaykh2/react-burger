@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderAccpetedDone from '../../images/order accpeted-done.png';
-import { ModalOverlay } from '../modal-overlay/modal-overlay';
+import { Modal } from '../modal/modal';
 import OrderDetailsStyles from './order-details-styles.module.css';
 
 export function OrderDetails({ isVisible = false, onClose, ...props }) {
   return (
-    <ModalOverlay isVisible={isVisible} onClose={onClose} header=''>
+    <Modal isVisible={isVisible} onClose={onClose} header=''>
       <div className={OrderDetailsStyles.block}>
         <p className='text text_type_digits-large pt-2 pb-8'>034536</p>
         <p className='text text_type_main-medium pb-15'>Идентификатор заказа</p>
@@ -16,7 +16,7 @@ export function OrderDetails({ isVisible = false, onClose, ...props }) {
           Дождитесь готовности на орбитальной станции
         </p>
       </div>
-    </ModalOverlay>
+    </Modal>
   );
 }
 

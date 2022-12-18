@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
-import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import { Notifications } from '../notifications/notifications';
 import appStyles from './app-styles.module.css';
 
@@ -24,7 +23,7 @@ function App() {
       fetch(urlDomen)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           const data = res.data;
           setState({ ...state, data, isLoading: false });
         })

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ModalOverlay } from '../modal-overlay/modal-overlay';
+import { Modal } from '../modal/modal';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
 
 export function IngredientDetails({ isVisible = false, onClose, ...props }) {
   return (
-    <ModalOverlay
+    <Modal
       isVisible={isVisible}
       onClose={onClose}
       header='Детали ингредиента'
@@ -64,7 +64,7 @@ export function IngredientDetails({ isVisible = false, onClose, ...props }) {
           </div>
         </div>
       </div>
-    </ModalOverlay>
+    </Modal>
   );
 }
 
