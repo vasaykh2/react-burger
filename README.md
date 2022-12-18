@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Проект: "React-burger"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Обзор
 
-## Available Scripts
+- Интро
+- Методы
+- Инструменты
 
-In the project directory, you can run:
+**Интро**
 
-### `npm start`
+Это начало студенческого проекта Yandex-Практикума курса web-разработки+ "Космическая Бургерная". На 7-м спринте создана главная страница бургерной.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Методы**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Сайт выполнен по макету в Figma. https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1.
 
-### `npm test`
+Реализован модульный подход: директории компонентов включают соответствующие файлы _.js и _-styles.module.css.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Организована файловая структура: src/components/, src/fonts/, src/images/, src/utils/
 
-### `npm run build`
+Методом GET в fetch запрошены данные с https://norma.nomoreparties.space/api/ingredients, необходимые для отображения ингредиентов и настройки функционала.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## New!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Проект реализован в среде React:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- По клику на ингридиент открывается модальное окно с описанием ингридиента.
+- По клику на кнопку "Оформить заказ" открывается модальное окно с захардкоженным номером заказа.
+- К функциональным элементам применена анимация.
 
-### `npm run eject`
+**Инструменты**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Использован вновь созданный проект React, установленный через CRA.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Использованы компоненты npm-пакета https://www.npmjs.com/package/@ya.praktikum/react-developer-burger-ui-components.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Ссылка на "React-burger" в GitHub Pages: https://vasaykh2.github.io/react-burger/.
