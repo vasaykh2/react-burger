@@ -1,12 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
 
 export function IngredientDetails(props) {
   return (
     <div className={IngredientDetailsStyles.block}>
-      <img src={props.currentIngredient.image_large} alt={props.currentIngredient.name} />
-      <p className='text text_type_main-medium pt-2 pb-8'>{props.currentIngredient.name}</p>
+      <img
+        src={props.currentIngredient.image_large}
+        alt={props.currentIngredient.name}
+      />
+      <p className='text text_type_main-medium pt-2 pb-8'>
+        {props.currentIngredient.name}
+      </p>
       <div className={IngredientDetailsStyles.contentString}>
         <div className={IngredientDetailsStyles.content}>
           <p className='text text_type_main-default text_color_inactive pb-2'>
@@ -61,13 +65,13 @@ export function IngredientDetails(props) {
   );
 }
 
-IngredientDetails.propTypes = PropTypes.shape({
+IngredientDetails.propTypes = {
+  _id: PropTypes.string,
   calories: PropTypes.number,
   carbohydrates: PropTypes.number,
   fat: PropTypes.number,
-  img: PropTypes.string,
+  image_large: PropTypes.string,
   isVisible: PropTypes.bool,
   name: PropTypes.string,
-  onClose: PropTypes.func,
   proteins: PropTypes.number,
-}).isRequired;
+}.isRequired;

@@ -6,16 +6,17 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 
 import { ingredientType } from '../../utils/types';
 import { OrderDetails } from '../order-details/order-details';
+import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
-function BurgerConstructor(props) {
+export default function BurgerConstructor(props) {
   const [isModalOrderDetails, setModalOrderDetails] = React.useState(false);
 
-  const handlerOrder = () => {
+  const handleOrder = () => {
     setModalOrderDetails(true);
   };
 
-  const handlerClose = () => {
+  const handleClose = () => {
     setModalOrderDetails(false);
   };
 
@@ -69,18 +70,21 @@ function BurgerConstructor(props) {
         </div>
         <button
           className={burgerConstructorStyles.button}
-          onClick={handlerOrder}
+          onClick={handleOrder}
         >
           Оформить заказ
         </button>
-      </div>
-      <OrderDetails isVisible={isModalOrderDetails} onClose={handlerClose} />
+      </div>{' '}
+      {isModalOrderDetails && (
+        <Modal header={'Детали ингредиента'} onClose={handleClose}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   );
 }
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-};
+}
 
-export default BurgerConstructor;

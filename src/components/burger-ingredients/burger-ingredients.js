@@ -9,7 +9,7 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-function BurgerIngredients(props) {
+export default function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('one');
 
   const [isModalIngredientDetails, setModalIngredientDetails] =
@@ -79,7 +79,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>{ingredient.price}</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -119,7 +121,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>{ingredient.price}</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -159,7 +163,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>{ingredient.price}</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -177,19 +183,17 @@ function BurgerIngredients(props) {
           </ul>
         </li>
       </ul>
-      <Modal
-      isVisible={isModalIngredientDetails}
-      header={'Детали ингредиента'}
-      onClose={handleClose}
-    >
-      <IngredientDetails currentIngredient={currentModalIngredientDetails} /> 
-    </Modal>      
+      {isModalIngredientDetails && (
+        <Modal header={'Детали ингредиента'} onClose={handleClose}>
+          <IngredientDetails
+            currentIngredient={currentModalIngredientDetails}
+          />
+        </Modal>
+      )}
     </section>
   );
 }
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-};
-
-export default BurgerIngredients;
+}

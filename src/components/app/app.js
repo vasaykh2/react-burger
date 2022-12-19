@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
 import { Notifications } from '../notifications/notifications';
-import appStyles from './app-styles.module.css';
+//import appStyles from './app-styles.module.css';
 
 const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
 
-function App() {
+export default function App() {
   const [state, setState] = useState({
     isLoading: false,
     hasError: false,
@@ -51,5 +51,3 @@ function App() {
     </>
   );
 }
-
-export default App;
