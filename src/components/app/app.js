@@ -18,21 +18,22 @@ function App() {
   }, []);
 
   const getData = () => {
-    try {
-      setState({ ...state, hasError: false, isLoading: true });
-      fetch(urlDomen)
-        .then((res) => res.json())
-        .then((res) => {
-          //console.log(res.data);
-          const data = res.data;
-          setState({ ...state, data, isLoading: false });
-        })
-        .catch((e) => {
-          setState({ ...state, hasError: true, isLoading: false });
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    setState({ ...state, hasError: false, isLoading: true });
+    fetch(urlDomen)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then((res) => {
+        //console.log(res.data);
+        const data = res.data;
+        setState({ ...state, data, isLoading: false });
+      })
+      .catch((e) => {
+        setState({ ...state, hasError: true, isLoading: false });
+      });
   };
 
   return (
