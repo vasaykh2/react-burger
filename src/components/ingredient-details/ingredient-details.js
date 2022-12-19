@@ -1,70 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal } from '../modal/modal';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
 
-export function IngredientDetails({ isVisible = false, onClose, ...props }) {
+export function IngredientDetails(props) {
   return (
-    <Modal
-      isVisible={isVisible}
-      onClose={onClose}
-      header='Детали ингредиента'
-    >
-      <div className={IngredientDetailsStyles.block}>
-        <img src={props.img} alt={props.name} />
-        <p className='text text_type_main-medium pt-2 pb-8'>{props.name}</p>
-        <div className={IngredientDetailsStyles.contentString}>
-          <div className={IngredientDetailsStyles.content}>
-            <p className='text text_type_main-default text_color_inactive pb-2'>
-              Калории, ккал
-            </p>
-            <p
-              className={
-                'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-              }
-            >
-              {props.calories}
-            </p>
-          </div>
-          <div className={IngredientDetailsStyles.content}>
-            <p className='text text_type_main-default text_color_inactive pb-2'>
-              Белки, г
-            </p>
-            <p
-              className={
-                'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-              }
-            >
-              {props.proteins}
-            </p>
-          </div>
-          <div className={IngredientDetailsStyles.content}>
-            <p className='text text_type_main-default text_color_inactive pb-2'>
-              Жиры, г
-            </p>
-            <p
-              className={
-                'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-              }
-            >
-              {props.fat}
-            </p>
-          </div>
-          <div className={IngredientDetailsStyles.content}>
-            <p className='text text_type_main-default text_color_inactive pb-2'>
-              Углеводы, г
-            </p>
-            <p
-              className={
-                'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-              }
-            >
-              {props.carbohydrates}
-            </p>
-          </div>
+    <div className={IngredientDetailsStyles.block}>
+      <img src={props.currentIngredient.image_large} alt={props.currentIngredient.name} />
+      <p className='text text_type_main-medium pt-2 pb-8'>{props.currentIngredient.name}</p>
+      <div className={IngredientDetailsStyles.contentString}>
+        <div className={IngredientDetailsStyles.content}>
+          <p className='text text_type_main-default text_color_inactive pb-2'>
+            Калории, ккал
+          </p>
+          <p
+            className={
+              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
+            }
+          >
+            {props.currentIngredient.calories}
+          </p>
+        </div>
+        <div className={IngredientDetailsStyles.content}>
+          <p className='text text_type_main-default text_color_inactive pb-2'>
+            Белки, г
+          </p>
+          <p
+            className={
+              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
+            }
+          >
+            {props.currentIngredient.proteins}
+          </p>
+        </div>
+        <div className={IngredientDetailsStyles.content}>
+          <p className='text text_type_main-default text_color_inactive pb-2'>
+            Жиры, г
+          </p>
+          <p
+            className={
+              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
+            }
+          >
+            {props.currentIngredient.fat}
+          </p>
+        </div>
+        <div className={IngredientDetailsStyles.content}>
+          <p className='text text_type_main-default text_color_inactive pb-2'>
+            Углеводы, г
+          </p>
+          <p
+            className={
+              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
+            }
+          >
+            {props.currentIngredient.carbohydrates}
+          </p>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }
 

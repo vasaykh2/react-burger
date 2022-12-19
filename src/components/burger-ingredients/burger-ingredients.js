@@ -4,6 +4,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
@@ -25,7 +26,7 @@ function BurgerIngredients(props) {
       carbohydrates: props.data[0].carbohydrates,
     });
 
-  const handlerIngredientDetails = (id) => {
+  const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
     let currentIngredient = props.data.find((item) => item._id == id);
@@ -36,7 +37,7 @@ function BurgerIngredients(props) {
     setcurrentModalIngredientDetails(currentModalIngredient);
   };
 
-  const handlerClose = () => {
+  const handleClose = () => {
     setModalIngredientDetails(false);
   };
 
@@ -64,7 +65,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
-                    onClick={() => handlerIngredientDetails(ingredient._id)}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -104,7 +105,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
-                    onClick={() => handlerIngredientDetails(ingredient._id)}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -144,7 +145,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
-                    onClick={() => handlerIngredientDetails(ingredient._id)}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -176,16 +177,13 @@ function BurgerIngredients(props) {
           </ul>
         </li>
       </ul>
-      <IngredientDetails
-        isVisible={isModalIngredientDetails}
-        onClose={handlerClose}
-        img={currentModalIngredientDetails.image_large}
-        name={currentModalIngredientDetails.name}
-        calories={currentModalIngredientDetails.calories}
-        proteins={currentModalIngredientDetails.proteins}
-        fat={currentModalIngredientDetails.fat}
-        carbohydrates={currentModalIngredientDetails.carbohydrates}
-      />
+      <Modal
+      isVisible={isModalIngredientDetails}
+      header={'Детали ингредиента'}
+      onClose={handleClose}
+    >
+      <IngredientDetails currentIngredient={currentModalIngredientDetails} /> 
+    </Modal>      
     </section>
   );
 }
