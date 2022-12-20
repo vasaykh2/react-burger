@@ -5,15 +5,24 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { ingredientType } from '../../utils/types';
+import { OrderDetails } from '../order-details/order-details';
+import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
-function BurgerConstructor(props) {
+
+export default function BurgerConstructor(props) {
+  const [isModalOrderDetails, setModalOrderDetails] = React.useState(false);
+
+  const handleOrder = () => {
+    setModalOrderDetails(true);
+  };
+
+  const handleClose = () => {
+    setModalOrderDetails(false);
+  };
+
   return (
     <section className={burgerConstructorStyles.section}>
-      <div
-        className={
-          burgerConstructorStyles.blockItem + ' pl-8 pr-4'
-        }
-      >
+      <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
           text={props.data[0].name + ' (верх)'}
           thumbnail={props.data[0].image}
@@ -45,11 +54,7 @@ function BurgerConstructor(props) {
           }
         })}
       </ul>
-      <div
-        className={
-          burgerConstructorStyles.blockItem + ' pl-8 pr-4'
-        }
-      >
+      <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
           text={props.data[0].name + ' (низ)'}
           thumbnail={props.data[0].image}
@@ -63,16 +68,23 @@ function BurgerConstructor(props) {
         <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
           <CurrencyIcon type='primary' />
         </div>
-        <button className={burgerConstructorStyles.button}>
+        <button
+          className={burgerConstructorStyles.button}
+          onClick={handleOrder}
+        >
           Оформить заказ
         </button>
-      </div>
+      </div>{' '}
+      {isModalOrderDetails && (
+        <Modal header={'Детали ингредиента'} onClose={handleClose}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   );
 }
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-};
+}
 
-export default BurgerConstructor;

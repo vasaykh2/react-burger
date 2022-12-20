@@ -1,4 +1,3 @@
-import React from 'react';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +5,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import appHeaderStyles from './app-header-styles.module.css';
 
-function AppHeader() {
+export default function AppHeader() {
   return (
     <header className={appHeaderStyles.header + ' ' + appHeaderStyles.blocks}>
       <div className={'mr-2 ' + appHeaderStyles.blocks}>
@@ -40,4 +39,3 @@ function AppHeader() {
   );
 }
 
-export default AppHeader;

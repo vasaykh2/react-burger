@@ -4,11 +4,42 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { Modal } from '../modal/modal';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-function BurgerIngredients(props) {
+export default function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState('one');
+
+  const [isModalIngredientDetails, setModalIngredientDetails] =
+    React.useState(false);
+
+  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
+    React.useState({
+      _id: props.data[0]._id,
+      image_large: props.data[0].image_large,
+      name: props.data[0].name,
+      calories: props.data[0].calories,
+      proteins: props.data[0].proteins,
+      fat: props.data[0].fat,
+      carbohydrates: props.data[0].carbohydrates,
+    });
+
+  const handleIngredientDetails = (id) => {
+    setModalIngredientDetails(true);
+    //console.log(id);
+    let currentIngredient = props.data.find((item) => item._id == id);
+    const currentModalIngredient = {};
+    for (let i in currentModalIngredientDetails) {
+      currentModalIngredient[i] = currentIngredient[i];
+    }
+    setcurrentModalIngredientDetails(currentModalIngredient);
+  };
+
+  const handleClose = () => {
+    setModalIngredientDetails(false);
+  };
 
   return (
     <section className={burgerIngredientsStyles.section}>
@@ -34,6 +65,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -47,7 +79,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>20</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -73,6 +107,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -86,7 +121,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>30</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -112,6 +149,7 @@ function BurgerIngredients(props) {
                   <li
                     className={burgerIngredientsStyles.cardIngredients}
                     key={ingredient._id}
+                    onClick={() => handleIngredientDetails(ingredient._id)}
                   >
                     <Counter count={1} size='default' extraClass='m-1' />
                     <img
@@ -125,7 +163,9 @@ function BurgerIngredients(props) {
                         burgerIngredientsStyles.blockDiscriptionCenter
                       }
                     >
-                      <p className='text text_type_digits-default'>40</p>
+                      <p className='text text_type_digits-default'>
+                        {ingredient.price}
+                      </p>
                       <CurrencyIcon type='primary' />
                     </div>
                     <p
@@ -143,12 +183,17 @@ function BurgerIngredients(props) {
           </ul>
         </li>
       </ul>
+      {isModalIngredientDetails && (
+        <Modal header={'Детали ингредиента'} onClose={handleClose}>
+          <IngredientDetails
+            currentIngredient={currentModalIngredientDetails}
+          />
+        </Modal>
+      )}
     </section>
   );
 }
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-};
-
-export default BurgerIngredients;
+}
