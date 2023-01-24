@@ -1,35 +1,39 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+//import PropTypes from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
-import { ingredientType } from '../../utils/types';
+//import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-export default function BurgerIngredients(props) {
+import { IngredientContext, } from '../../services/ingredient-context'
+
+export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
 
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
+    const ingredientsState =  useContext(IngredientContext);
+
   const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
-      _id: props.data[0]._id,
-      image_large: props.data[0].image_large,
-      name: props.data[0].name,
-      calories: props.data[0].calories,
-      proteins: props.data[0].proteins,
-      fat: props.data[0].fat,
-      carbohydrates: props.data[0].carbohydrates,
+      _id: ingredientsState.data[0]._id,
+      image_large: ingredientsState.data[0].image_large,
+      name: ingredientsState.data[0].name,
+      calories: ingredientsState.data[0].calories,
+      proteins: ingredientsState.data[0].proteins,
+      fat: ingredientsState.data[0].fat,
+      carbohydrates: ingredientsState.data[0].carbohydrates,
     });
 
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
-    let currentIngredient = props.data.find((item) => item._id == id);
+    let currentIngredient = ingredientsState.data.find((item) => item._id == id);
     const currentModalIngredient = {};
     for (let i in currentModalIngredientDetails) {
       currentModalIngredient[i] = currentIngredient[i];
@@ -59,7 +63,7 @@ export default function BurgerIngredients(props) {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Булки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
+            {ingredientsState.data.map(
               (ingredient) =>
                 ingredient.type === 'bun' && (
                   <li
@@ -101,7 +105,7 @@ export default function BurgerIngredients(props) {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Соусы</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
+            {ingredientsState.data.map(
               (ingredient) =>
                 ingredient.type === 'sauce' && (
                   <li
@@ -143,7 +147,7 @@ export default function BurgerIngredients(props) {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Начинки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
+            {ingredientsState.data.map(
               (ingredient) =>
                 ingredient.type === 'main' && (
                   <li
@@ -194,6 +198,6 @@ export default function BurgerIngredients(props) {
   );
 }
 
-BurgerIngredients.propTypes = {
+/*urgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-}
+}*/

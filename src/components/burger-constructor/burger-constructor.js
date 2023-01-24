@@ -1,15 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+//import PropTypes from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../utils/types';
+//import { ingredientType } from '../../utils/types';
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
-export default function BurgerConstructor(props) {
+import { IngredientContext, } from '../../services/ingredient-context'
+
+export default function BurgerConstructor() {
   const [isModalOrderDetails, setModalOrderDetails] = React.useState(false);
 
   const handleOrder = () => {
@@ -20,19 +22,21 @@ export default function BurgerConstructor(props) {
     setModalOrderDetails(false);
   };
 
+  const constructorState =  useContext(IngredientContext);
+
   return (
     <section className={burgerConstructorStyles.section}>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
-          text={props.data[0].name + ' (верх)'}
-          thumbnail={props.data[0].image}
-          price={props.data[0].price}
+          text={constructorState.data[0].name + ' (верх)'}
+          thumbnail={constructorState.data[0].image}
+          price={constructorState.data[0].price}
           type='top'
           isLocked='undefined'
         />
       </div>
       <ul className={burgerConstructorStyles.blockTipes}>
-        {props.data.map((item) => {
+        {constructorState.data.map((item) => {
           if (item.type === 'sauce' || item.type === 'main') {
             return (
               <li
@@ -56,9 +60,9 @@ export default function BurgerConstructor(props) {
       </ul>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
-          text={props.data[0].name + ' (низ)'}
-          thumbnail={props.data[0].image}
-          price={props.data[0].price}
+          text={constructorState.data[0].name + ' (низ)'}
+          thumbnail={constructorState.data[0].image}
+          price={constructorState.data[0].price}
           type='bottom'
           isLocked='undefined'
         />
@@ -84,7 +88,7 @@ export default function BurgerConstructor(props) {
   );
 }
 
-BurgerConstructor.propTypes = {
+/*BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
-}
+}*/
 
