@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 //import PropTypes from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,22 +10,36 @@ import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
-import {OrderDetailsContext} from '../../services/order-details-context';
-
+import { OrderDetailsContext } from '../../services/order-details-context';
+import { TotalPriceContext } from '../../services/app-context';
 
 export default function BurgerConstructor() {
-  const [orderDetails, setModalOrderDetails] = React.useState({isModalOrderDetails: false, counterOrder: 1000 });
+  const [orderDetails, setModalOrderDetails] = React.useState({
+    isModalOrderDetails: false,
+    counterOrder: 1000,
+  });
 
   const handleOrder = () => {
-    setModalOrderDetails({isModalOrderDetails: true, counterOrder: ++orderDetails.counterOrder});   
+    setModalOrderDetails({
+      isModalOrderDetails: true,
+      counterOrder: ++orderDetails.counterOrder,
+    });
   };
 
-  const handleClose = () => {    
-    setModalOrderDetails({...orderDetails, isModalOrderDetails: false});    
+  const handleClose = () => {
+    setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
   };
 
   const constructorState = useContext(BurgerIngredientsContext);
-  
+
+  const [totalPrice, setTotalPrice] = useContext(TotalPriceContext);
+
+  setTotalPrice(
+    constructorState.data.reduce(
+      (acc, item) => acc + item.price,
+      constructorState.data[0].price
+    )
+  );
 
   return (
     <section className={burgerConstructorStyles.section}>
@@ -71,7 +85,7 @@ export default function BurgerConstructor() {
         />
       </div>
       <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
-        <p className='text text_type_digits-medium pr-2'>610</p>
+        <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
         <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
           <CurrencyIcon type='primary' />
         </div>
@@ -85,7 +99,7 @@ export default function BurgerConstructor() {
       {orderDetails.isModalOrderDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <OrderDetailsContext.Provider value={orderDetails}>
-          <OrderDetails />
+            <OrderDetails />
           </OrderDetailsContext.Provider>
         </Modal>
       )}
