@@ -9,7 +9,8 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 //import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-import { IngredientContext, } from '../../services/ingredient-context'
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+import {IngredientDetailsContext} from '../../services/ingredient-details-context'
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
@@ -17,7 +18,7 @@ export default function BurgerIngredients() {
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
-    const ingredientsState =  useContext(IngredientContext);
+  const ingredientsState = useContext(BurgerIngredientsContext);
 
   const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
@@ -33,7 +34,9 @@ export default function BurgerIngredients() {
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
-    let currentIngredient = ingredientsState.data.find((item) => item._id == id);
+    let currentIngredient = ingredientsState.data.find(
+      (item) => item._id == id
+    );
     const currentModalIngredient = {};
     for (let i in currentModalIngredientDetails) {
       currentModalIngredient[i] = currentIngredient[i];
@@ -189,9 +192,9 @@ export default function BurgerIngredients() {
       </ul>
       {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
-          <IngredientDetails
-            currentIngredient={currentModalIngredientDetails}
-          />
+           <IngredientDetailsContext.Provider value={currentModalIngredientDetails}>
+          <IngredientDetails />
+           </IngredientDetailsContext.Provider >
         </Modal>
       )}
     </section>

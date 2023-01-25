@@ -3,7 +3,7 @@ import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
 import { Notifications } from '../notifications/notifications';
 
-import { IngredientContext, } from '../../services/ingredient-context'
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 //import appStyles from './app-styles.module.css';
 
 const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
@@ -40,7 +40,6 @@ export default function App() {
 
   return (
     <>
-    
       <Notifications>
         {state.isLoading && 'Загрузка...'}
         {state.hasError && 'Произошла ошибка'}
@@ -48,11 +47,11 @@ export default function App() {
       {!state.isLoading && !state.hasError && state.data.length && (
         <>
           <AppHeader />
-          <IngredientContext.Provider value={state}>
-          <BurgerMain />
-          </IngredientContext.Provider>
+          <BurgerIngredientsContext.Provider value={state}>
+            <BurgerMain />
+          </BurgerIngredientsContext.Provider>
         </>
-      )}      
+      )}
     </>
   );
 }

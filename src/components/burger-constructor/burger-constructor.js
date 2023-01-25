@@ -9,20 +9,23 @@ import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
-import { IngredientContext, } from '../../services/ingredient-context'
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+import {OrderDetailsContext} from '../../services/order-details-context';
+
 
 export default function BurgerConstructor() {
-  const [isModalOrderDetails, setModalOrderDetails] = React.useState(false);
+  const [orderDetails, setModalOrderDetails] = React.useState({isModalOrderDetails: false, counterOrder: 1000 });
 
   const handleOrder = () => {
-    setModalOrderDetails(true);
+    setModalOrderDetails({isModalOrderDetails: true, counterOrder: ++orderDetails.counterOrder});   
   };
 
-  const handleClose = () => {
-    setModalOrderDetails(false);
+  const handleClose = () => {    
+    setModalOrderDetails({...orderDetails, isModalOrderDetails: false});    
   };
 
-  const constructorState =  useContext(IngredientContext);
+  const constructorState = useContext(BurgerIngredientsContext);
+  
 
   return (
     <section className={burgerConstructorStyles.section}>
@@ -79,9 +82,11 @@ export default function BurgerConstructor() {
           Оформить заказ
         </button>
       </div>{' '}
-      {isModalOrderDetails && (
+      {orderDetails.isModalOrderDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
+          <OrderDetailsContext.Provider value={orderDetails}>
           <OrderDetails />
+          </OrderDetailsContext.Provider>
         </Modal>
       )}
     </section>
@@ -91,4 +96,3 @@ export default function BurgerConstructor() {
 /*BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientType).isRequired,
 }*/
-
