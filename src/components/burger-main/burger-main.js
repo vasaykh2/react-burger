@@ -1,20 +1,32 @@
 //import PropTypes from 'prop-types';
-import React, {  useState } from 'react';
+import React, { useContext, useState } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
 //import { ingredientType } from '../../utils/types';
 import burgerMainStyles from './burger-main-styles.module.css';
 
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 import { TotalPriceContext } from '../../services/app-context';
+import { BurgerConstructorContext } from '../../services/burger-constructor-context';
 
 export default function BurgerMain() {
-  const totalPrice = useState(0);
+  const ingredientsState = useContext(BurgerIngredientsContext);
+  const constructorState = {};
+  constructorState.data = ingredientsState.data;
+
+  const totalPrice = constructorState.data.reduce(
+    (acc, item) => acc + item.price,
+    constructorState.data[0].price
+  );
+
   return (
     <main className={burgerMainStyles.blocks}>
       <BurgerIngredients />
-      <TotalPriceContext.Provider value={totalPrice}>
-        <BurgerConstructor />
-      </TotalPriceContext.Provider>
+      <BurgerConstructorContext.Provider value={constructorState}>
+        <TotalPriceContext.Provider value={totalPrice}>
+          <BurgerConstructor />
+        </TotalPriceContext.Provider>
+      </BurgerConstructorContext.Provider>
     </main>
   );
 }

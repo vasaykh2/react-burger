@@ -9,37 +9,64 @@ import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
-import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 import { OrderDetailsContext } from '../../services/order-details-context';
 import { TotalPriceContext } from '../../services/app-context';
+import { BurgerConstructorContext } from '../../services/burger-constructor-context';
+
+const urlOrders = 'https://norma.nomoreparties.space/api/orders';
 
 export default function BurgerConstructor() {
-  const [orderDetails, setModalOrderDetails] = React.useState({
+  const constructorState = useContext(BurgerConstructorContext);
+
+  const listId = constructorState.data.map((item) => item._id);
+
+  const [orderDetails, setModalOrderDetails] = useState({
+    name: '',
+    order: {
+      number: 8888,
+    },
+    success: true,
     isModalOrderDetails: false,
-    counterOrder: 1000,
   });
 
+  //["60d3b41abdacab0026a733c6"]
+
   const handleOrder = () => {
-    setModalOrderDetails({
-      isModalOrderDetails: true,
-      counterOrder: ++orderDetails.counterOrder,
-    });
+    fetch(urlOrders, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ingredients: listId,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then((res) => {
+        //console.log(res);
+        setModalOrderDetails({ ...res, isModalOrderDetails: true });
+        //console.log(orderDetails);
+      })
+      .catch((e) => {
+        console.log(e);
+        setModalOrderDetails({
+          ...orderDetails,
+          success: false,
+          isModalOrderDetails: false,
+        });
+      });
   };
 
   const handleClose = () => {
     setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
   };
 
-  const constructorState = useContext(BurgerIngredientsContext);
-
-  const [totalPrice, setTotalPrice] = useContext(TotalPriceContext);
-
-  setTotalPrice(
-    constructorState.data.reduce(
-      (acc, item) => acc + item.price,
-      constructorState.data[0].price
-    )
-  );
+  const totalPrice = useContext(TotalPriceContext);
 
   return (
     <section className={burgerConstructorStyles.section}>
