@@ -13,7 +13,10 @@ import { BASE_URL } from '../../utils/constants'
 
 import { OrderDetailsContext } from '../../services/order-details-context';
 import { TotalPriceContext } from '../../services/app-context';
+
 import { BurgerConstructorContext } from '../../services/burger-constructor-context';
+import { request } from '../../utils/request';
+
 
 const urlOrders = BASE_URL + 'orders';
 
@@ -31,10 +34,8 @@ export default function BurgerConstructor() {
     isModalOrderDetails: false,
   });
 
-  //["60d3b41abdacab0026a733c6"]
-
   const handleOrder = () => {
-    fetch(urlOrders, {
+    request(urlOrders, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,14 +43,7 @@ export default function BurgerConstructor() {
       body: JSON.stringify({
         ingredients: listId,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then((res) => {
+    }).then((res) => {
         //console.log(res);
         setModalOrderDetails({ ...res, isModalOrderDetails: true });
         //console.log(orderDetails);
