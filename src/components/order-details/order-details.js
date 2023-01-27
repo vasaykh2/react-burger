@@ -22,8 +22,8 @@ export function OrderDetails(props) {
 }
 
 OrderDetails.propTypes = {
-  name: PropTypes.string.isRequired,
-  order: { number: PropTypes.number }.isRequired,
-  success: PropTypes.bool.isRequired,
-  isModalOrderDetails: PropTypes.bool.isRequired,
-};
+  name: PropTypes.string,
+  order: { number: PropTypes.number },
+  success: PropTypes.bool,
+  isModalOrderDetails: PropTypes.bool,
+}.isRequired;

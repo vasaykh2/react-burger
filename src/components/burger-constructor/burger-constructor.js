@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,7 +20,10 @@ const urlOrders = BASE_URL + 'orders';
 export default function BurgerConstructor() {
   const constructorState = useContext(BurgerConstructorContext);
 
-  const listId = constructorState.data.map((item) => item._id);
+  const listId = useMemo(
+    () => constructorState.data.map((item) => item._id),
+    [constructorState.data]
+  );
 
   const [orderDetails, setModalOrderDetails] = useState({
     name: '',
@@ -72,6 +75,35 @@ export default function BurgerConstructor() {
   };
   const totalPrice = useContext(TotalPriceContext);
 
+  function renderedIngredients() {
+    return constructorState.data.map((item) => {
+      if (item.type === 'sauce' || item.type === 'main') {
+        return (
+          <li
+            className={burgerConstructorStyles.blockString + ' pr-2'}
+            key={item._id}
+          >
+            <DragIcon type='primary' />
+            <div className={burgerConstructorStyles.blockItem}>
+              <ConstructorElement
+                text={item.name}
+                thumbnail={item.image}
+                price={item.price}
+                type='undefined'
+                isLocked=''
+              />
+            </div>
+          </li>
+        );
+      }
+    })
+  }
+
+  const rendererIngredients = useMemo(
+    () => renderedIngredients(),
+    [constructorState.data]
+  );
+
   return (
     <section className={burgerConstructorStyles.section}>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
@@ -84,27 +116,7 @@ export default function BurgerConstructor() {
         />
       </div>
       <ul className={burgerConstructorStyles.blockTipes}>
-        {constructorState.data.map((item) => {
-          if (item.type === 'sauce' || item.type === 'main') {
-            return (
-              <li
-                className={burgerConstructorStyles.blockString + ' pr-2'}
-                key={item._id}
-              >
-                <DragIcon type='primary' />
-                <div className={burgerConstructorStyles.blockItem}>
-                  <ConstructorElement
-                    text={item.name}
-                    thumbnail={item.image}
-                    price={item.price}
-                    type='undefined'
-                    isLocked=''
-                  />
-                </div>
-              </li>
-            );
-          }
-        })}
+        {rendererIngredients}
       </ul>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
@@ -116,17 +128,17 @@ export default function BurgerConstructor() {
         />
       </div>
       <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
-      {orderDetails.isLoading && (
-        <Oval
-          ariaLabel='loading-indicator'
-          height={70}
-          width={70}
-          strokeWidth={5}
-          strokeWidthSecondary={2}
-          color='blue'
-          secondaryColor='white'
-        />
-      )}
+        {orderDetails.isLoading && (
+          <Oval
+            ariaLabel='loading-indicator'
+            height={70}
+            width={70}
+            strokeWidth={5}
+            strokeWidthSecondary={2}
+            color='blue'
+            secondaryColor='white'
+          />
+        )}
         <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
         <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
           <CurrencyIcon type='primary' />
@@ -138,7 +150,6 @@ export default function BurgerConstructor() {
           Оформить заказ
         </button>
       </div>{' '}
-      
       {orderDetails.isModalOrderDetails && (
         <Modal onClose={handleClose}>
           <OrderDetails orderDetails={orderDetails} />
