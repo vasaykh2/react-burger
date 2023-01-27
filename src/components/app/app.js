@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
 import { Notifications } from '../notifications/notifications';
+import { BASE_URL } from '../../utils/constants'
+
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 //import appStyles from './app-styles.module.css';
 
-const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
+const urlDomen = BASE_URL + 'ingredients';
 
 export default function App() {
   const [state, setState] = useState({
