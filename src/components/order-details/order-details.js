@@ -1,16 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import orderAccpetedDone from '../../images/order accpeted-done.png';
 import OrderDetailsStyles from './order-details-styles.module.css';
 
-import { OrderDetailsContext } from '../../services/order-details-context';
-
-export function OrderDetails() {
-  const orderDetails = useContext(OrderDetailsContext);
-
+export function OrderDetails(props) {
   return (
     <div className={OrderDetailsStyles.block}>
       <p className='text text_type_digits-large pt-2 pb-8'>
-        {orderDetails.order.number}
+        {props.orderDetails.order.number}
       </p>
       <p className='text text_type_main-medium pb-15'>Идентификатор заказа</p>
       <img src={orderAccpetedDone} alt='Заказ начали готовитьа' />
@@ -22,4 +19,11 @@ export function OrderDetails() {
       </p>
     </div>
   );
+}
+
+OrderDetails.propTypes = {
+  name: PropTypes.string.isRequired,
+  order: {number: PropTypes.number}.isRequired,
+  success: PropTypes.bool.isRequired,
+  isModalOrderDetails: PropTypes.bool.isRequired,
 }
