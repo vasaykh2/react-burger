@@ -1,4 +1,4 @@
-import React, { useContext, } from 'react';
+import React, { useContext, useMemo, } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
 
@@ -13,9 +13,12 @@ export default function BurgerMain() {
   const constructorState = {};
   constructorState.data = ingredientsState.data;
 
-  const totalPrice = constructorState.data.reduce(
-    (acc, item) => acc + item.price,
-    constructorState.data[0].price
+  const totalPrice = useMemo(
+    () => constructorState.data.reduce(
+      (acc, item) => acc + item.price,
+      constructorState.data[0].price
+    ),
+    [constructorState.data]
   );
 
   return (
