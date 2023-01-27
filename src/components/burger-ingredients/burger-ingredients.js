@@ -1,16 +1,14 @@
-import React, { useContext } from 'react';
-//import PropTypes from 'prop-types';
+import React, { useContext, useMemo } from 'react';
+
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
-//import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
-//import { IngredientDetailsContext } from '../../services/ingredient-details-context';
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
@@ -48,6 +46,60 @@ export default function BurgerIngredients() {
     setModalIngredientDetails(false);
   };
 
+  function renderedIngredients(typeIngredients) {
+    return ingredientsState.data.map(
+      (ingredient) =>
+        ingredient.type === typeIngredients && (
+          <li
+            className={burgerIngredientsStyles.cardIngredients}
+            key={ingredient._id}
+            onClick={() => handleIngredientDetails(ingredient._id)}
+          >
+            <Counter count={1} size='default' extraClass='m-1' />
+            <img
+              src={ingredient.image}
+              alt={ingredient.name}
+              className={'ml-4 mr-4'}
+            />
+            <div
+              className={
+                'mt-1 mb-1 ' + burgerIngredientsStyles.blockDiscriptionCenter
+              }
+            >
+              <p className='text text_type_digits-default'>
+                {ingredient.price}
+              </p>
+              <CurrencyIcon type='primary' />
+            </div>
+            <p
+              className={
+                ' Apptext text_type_main-default pl-1 pr-1 ' +
+                burgerIngredientsStyles.blockCenter +
+                burgerIngredientsStyles.discriptionIngredients
+              }
+            >
+              {ingredient.name}
+            </p>
+          </li>
+        )
+    );
+  }
+
+  const rendererBun = useMemo(
+    () => renderedIngredients('bun'),
+    [ingredientsState.data]
+  );
+
+  const rendererSauce = useMemo(
+    () => renderedIngredients('sauce'),
+    [ingredientsState.data]
+  );
+
+  const rendererMain = useMemo(
+    () => renderedIngredients('main'),
+    [ingredientsState.data]
+  );
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
@@ -66,127 +118,19 @@ export default function BurgerIngredients() {
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Булки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {ingredientsState.data.map(
-              (ingredient) =>
-                ingredient.type === 'bun' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererBun}
           </ul>
         </li>
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Соусы</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {ingredientsState.data.map(
-              (ingredient) =>
-                ingredient.type === 'sauce' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererSauce}
           </ul>
         </li>
         <li>
           <p className='text text_type_main-medium pt-10 pb-6'>Начинки</p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {ingredientsState.data.map(
-              (ingredient) =>
-                ingredient.type === 'main' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererMain}
           </ul>
         </li>
       </ul>
@@ -200,7 +144,3 @@ export default function BurgerIngredients() {
     </section>
   );
 }
-
-/*urgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-}*/

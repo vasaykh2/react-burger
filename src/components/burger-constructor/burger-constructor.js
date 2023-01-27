@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Oval } from 'react-loader-spinner';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -27,10 +28,16 @@ export default function BurgerConstructor() {
       number: 8888,
     },
     success: true,
+    isLoading: false,
     isModalOrderDetails: false,
   });
 
   const handleOrder = () => {
+    setModalOrderDetails({
+      ...orderDetails,
+      isLoading: true,
+      isModalOrderDetails: false,
+    });
     request(urlOrders, {
       method: 'POST',
       headers: {
@@ -42,7 +49,11 @@ export default function BurgerConstructor() {
     })
       .then((res) => {
         //console.log(res);
-        setModalOrderDetails({ ...res, isModalOrderDetails: true });
+        setModalOrderDetails({
+          ...res,
+          isLoading: false,
+          isModalOrderDetails: true,
+        });
         //console.log(orderDetails);
       })
       .catch((e) => {
@@ -50,6 +61,7 @@ export default function BurgerConstructor() {
         setModalOrderDetails({
           ...orderDetails,
           success: false,
+          isLoading: false,
           isModalOrderDetails: false,
         });
       });
@@ -58,7 +70,6 @@ export default function BurgerConstructor() {
   const handleClose = () => {
     setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
   };
-
   const totalPrice = useContext(TotalPriceContext);
 
   return (
@@ -105,6 +116,17 @@ export default function BurgerConstructor() {
         />
       </div>
       <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
+      {orderDetails.isLoading && (
+        <Oval
+          ariaLabel='loading-indicator'
+          height={70}
+          width={70}
+          strokeWidth={5}
+          strokeWidthSecondary={2}
+          color='blue'
+          secondaryColor='white'
+        />
+      )}
         <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
         <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
           <CurrencyIcon type='primary' />
@@ -116,6 +138,7 @@ export default function BurgerConstructor() {
           Оформить заказ
         </button>
       </div>{' '}
+      
       {orderDetails.isModalOrderDetails && (
         <Modal onClose={handleClose}>
           <OrderDetails orderDetails={orderDetails} />
@@ -124,7 +147,3 @@ export default function BurgerConstructor() {
     </section>
   );
 }
-
-/*BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-}*/

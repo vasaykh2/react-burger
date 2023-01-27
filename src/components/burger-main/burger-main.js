@@ -1,8 +1,7 @@
-//import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
-//import { ingredientType } from '../../utils/types';
+
 import burgerMainStyles from './burger-main-styles.module.css';
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
@@ -30,7 +29,3 @@ export default function BurgerMain() {
     </main>
   );
 }
-
-/*BurgerMain.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-};*/
