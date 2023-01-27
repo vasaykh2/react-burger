@@ -10,7 +10,7 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
-import { IngredientDetailsContext } from '../../services/ingredient-details-context';
+//import { IngredientDetailsContext } from '../../services/ingredient-details-context';
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
@@ -192,11 +192,9 @@ export default function BurgerIngredients() {
       </ul>
       {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
-          <IngredientDetailsContext.Provider
-            value={currentModalIngredientDetails}
-          >
-            <IngredientDetails />
-          </IngredientDetailsContext.Provider>
+          <IngredientDetails
+            currentModalIngredientDetails={currentModalIngredientDetails}
+          />
         </Modal>
       )}
     </section>

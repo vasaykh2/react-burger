@@ -7,13 +7,12 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
-import { BASE_URL } from '../../utils/constants'
+import { BASE_URL } from '../../utils/constants';
 
 import { TotalPriceContext } from '../../services/app-context';
 
 import { BurgerConstructorContext } from '../../services/burger-constructor-context';
 import { request } from '../../utils/request';
-
 
 const urlOrders = BASE_URL + 'orders';
 
@@ -40,7 +39,8 @@ export default function BurgerConstructor() {
       body: JSON.stringify({
         ingredients: listId,
       }),
-    }).then((res) => {
+    })
+      .then((res) => {
         //console.log(res);
         setModalOrderDetails({ ...res, isModalOrderDetails: true });
         //console.log(orderDetails);
@@ -117,8 +117,8 @@ export default function BurgerConstructor() {
         </button>
       </div>{' '}
       {orderDetails.isModalOrderDetails && (
-        <Modal header={'Детали ингредиента'} onClose={handleClose}>          
-            <OrderDetails orderDetails={orderDetails} />          
+        <Modal onClose={handleClose}>
+          <OrderDetails orderDetails={orderDetails} />
         </Modal>
       )}
     </section>

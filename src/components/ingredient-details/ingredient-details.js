@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
-//import PropTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
-import {IngredientDetailsContext} from '../../services/ingredient-details-context'
 
-export function IngredientDetails() {
-
-  const currentIngredientDetails = useContext(IngredientDetailsContext);
+export function IngredientDetails(props) {
+  const currentIngredientDetails = props.currentModalIngredientDetails;
 
   return (
     <div className={IngredientDetailsStyles.block}>
@@ -70,13 +68,12 @@ export function IngredientDetails() {
   );
 }
 
-/*IngredientDetails.propTypes = {
+IngredientDetails.propTypes = {
   _id: PropTypes.string,
   calories: PropTypes.number,
   carbohydrates: PropTypes.number,
   fat: PropTypes.number,
   image_large: PropTypes.string,
-  isVisible: PropTypes.bool,
   name: PropTypes.string,
   proteins: PropTypes.number,
-}.isRequired;*/
+}.isRequired;
