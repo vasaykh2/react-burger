@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -100,35 +100,75 @@ export default function BurgerIngredients() {
     [ingredientsState.data]
   );
 
+  const refBun = useRef('bun');
+  const refSauce = useRef('sauce');
+  const refMain = useRef('main');
+
+  function handleOnClickCurrent(e) {
+    //console.log(refMain.current);
+    setCurrent(e);
+    switch (e) {
+      case 'one':
+        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      case 'two':
+        refSauce.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      case 'three':
+        refMain.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      default:
+        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
+    }
+  }
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
       <div className={burgerIngredientsStyles.blockTab}>
-        <Tab value='one' active={current === 'one'} onClick={setCurrent}>
+        <Tab
+          value='one'
+          active={current === 'one'}
+          onClick={handleOnClickCurrent}
+        >
           Булки
         </Tab>
-        <Tab value='two' active={current === 'two'} onClick={setCurrent}>
+        <Tab
+          value='two'
+          active={current === 'two'}
+          onClick={handleOnClickCurrent}
+        >
           Соусы
         </Tab>
-        <Tab value='three' active={current === 'three'} onClick={setCurrent}>
+        <Tab
+          value='three'
+          active={current === 'three'}
+          onClick={handleOnClickCurrent}
+        >
           Начинки
         </Tab>
       </div>
       <ul className={burgerIngredientsStyles.blockTipes}>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Булки</p>
+          <p ref={refBun} className='text text_type_main-medium pt-10 pb-6'>
+            Булки
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
             {rendererBun}
           </ul>
         </li>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Соусы</p>
+          <p ref={refSauce} className='text text_type_main-medium pt-10 pb-6'>
+            Соусы
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
             {rendererSauce}
           </ul>
         </li>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Начинки</p>
+          <p ref={refMain} className='text text_type_main-medium pt-10 pb-6'>
+            Начинки
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
             {rendererMain}
           </ul>

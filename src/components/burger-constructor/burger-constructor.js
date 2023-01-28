@@ -96,7 +96,7 @@ export default function BurgerConstructor() {
           </li>
         );
       }
-    })
+    });
   }
 
   const rendererIngredients = useMemo(
