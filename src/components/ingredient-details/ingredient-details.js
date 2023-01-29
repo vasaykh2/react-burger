@@ -1,15 +1,18 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import IngredientDetailsStyles from './ingredient-details-styles.module.css';
 
 export function IngredientDetails(props) {
+  const currentIngredientDetails = props.currentModalIngredientDetails;
+
   return (
     <div className={IngredientDetailsStyles.block}>
       <img
-        src={props.currentIngredient.image_large}
-        alt={props.currentIngredient.name}
+        src={currentIngredientDetails.image_large}
+        alt={currentIngredientDetails.name}
       />
       <p className='text text_type_main-medium pt-2 pb-8'>
-        {props.currentIngredient.name}
+        {currentIngredientDetails.name}
       </p>
       <div className={IngredientDetailsStyles.contentString}>
         <div className={IngredientDetailsStyles.content}>
@@ -21,7 +24,7 @@ export function IngredientDetails(props) {
               'text  text_color_inactive ' + IngredientDetailsStyles.textValue
             }
           >
-            {props.currentIngredient.calories}
+            {currentIngredientDetails.calories}
           </p>
         </div>
         <div className={IngredientDetailsStyles.content}>
@@ -33,7 +36,7 @@ export function IngredientDetails(props) {
               'text  text_color_inactive ' + IngredientDetailsStyles.textValue
             }
           >
-            {props.currentIngredient.proteins}
+            {currentIngredientDetails.proteins}
           </p>
         </div>
         <div className={IngredientDetailsStyles.content}>
@@ -45,7 +48,7 @@ export function IngredientDetails(props) {
               'text  text_color_inactive ' + IngredientDetailsStyles.textValue
             }
           >
-            {props.currentIngredient.fat}
+            {currentIngredientDetails.fat}
           </p>
         </div>
         <div className={IngredientDetailsStyles.content}>
@@ -57,7 +60,7 @@ export function IngredientDetails(props) {
               'text  text_color_inactive ' + IngredientDetailsStyles.textValue
             }
           >
-            {props.currentIngredient.carbohydrates}
+            {currentIngredientDetails.carbohydrates}
           </p>
         </div>
       </div>
@@ -71,7 +74,6 @@ IngredientDetails.propTypes = {
   carbohydrates: PropTypes.number,
   fat: PropTypes.number,
   image_large: PropTypes.string,
-  isVisible: PropTypes.bool,
   name: PropTypes.string,
   proteins: PropTypes.number,
 }.isRequired;

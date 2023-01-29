@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.js';
 import BurgerMain from '../burger-main/burger-main.js';
 import { Notifications } from '../notifications/notifications';
+
+import { BASE_URL } from '../../utils/constants';
+import { request } from '../../utils/request';
+
+
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 //import appStyles from './app-styles.module.css';
 
-const urlDomen = 'https://norma.nomoreparties.space/api/ingredients';
+const urlDomen = BASE_URL + 'ingredients';
 
 export default function App() {
   const [state, setState] = useState({
@@ -19,20 +25,14 @@ export default function App() {
 
   const getData = () => {
     setState({ ...state, hasError: false, isLoading: true });
-    fetch(urlDomen)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then((res) => {
+    request(urlDomen).then((res) => {
         //console.log(res.data);
         const data = res.data;
         setState({ ...state, data, isLoading: false });
       })
       .catch((e) => {
         setState({ ...state, hasError: true, isLoading: false });
+        console.log(e);
       });
   };
 
@@ -45,7 +45,9 @@ export default function App() {
       {!state.isLoading && !state.hasError && state.data.length && (
         <>
           <AppHeader />
-          <BurgerMain data={state.data} />
+          <BurgerIngredientsContext.Provider value={state}>
+            <BurgerMain />
+          </BurgerIngredientsContext.Provider>
         </>
       )}
     </>

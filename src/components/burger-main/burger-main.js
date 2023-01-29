@@ -1,18 +1,34 @@
-import PropTypes from 'prop-types';
+import React, { useContext, useMemo, } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor.js';
-import { ingredientType } from '../../utils/types';
+
 import burgerMainStyles from './burger-main-styles.module.css';
 
-export default function BurgerMain(props) {
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+import { TotalPriceContext } from '../../services/app-context';
+import { BurgerConstructorContext } from '../../services/burger-constructor-context';
+
+export default function BurgerMain() {
+  const ingredientsState = useContext(BurgerIngredientsContext);
+  const constructorState = {};
+  constructorState.data = ingredientsState.data;
+
+  const totalPrice = useMemo(
+    () => constructorState.data.reduce(
+      (acc, item) => acc + item.price,
+      constructorState.data[0].price
+    ),
+    [constructorState.data]
+  );
+
   return (
     <main className={burgerMainStyles.blocks}>
-      <BurgerIngredients data={props.data} />
-      <BurgerConstructor data={props.data} />
+      <BurgerIngredients />
+      <BurgerConstructorContext.Provider value={constructorState}>
+        <TotalPriceContext.Provider value={totalPrice}>
+          <BurgerConstructor />
+        </TotalPriceContext.Provider>
+      </BurgerConstructorContext.Provider>
     </main>
   );
 }
-
-BurgerMain.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-};

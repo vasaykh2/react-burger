@@ -1,70 +1,145 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState, useMemo } from 'react';
+import { Oval } from 'react-loader-spinner';
+
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../utils/types';
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
+import { BASE_URL } from '../../utils/constants';
 
-export default function BurgerConstructor(props) {
-  const [isModalOrderDetails, setModalOrderDetails] = React.useState(false);
+import { TotalPriceContext } from '../../services/app-context';
+
+import { BurgerConstructorContext } from '../../services/burger-constructor-context';
+import { request } from '../../utils/request';
+
+const urlOrders = BASE_URL + 'orders';
+
+export default function BurgerConstructor() {
+  const constructorState = useContext(BurgerConstructorContext);
+
+  const listId = useMemo(
+    () => constructorState.data.map((item) => item._id),
+    [constructorState.data]
+  );
+
+  const [orderDetails, setModalOrderDetails] = useState({
+    name: '',
+    order: {
+      number: 8888,
+    },
+    success: true,
+    isLoading: false,
+    isModalOrderDetails: false,
+  });
 
   const handleOrder = () => {
-    setModalOrderDetails(true);
+    setModalOrderDetails({
+      ...orderDetails,
+      isLoading: true,
+      isModalOrderDetails: false,
+    });
+    request(urlOrders, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ingredients: listId,
+      }),
+    })
+      .then((res) => {
+        //console.log(res);
+        setModalOrderDetails({
+          ...res,
+          isLoading: false,
+          isModalOrderDetails: true,
+        });
+        //console.log(orderDetails);
+      })
+      .catch((e) => {
+        console.log(e);
+        setModalOrderDetails({
+          ...orderDetails,
+          success: false,
+          isLoading: false,
+          isModalOrderDetails: false,
+        });
+      });
   };
 
   const handleClose = () => {
-    setModalOrderDetails(false);
+    setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
   };
+  const totalPrice = useContext(TotalPriceContext);
+
+  function renderedIngredients() {
+    return constructorState.data.map((item) => {
+      if (item.type === 'sauce' || item.type === 'main') {
+        return (
+          <li
+            className={burgerConstructorStyles.blockString + ' pr-2'}
+            key={item._id}
+          >
+            <DragIcon type='primary' />
+            <div className={burgerConstructorStyles.blockItem}>
+              <ConstructorElement
+                text={item.name}
+                thumbnail={item.image}
+                price={item.price}
+                type='undefined'
+                isLocked=''
+              />
+            </div>
+          </li>
+        );
+      }
+    });
+  }
+
+  const rendererIngredients = useMemo(
+    () => renderedIngredients(),
+    [constructorState.data]
+  );
 
   return (
     <section className={burgerConstructorStyles.section}>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
-          text={props.data[0].name + ' (верх)'}
-          thumbnail={props.data[0].image}
-          price={props.data[0].price}
+          text={constructorState.data[0].name + ' (верх)'}
+          thumbnail={constructorState.data[0].image}
+          price={constructorState.data[0].price}
           type='top'
           isLocked='undefined'
         />
       </div>
       <ul className={burgerConstructorStyles.blockTipes}>
-        {props.data.map((item) => {
-          if (item.type === 'sauce' || item.type === 'main') {
-            return (
-              <li
-                className={burgerConstructorStyles.blockString + ' pr-2'}
-                key={item._id}
-              >
-                <DragIcon type='primary' />
-                <div className={burgerConstructorStyles.blockItem}>
-                  <ConstructorElement
-                    text={item.name}
-                    thumbnail={item.image}
-                    price={item.price}
-                    type='undefined'
-                    isLocked=''
-                  />
-                </div>
-              </li>
-            );
-          }
-        })}
+        {rendererIngredients}
       </ul>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         <ConstructorElement
-          text={props.data[0].name + ' (низ)'}
-          thumbnail={props.data[0].image}
-          price={props.data[0].price}
+          text={constructorState.data[0].name + ' (низ)'}
+          thumbnail={constructorState.data[0].image}
+          price={constructorState.data[0].price}
           type='bottom'
           isLocked='undefined'
         />
       </div>
       <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
-        <p className='text text_type_digits-medium pr-2'>610</p>
+        {orderDetails.isLoading && (
+          <Oval
+            ariaLabel='loading-indicator'
+            height={70}
+            width={70}
+            strokeWidth={5}
+            strokeWidthSecondary={2}
+            color='blue'
+            secondaryColor='white'
+          />
+        )}
+        <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
         <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
           <CurrencyIcon type='primary' />
         </div>
@@ -75,16 +150,11 @@ export default function BurgerConstructor(props) {
           Оформить заказ
         </button>
       </div>{' '}
-      {isModalOrderDetails && (
-        <Modal header={'Детали ингредиента'} onClose={handleClose}>
-          <OrderDetails />
+      {orderDetails.isModalOrderDetails && (
+        <Modal onClose={handleClose}>
+          <OrderDetails orderDetails={orderDetails} />
         </Modal>
       )}
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-}
-

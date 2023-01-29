@@ -1,35 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useMemo, useRef } from 'react';
+
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
-import { ingredientType } from '../../utils/types';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-export default function BurgerIngredients(props) {
+import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+
+export default function BurgerIngredients() {
   const [current, setCurrent] = React.useState('one');
 
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
+  const ingredientsState = useContext(BurgerIngredientsContext);
+
   const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
-      _id: props.data[0]._id,
-      image_large: props.data[0].image_large,
-      name: props.data[0].name,
-      calories: props.data[0].calories,
-      proteins: props.data[0].proteins,
-      fat: props.data[0].fat,
-      carbohydrates: props.data[0].carbohydrates,
+      _id: ingredientsState.data[0]._id,
+      image_large: ingredientsState.data[0].image_large,
+      name: ingredientsState.data[0].name,
+      calories: ingredientsState.data[0].calories,
+      proteins: ingredientsState.data[0].proteins,
+      fat: ingredientsState.data[0].fat,
+      carbohydrates: ingredientsState.data[0].carbohydrates,
     });
 
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
-    let currentIngredient = props.data.find((item) => item._id == id);
+    let currentIngredient = ingredientsState.data.find(
+      (item) => item._id == id
+    );
     const currentModalIngredient = {};
     for (let i in currentModalIngredientDetails) {
       currentModalIngredient[i] = currentIngredient[i];
@@ -41,159 +46,141 @@ export default function BurgerIngredients(props) {
     setModalIngredientDetails(false);
   };
 
+  function renderedIngredients(typeIngredients) {
+    return ingredientsState.data.map(
+      (ingredient) =>
+        ingredient.type === typeIngredients && (
+          <li
+            className={burgerIngredientsStyles.cardIngredients}
+            key={ingredient._id}
+            onClick={() => handleIngredientDetails(ingredient._id)}
+          >
+            <Counter count={1} size='default' extraClass='m-1' />
+            <img
+              src={ingredient.image}
+              alt={ingredient.name}
+              className={'ml-4 mr-4'}
+            />
+            <div
+              className={
+                'mt-1 mb-1 ' + burgerIngredientsStyles.blockDiscriptionCenter
+              }
+            >
+              <p className='text text_type_digits-default'>
+                {ingredient.price}
+              </p>
+              <CurrencyIcon type='primary' />
+            </div>
+            <p
+              className={
+                ' Apptext text_type_main-default pl-1 pr-1 ' +
+                burgerIngredientsStyles.blockCenter +
+                burgerIngredientsStyles.discriptionIngredients
+              }
+            >
+              {ingredient.name}
+            </p>
+          </li>
+        )
+    );
+  }
+
+  const rendererBun = useMemo(
+    () => renderedIngredients('bun'),
+    [ingredientsState.data]
+  );
+
+  const rendererSauce = useMemo(
+    () => renderedIngredients('sauce'),
+    [ingredientsState.data]
+  );
+
+  const rendererMain = useMemo(
+    () => renderedIngredients('main'),
+    [ingredientsState.data]
+  );
+
+  const refBun = useRef('bun');
+  const refSauce = useRef('sauce');
+  const refMain = useRef('main');
+
+  function handleOnClickCurrent(e) {
+    //console.log(refMain.current);
+    setCurrent(e);
+    switch (e) {
+      case 'one':
+        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      case 'two':
+        refSauce.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      case 'three':
+        refMain.current.scrollIntoView(true, { behavior: 'smooth' });
+        break;
+      default:
+        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
+    }
+  }
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
       <div className={burgerIngredientsStyles.blockTab}>
-        <Tab value='one' active={current === 'one'} onClick={setCurrent}>
+        <Tab
+          value='one'
+          active={current === 'one'}
+          onClick={handleOnClickCurrent}
+        >
           Булки
         </Tab>
-        <Tab value='two' active={current === 'two'} onClick={setCurrent}>
+        <Tab
+          value='two'
+          active={current === 'two'}
+          onClick={handleOnClickCurrent}
+        >
           Соусы
         </Tab>
-        <Tab value='three' active={current === 'three'} onClick={setCurrent}>
+        <Tab
+          value='three'
+          active={current === 'three'}
+          onClick={handleOnClickCurrent}
+        >
           Начинки
         </Tab>
       </div>
       <ul className={burgerIngredientsStyles.blockTipes}>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Булки</p>
+          <p ref={refBun} className='text text_type_main-medium pt-10 pb-6'>
+            Булки
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
-              (ingredient) =>
-                ingredient.type === 'bun' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererBun}
           </ul>
         </li>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Соусы</p>
+          <p ref={refSauce} className='text text_type_main-medium pt-10 pb-6'>
+            Соусы
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
-              (ingredient) =>
-                ingredient.type === 'sauce' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererSauce}
           </ul>
         </li>
         <li>
-          <p className='text text_type_main-medium pt-10 pb-6'>Начинки</p>
+          <p ref={refMain} className='text text_type_main-medium pt-10 pb-6'>
+            Начинки
+          </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {props.data.map(
-              (ingredient) =>
-                ingredient.type === 'main' && (
-                  <li
-                    className={burgerIngredientsStyles.cardIngredients}
-                    key={ingredient._id}
-                    onClick={() => handleIngredientDetails(ingredient._id)}
-                  >
-                    <Counter count={1} size='default' extraClass='m-1' />
-                    <img
-                      src={ingredient.image}
-                      alt={ingredient.name}
-                      className={'ml-4 mr-4'}
-                    />
-                    <div
-                      className={
-                        'mt-1 mb-1 ' +
-                        burgerIngredientsStyles.blockDiscriptionCenter
-                      }
-                    >
-                      <p className='text text_type_digits-default'>
-                        {ingredient.price}
-                      </p>
-                      <CurrencyIcon type='primary' />
-                    </div>
-                    <p
-                      className={
-                        ' Apptext text_type_main-default pl-1 pr-1 ' +
-                        burgerIngredientsStyles.blockCenter +
-                        burgerIngredientsStyles.discriptionIngredients
-                      }
-                    >
-                      {ingredient.name}
-                    </p>
-                  </li>
-                )
-            )}
+            {rendererMain}
           </ul>
         </li>
       </ul>
       {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
-            currentIngredient={currentModalIngredientDetails}
+            currentModalIngredientDetails={currentModalIngredientDetails}
           />
         </Modal>
       )}
     </section>
   );
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
 }
