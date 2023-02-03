@@ -34,24 +34,24 @@ export default function BurgerIngredients() {
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
-  const ingredientsState = useContext(BurgerIngredientsContext);
- // console.log(ingredientsState.data[0])
+  //const ingredientsState = useContext(BurgerIngredientsContext);
+  //console.log(ingredients[0])
 
-  /*const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
+  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
-      _id: ingredientsState.data[0]._id,
-      image_large: ingredientsState.data[0].image_large,
-      name: ingredientsState.data[0].name,
-      calories: ingredientsState.data[0].calories,
-      proteins: ingredientsState.data[0].proteins,
-      fat: ingredientsState.data[0].fat,
-      carbohydrates: ingredientsState.data[0].carbohydrates,
+      _id: 0,
+      image_large: '',
+      name: '',
+      calories: 0,
+      proteins: 0,
+      fat: 0,
+      carbohydrates: 0,
     });
 
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
-    let currentIngredient = ingredientsState.data.find(
+    let currentIngredient = ingredients.find(
       (item) => item._id == id
     );
     const currentModalIngredient = {};
@@ -63,23 +63,17 @@ export default function BurgerIngredients() {
 
   const handleClose = () => {
     setModalIngredientDetails(false);
-  };*/
-
-/*<li
-            className={burgerIngredientsStyles.cardIngredients}
-            key={ingredient._id}
-            onClick={() => handleIngredientDetails(ingredient._id)}
-          >*/
+  };
 
 
   function renderedIngredients(typeIngredients) {
-    return ingredientsState.data.map(
+    return ingredients.map(
       (ingredient) =>
         ingredient.type === typeIngredients && (
           <li
             className={burgerIngredientsStyles.cardIngredients}
             key={ingredient._id}
-            
+            onClick={() => handleIngredientDetails(ingredient._id)}
           >
             <Counter count={1} size='default' extraClass='m-1' />
             <img
@@ -113,17 +107,17 @@ export default function BurgerIngredients() {
 
   const rendererBun = useMemo(
     () => renderedIngredients('bun'),
-    [ingredientsState.data]
+    [ingredients]
   );
 
   const rendererSauce = useMemo(
     () => renderedIngredients('sauce'),
-    [ingredientsState.data]
+    [ingredients]
   );
 
   const rendererMain = useMemo(
     () => renderedIngredients('main'),
-    [ingredientsState.data]
+    [ingredients]
   );
 
   const refBun = useRef('bun');
@@ -200,13 +194,13 @@ export default function BurgerIngredients() {
           </ul>
         </li>
       </ul>
-      {/*isModalIngredientDetails && (
+      {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
             currentModalIngredientDetails={currentModalIngredientDetails}
           />
         </Modal>
-      )*/}
+      )}
     </section>
   );
 }
