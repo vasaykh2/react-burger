@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useContext, useMemo, useRef, useEffect } from 'react';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,15 +10,34 @@ import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 
+
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredientsList } from '../../services/actions/actions';
+
+
+
 export default function BurgerIngredients() {
+
+  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(state => state.ingredientsReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    // Отправляем экшен-функцию
+    dispatch(getIngredientsList())
+}, []);
+
+//console.log(ingredientsLoad, ingredientsFailed, ingredients );
+
   const [current, setCurrent] = React.useState('one');
 
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
   const ingredientsState = useContext(BurgerIngredientsContext);
+ // console.log(ingredientsState.data[0])
 
-  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
+  /*const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
       _id: ingredientsState.data[0]._id,
       image_large: ingredientsState.data[0].image_large,
@@ -44,7 +63,14 @@ export default function BurgerIngredients() {
 
   const handleClose = () => {
     setModalIngredientDetails(false);
-  };
+  };*/
+
+/*<li
+            className={burgerIngredientsStyles.cardIngredients}
+            key={ingredient._id}
+            onClick={() => handleIngredientDetails(ingredient._id)}
+          >*/
+
 
   function renderedIngredients(typeIngredients) {
     return ingredientsState.data.map(
@@ -53,7 +79,7 @@ export default function BurgerIngredients() {
           <li
             className={burgerIngredientsStyles.cardIngredients}
             key={ingredient._id}
-            onClick={() => handleIngredientDetails(ingredient._id)}
+            
           >
             <Counter count={1} size='default' extraClass='m-1' />
             <img
@@ -174,13 +200,13 @@ export default function BurgerIngredients() {
           </ul>
         </li>
       </ul>
-      {isModalIngredientDetails && (
+      {/*isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
             currentModalIngredientDetails={currentModalIngredientDetails}
           />
         </Modal>
-      )}
+      )*/}
     </section>
   );
 }
