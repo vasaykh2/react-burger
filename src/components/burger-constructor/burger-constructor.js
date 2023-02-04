@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,15 +15,62 @@ import { TotalPriceContext } from '../../services/app-context';
 import { BurgerConstructorContext } from '../../services/burger-constructor-context';
 import { request } from '../../utils/request';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  GET_CONSTRUCTOR_LIST,
+  getIngredientsList,
+} from '../../services/actions/constructor';
+
+import { ADD_CURRENT_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-details';
+
 const urlOrders = BASE_URL + 'orders';
 
 export default function BurgerConstructor() {
+  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
+    (state) => state.ingredientsReducer
+  );
+
+  const { data } = useSelector((state) => state.constructorReducer);
+  console.log(data);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+        dispatch({
+      type: GET_CONSTRUCTOR_LIST,
+      data: ingredients,
+    });
+  }, []);
+
   const constructorState = useContext(BurgerConstructorContext);
 
   const listId = useMemo(
     () => constructorState.data.map((item) => item._id),
     [constructorState.data]
   );
+
+  
+
+  /*useEffect(() => {
+    dispatch({
+  type: UPDATE_ORDER_DETAILS,
+  data: {
+    name: '',
+    order: {
+      number: 8888,
+    },
+    success: true,
+    isLoading: false,
+    isModalOrderDetails: false,
+  },
+});
+}, []);*/
+
+
+
+
+const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
+  console.log(data);
 
   const [orderDetails, setModalOrderDetails] = useState({
     name: '',
@@ -34,6 +81,9 @@ export default function BurgerConstructor() {
     isLoading: false,
     isModalOrderDetails: false,
   });
+
+
+
 
   const handleOrder = () => {
     setModalOrderDetails({
@@ -70,6 +120,9 @@ export default function BurgerConstructor() {
       });
   };
 
+
+
+  
   const handleClose = () => {
     setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
   };

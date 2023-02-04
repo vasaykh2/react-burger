@@ -8,11 +8,12 @@ import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+//import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredientsList } from '../../services/actions/actions';
+import { getIngredientsList } from '../../services/actions/ingredients';
+import { ADD_CURRENT_INGREDIENT_DETAILS, DELETE_CURRENT_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-details';
 
 
 
@@ -36,6 +37,20 @@ export default function BurgerIngredients() {
 
   //const ingredientsState = useContext(BurgerIngredientsContext);
   //console.log(ingredients[0])
+  useEffect(() => {
+    dispatch({
+  type: ADD_CURRENT_INGREDIENT_DETAILS,
+  item: {
+    _id: 0,
+    image_large: '',
+    name: '',
+    calories: 0,
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+  },
+});
+}, []);
 
   const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({

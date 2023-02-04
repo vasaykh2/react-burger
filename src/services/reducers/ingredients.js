@@ -14,7 +14,6 @@ import {
   UPDATE_ORDER_DETAILS,
 } from '../actions/actions';
 
-
 /*{
   calories: 420,
   carbohydrates: 53,
@@ -33,34 +32,7 @@ import {
 const ingredientsInitialState = {
   ingredientsLoad: false,
   ingredientsFailed: false,
-  ingredients: [  ],
-};
-
-
-const constructorInitialState = {
-  data: ingredientsInitialState.ingredients,
-};
-
-/*const currentIngredientDetailsInitialState = {
-  _id: ingredientsInitialState.ingredients[0]._id,
-  image_large: ingredientsInitialState.ingredients[0].image_large,
-  name: ingredientsInitialState.ingredients[0].name,
-  calories: ingredientsInitialState.ingredients[0].calories,
-  proteins: ingredientsInitialState.ingredients[0].proteins,
-  fat: ingredientsInitialState.ingredients[0].fat,
-  carbohydrates: ingredientsInitialState.ingredients[0].carbohydrates,
-};*/
-
-const currentIngredientDetailsInitialState = [];
-
-const orderDetailsInitialState = {
-  name: '',
-  order: {
-    number: 8888,
-  },
-  success: true,
-  isLoading: false,
-  isModalOrderDetails: false,
+  ingredients: [],
 };
 
 export const ingredientsReducer = (state = ingredientsInitialState, action) => {
@@ -73,7 +45,7 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
       };
     }
     case GET_INGREDIENTS_LIST_SUCCESS: {
-          return {
+      return {
         ...state,
         ingredients: action.result,
         ingredientsLoad: false,
@@ -89,66 +61,5 @@ export const ingredientsReducer = (state = ingredientsInitialState, action) => {
     default: {
       return state;
     }
-  }
-};
-
-export const constructorReducer = (state = constructorInitialState, action) => {
-  switch (action.type) {
-    // Добавление новой задачи в список дел
-    case GET_CONSTRUCTOR_LIST:
-    /*return (...state,
-        {  
-          isLoading: false,
-          hasError: false,        
-        })
-      */
-    // Реакция на прочие типы экшенов
-    default:
-      return state;
-  }
-};
-
-export const currentIngredientDetailsReducer = (
-  state = currentIngredientDetailsInitialState,
-  action
-) => {
-  switch (action.type) {
-    // Добавление новой задачи в список дел
-    case ADD_CURRENT_INGREDIENT_DETAILS:
-    /*return (...state,
-        {  
-          isLoading: false,
-          hasError: false,        
-        })
-      */
-    case DELETE_CURRENT_INGREDIENT_DETAILS:
-    /*return (...state,
-              {  
-                isLoading: false,
-                hasError: false,        
-              })
-            */
-    // Реакция на прочие типы экшенов
-    default:
-      return state;
-  }
-};
-
-export const orderDetailsReducer = (
-  state = orderDetailsInitialState,
-  action
-) => {
-  switch (action.type) {
-    // Добавление новой задачи в список дел
-    case UPDATE_ORDER_DETAILS:
-    /*return (...state,
-        {  
-          isLoading: false,
-          hasError: false,        
-        })
-      */
-    // Реакция на прочие типы экшенов
-    default:
-      return state;
   }
 };
