@@ -37,6 +37,15 @@ export default function BurgerIngredients() {
 
   //const ingredientsState = useContext(BurgerIngredientsContext);
   //console.log(ingredients[0])
+
+
+
+
+
+  const currentModalIngredientDetails = useSelector(state => state.currentIngredientDetailsReducer);
+
+  console.log(currentModalIngredientDetails);
+  /*
   useEffect(() => {
     dispatch({
   type: ADD_CURRENT_INGREDIENT_DETAILS,
@@ -51,8 +60,28 @@ export default function BurgerIngredients() {
   },
 });
 }, []);
+*/
 
-  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
+
+const handleIngredientDetails = (id) => {
+  setModalIngredientDetails(true);
+  //console.log(id);
+  let currentIngredient = ingredients.find(
+    (item) => item._id == id
+  );  
+  const currentModalIngredient = {};
+  for (let i in currentModalIngredientDetails.item) {
+    currentModalIngredient[i] = currentIngredient[i];    
+  }
+  //console.log(currentModalIngredient);
+  dispatch({
+    type: ADD_CURRENT_INGREDIENT_DETAILS,
+    item: currentModalIngredient,
+  });
+};
+
+
+  /*const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
       _id: 0,
       image_large: '',
@@ -75,9 +104,13 @@ export default function BurgerIngredients() {
     }
     setcurrentModalIngredientDetails(currentModalIngredient);
   };
+  */
 
   const handleClose = () => {
     setModalIngredientDetails(false);
+    dispatch({
+      type: DELETE_CURRENT_INGREDIENT_DETAILS,      
+    });
   };
 
 

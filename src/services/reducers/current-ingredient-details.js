@@ -11,40 +11,35 @@ import {
   UPDATE_ORDER_DETAILS,
 } from '../actions/actions';
 
-
-
-const currentIngredientDetailsInitialState = [1];
-
-const orderDetailsInitialState = {
-  name: '',
-  order: {
-    number: 8888,
-  },
-  success: true,
-  isLoading: false,
-  isModalOrderDetails: false,
+const currentIngredientDetailsInitialState = {
+  item: {
+    _id: 0,
+    image_large: '',
+    name: '',
+    calories: 0,
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+  }
 };
 
+const orderDetailsInitialState = {};
 
 export const currentIngredientDetailsReducer = (
   state = currentIngredientDetailsInitialState,
   action
 ) => {
-  switch (action.type) {
-    // Добавление новой задачи в список дел
+  switch (action.type) {    
     case ADD_CURRENT_INGREDIENT_DETAILS:
       return {
         ...state,
         item: action.item,
       };
     case DELETE_CURRENT_INGREDIENT_DETAILS:
-    /*return (...state,
-              {  
-                isLoading: false,
-                hasError: false,        
-              })
-            */
-    // Реакция на прочие типы экшенов
+      return {
+        ...state,
+        item: currentIngredientDetailsInitialState.item,
+      };    
     default:
       return state;
   }

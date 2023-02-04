@@ -31,7 +31,7 @@ export default function BurgerConstructor() {
   );
 
   const { data } = useSelector((state) => state.constructorReducer);
-  console.log(data);
+  //console.log(data);
 
   const dispatch = useDispatch();
 
@@ -70,7 +70,7 @@ export default function BurgerConstructor() {
 
 
 const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
-  console.log(data);
+ // console.log(data);
 
   const [orderDetails, setModalOrderDetails] = useState({
     name: '',

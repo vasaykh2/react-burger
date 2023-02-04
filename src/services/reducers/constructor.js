@@ -41,7 +41,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
   switch (action.type) {
     // Добавление новой задачи в список дел
     case GET_CONSTRUCTOR_LIST:
-      console.log(action);
+      //console.log(action);
       return {
         ...state,
         data: action.data,
