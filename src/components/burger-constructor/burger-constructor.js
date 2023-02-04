@@ -21,9 +21,11 @@ import {
   getIngredientsList,
 } from '../../services/actions/constructor';
 
-import { ADD_CURRENT_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-details';
+import { UPDATE_ORDER_DETAILS, postOrderDetails } from '../../services/actions/order-details';
 
 const urlOrders = BASE_URL + 'orders';
+
+export let listId = 0;
 
 export default function BurgerConstructor() {
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
@@ -44,35 +46,18 @@ export default function BurgerConstructor() {
 
   const constructorState = useContext(BurgerConstructorContext);
 
-  const listId = useMemo(
+  listId = useMemo(
     () => constructorState.data.map((item) => item._id),
     [constructorState.data]
-  );
-
-  
-
-  /*useEffect(() => {
-    dispatch({
-  type: UPDATE_ORDER_DETAILS,
-  data: {
-    name: '',
-    order: {
-      number: 8888,
-    },
-    success: true,
-    isLoading: false,
-    isModalOrderDetails: false,
-  },
-});
-}, []);*/
+  );  
 
 
 
 
-const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
+const orderDetails = useSelector((state) => state.orderDetailsReducer);
  // console.log(data);
 
-  const [orderDetails, setModalOrderDetails] = useState({
+  const [orderDetailses, setModalOrderDetails] = useState({
     name: '',
     order: {
       number: 8888,
@@ -85,12 +70,20 @@ const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
 
 
 
-  const handleOrder = () => {
+  const handleOrder = () => {    
+    dispatch(postOrderDetails());    
+  };
+
+/*const handleOrder = () => {
     setModalOrderDetails({
       ...orderDetails,
       isLoading: true,
       isModalOrderDetails: false,
     });
+    dispatch({type: UPDATE_ORDER_DETAILS});
+    dispatch(postOrderDetails());
+
+
     request(urlOrders, {
       method: 'POST',
       headers: {
@@ -101,7 +94,7 @@ const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
       }),
     })
       .then((res) => {
-        //console.log(res);
+        console.log(res);
         setModalOrderDetails({
           ...res,
           isLoading: false,
@@ -118,13 +111,11 @@ const {  } = useSelector((state) => state.currentIngredientDetailsReducer);
           isModalOrderDetails: false,
         });
       });
-  };
+  }; */
 
 
-
-  
   const handleClose = () => {
-    setModalOrderDetails({ ...orderDetails, isModalOrderDetails: false });
+    dispatch({type: UPDATE_ORDER_DETAILS});
   };
   const totalPrice = useContext(TotalPriceContext);
 

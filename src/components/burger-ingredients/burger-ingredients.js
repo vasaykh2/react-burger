@@ -10,25 +10,26 @@ import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 //import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
 
-
 import { useSelector, useDispatch } from 'react-redux';
 import { getIngredientsList } from '../../services/actions/ingredients';
-import { ADD_CURRENT_INGREDIENT_DETAILS, DELETE_CURRENT_INGREDIENT_DETAILS } from '../../services/actions/current-ingredient-details';
-
-
+import {
+  ADD_CURRENT_INGREDIENT_DETAILS,
+  DELETE_CURRENT_INGREDIENT_DETAILS,
+} from '../../services/actions/current-ingredient-details';
 
 export default function BurgerIngredients() {
-
-  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(state => state.ingredientsReducer);
+  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
+    (state) => state.ingredientsReducer
+  );
 
   const dispatch = useDispatch();
 
-  useEffect(()=> {
+  useEffect(() => {
     // Отправляем экшен-функцию
-    dispatch(getIngredientsList())
-}, []);
+    dispatch(getIngredientsList());
+  }, []);
 
-//console.log(ingredientsLoad, ingredientsFailed, ingredients );
+  //console.log(ingredientsLoad, ingredientsFailed, ingredients );
 
   const [current, setCurrent] = React.useState('one');
 
@@ -38,11 +39,9 @@ export default function BurgerIngredients() {
   //const ingredientsState = useContext(BurgerIngredientsContext);
   //console.log(ingredients[0])
 
-
-
-
-
-  const currentModalIngredientDetails = useSelector(state => state.currentIngredientDetailsReducer);
+  const currentModalIngredientDetails = useSelector(
+    (state) => state.currentIngredientDetailsReducer
+  );
 
   console.log(currentModalIngredientDetails);
   /*
@@ -62,24 +61,20 @@ export default function BurgerIngredients() {
 }, []);
 */
 
-
-const handleIngredientDetails = (id) => {
-  setModalIngredientDetails(true);
-  //console.log(id);
-  let currentIngredient = ingredients.find(
-    (item) => item._id == id
-  );  
-  const currentModalIngredient = {};
-  for (let i in currentModalIngredientDetails.item) {
-    currentModalIngredient[i] = currentIngredient[i];    
-  }
-  //console.log(currentModalIngredient);
-  dispatch({
-    type: ADD_CURRENT_INGREDIENT_DETAILS,
-    item: currentModalIngredient,
-  });
-};
-
+  const handleIngredientDetails = (id) => {
+    setModalIngredientDetails(true);
+    //console.log(id);
+    let currentIngredient = ingredients.find((item) => item._id == id);
+    const currentModalIngredient = {};
+    for (let i in currentModalIngredientDetails.item) {
+      currentModalIngredient[i] = currentIngredient[i];
+    }
+    //console.log(currentModalIngredient);
+    dispatch({
+      type: ADD_CURRENT_INGREDIENT_DETAILS,
+      item: currentModalIngredient,
+    });
+  };
 
   /*const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
     React.useState({
@@ -109,10 +104,9 @@ const handleIngredientDetails = (id) => {
   const handleClose = () => {
     setModalIngredientDetails(false);
     dispatch({
-      type: DELETE_CURRENT_INGREDIENT_DETAILS,      
+      type: DELETE_CURRENT_INGREDIENT_DETAILS,
     });
   };
-
 
   function renderedIngredients(typeIngredients) {
     return ingredients.map(
@@ -153,10 +147,7 @@ const handleIngredientDetails = (id) => {
     );
   }
 
-  const rendererBun = useMemo(
-    () => renderedIngredients('bun'),
-    [ingredients]
-  );
+  const rendererBun = useMemo(() => renderedIngredients('bun'), [ingredients]);
 
   const rendererSauce = useMemo(
     () => renderedIngredients('sauce'),
@@ -245,7 +236,7 @@ const handleIngredientDetails = (id) => {
       {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
-            currentModalIngredientDetails={currentModalIngredientDetails}
+            currentModalIngredientDetails={currentModalIngredientDetails.item}
           />
         </Modal>
       )}
