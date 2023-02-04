@@ -159,12 +159,14 @@ export default function BurgerIngredients() {
     [ingredients]
   );
 
+  const refeHeder = useRef('heder');
   const refBun = useRef('bun');
   const refSauce = useRef('sauce');
   const refMain = useRef('main');
 
   function handleOnClickCurrent(e) {
     //console.log(refMain.current);
+
     setCurrent(e);
     switch (e) {
       case 'one':
@@ -181,10 +183,45 @@ export default function BurgerIngredients() {
     }
   }
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, true);
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, []);
+
+  function handleScroll() {
+    const distBun = Math.abs(
+      refBun.current.getBoundingClientRect().top -
+        refeHeder.current.getBoundingClientRect().top
+    );
+    /*const distSauce = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);
+    const distMain = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);*/
+
+    //console.log(Math.min(distBun, distSauce, distMain));
+
+    const scale = distBun > 800 ? 'three' : distBun < 200 ? 'one' : 'two';
+
+    switch (scale) {
+      case 'one':
+        setCurrent('one');
+        break;
+      case 'two':
+        setCurrent('two');
+        console.log('two');
+        break;
+      case 'three':
+        setCurrent('three');
+        break;
+      default:
+        return;
+    }
+  }
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
-      <div className={burgerIngredientsStyles.blockTab}>
+      <div ref={refeHeder} className={burgerIngredientsStyles.blockTab}>
         <Tab
           value='one'
           active={current === 'one'}

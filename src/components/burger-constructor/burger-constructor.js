@@ -74,46 +74,6 @@ const orderDetails = useSelector((state) => state.orderDetailsReducer);
     dispatch(postOrderDetails());    
   };
 
-/*const handleOrder = () => {
-    setModalOrderDetails({
-      ...orderDetails,
-      isLoading: true,
-      isModalOrderDetails: false,
-    });
-    dispatch({type: UPDATE_ORDER_DETAILS});
-    dispatch(postOrderDetails());
-
-
-    request(urlOrders, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ingredients: listId,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        setModalOrderDetails({
-          ...res,
-          isLoading: false,
-          isModalOrderDetails: true,
-        });
-        //console.log(orderDetails);
-      })
-      .catch((e) => {
-        console.log(e);
-        setModalOrderDetails({
-          ...orderDetails,
-          success: false,
-          isLoading: false,
-          isModalOrderDetails: false,
-        });
-      });
-  }; */
-
-
   const handleClose = () => {
     dispatch({type: UPDATE_ORDER_DETAILS});
   };
