@@ -10,19 +10,18 @@ import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { GET_CONSTRUCTOR_LIST } from '../../services/actions/constructor';
+import { GET_CONSTRUCTOR_LIST, ADD_CONSTRUCTOR_LIST, addConstructorList } from '../../services/actions/constructor';
 
 import {
   UPDATE_ORDER_DETAILS,
   postOrderDetails,
 } from '../../services/actions/order-details';
 
-import { useDrop } from "react-dnd";
+import { useDrop } from 'react-dnd';
 
 export let listId = '';
 
 export default function BurgerConstructor() {
-
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
     (state) => state.ingredientsReducer
   );
@@ -71,29 +70,19 @@ export default function BurgerConstructor() {
     [constructorState]
   );
 
-  const onDropHandler = (itemId) => {
-    dispatch({
-      type: GET_CONSTRUCTOR_LIST,
-      data: ingredients,
-    });
-  };
+  const handleOnDrop = (ingredient) => {
+    dispatch(addConstructorList (ingredient)) };
 
-  const itemId = '60d3b41abdacab0026a733cc';
-
-
-  const [{ isHover }, drop] = useDrop({
-    accept: "sauce",
-    collect: monitor => ({
+  const [{ isHover, canDrop }, dropTarget] = useDrop({
+    accept: 'ingredients',
+    drop(ingredient) {
+      handleOnDrop(ingredient);
+    },
+    collect: (monitor) => ({
       isHover: monitor.isOver(),
-  }),
-    drop(itemId) {
-        onDropHandler(itemId);
-    },    
-});
-
-const borderColor = isHover ? 'lightgreen' : 'transparent';
-
-
+      canDrop: monitor.canDrop(),
+    }),
+  });
 
   function renderedIngredients() {
     return !isData
@@ -127,59 +116,67 @@ const borderColor = isHover ? 'lightgreen' : 'transparent';
   );
 
   return (
-    <section     className={burgerConstructorStyles.section}>
-      <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-        {!isData ? null : (
-          <ConstructorElement
-            text={constructorState[0].name + ' (верх)'}
-            thumbnail={constructorState[0].image}
-            price={constructorState[0].price}
-            type='top'
-            isLocked='undefined'
-          />
-        )}
-      </div>
-      <ul ref={drop}    style={{borderColor}}
-        className={burgerConstructorStyles.blockTipes}>
-        {rendererIngredients}
-      </ul>
-      <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-        {!isData ? null : (
-          <ConstructorElement
-            text={constructorState[0].name + ' (низ)'}
-            thumbnail={constructorState[0].image}
-            price={constructorState[0].price}
-            type='bottom'
-            isLocked='undefined'
-          />
-        )}
-      </div>
-      <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
-        {orderDetails.isLoading && (
-          <Oval
-            ariaLabel='loading-indicator'
-            height={70}
-            width={70}
-            strokeWidth={5}
-            strokeWidthSecondary={2}
-            color='blue'
-            secondaryColor='white'
-          />
-        )}
-        <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
-        <div
-          onClick={handleAllIngredients}
-          className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}
-        >
-          <CurrencyIcon type='primary' />
+    <section className={burgerConstructorStyles.section}>
+      <div
+        className={`${
+          canDrop && !isHover && burgerConstructorStyles.dropActive
+        } ${isHover && burgerConstructorStyles.dropHover}`}
+        ref={dropTarget}
+      >
+        <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
+          {!isData ? null : (
+            <ConstructorElement
+              text={constructorState[0].name + ' (верх)'}
+              thumbnail={constructorState[0].image}
+              price={constructorState[0].price}
+              type='top'
+              isLocked='undefined'
+            />
+          )}
         </div>
-        <button
-          className={burgerConstructorStyles.button}
-          onClick={handleOrder}
+        <ul className={burgerConstructorStyles.blockTipes}>
+          {rendererIngredients}
+        </ul>
+        <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
+          {!isData ? null : (
+            <ConstructorElement
+              text={constructorState[0].name + ' (низ)'}
+              thumbnail={constructorState[0].image}
+              price={constructorState[0].price}
+              type='bottom'
+              isLocked='undefined'
+            />
+          )}
+        </div>
+        <div
+          className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}
         >
-          Оформить заказ
-        </button>
-      </div>{' '}
+          {orderDetails.isLoading && (
+            <Oval
+              ariaLabel='loading-indicator'
+              height={70}
+              width={70}
+              strokeWidth={5}
+              strokeWidthSecondary={2}
+              color='blue'
+              secondaryColor='white'
+            />
+          )}
+          <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
+          <div
+            onClick={handleAllIngredients}
+            className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}
+          >
+            <CurrencyIcon type='primary' />
+          </div>
+          <button
+            className={burgerConstructorStyles.button}
+            onClick={handleOrder}
+          >
+            Оформить заказ
+          </button>
+        </div>
+      </div>
       {orderDetails.isModalOrderDetails && (
         <Modal onClose={handleClose}>
           <OrderDetails orderDetails={orderDetails} />

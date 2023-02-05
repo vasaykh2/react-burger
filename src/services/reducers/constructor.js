@@ -2,12 +2,12 @@
 
 import {
   GET_CONSTRUCTOR_LIST,
-  ADD_CURRENT_INGREDIENT_DETAILS,
-  DELETE_CURRENT_INGREDIENT_DETAILS,
-  UPDATE_ORDER_DETAILS,
+  ADD_CONSTRUCTOR_LIST,
 } from '../actions/constructor';
 
 const constructorInitialState = {
+  selectedBun: {},
+  selectedToppings: [],
   data: [],
 };
 
@@ -18,8 +18,27 @@ export const constructorReducer = (state = constructorInitialState, action) => {
       //console.log(action);
       return {
         ...state,
-        data: action.data,
+        selectedToppings: [
+          ...state,
+          { data: action.data },
+        ],       
       };
+    case ADD_CONSTRUCTOR_LIST:
+      return action.payload.ingredient.type !== 'bun'
+        ? {
+            ...state,
+            selectedToppings: [
+              ...state.selectedToppings,
+              { data: action.payload.ingredient },
+            ],
+          }
+        : {
+            ...state,
+            selectedBun: {
+              data: action.payload.ingredient,
+            },
+          };
+
     default:
       return state;
   }

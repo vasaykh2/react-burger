@@ -1,9 +1,5 @@
 import React, { useMemo, useRef, useEffect } from 'react';
-
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Ingredient } from '../ingredient/ingredient';
@@ -14,8 +10,6 @@ import {
   ADD_CURRENT_INGREDIENT_DETAILS,
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../../services/actions/current-ingredient-details';
-
-import { useDrag } from 'react-dnd';
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
@@ -72,10 +66,12 @@ export default function BurgerIngredients() {
       (ingredient) =>
         ingredient.type === typeIngredients && (
           <Ingredient
-          ingredient={ingredient}
-          key={ingredient._id}
-          handleIngredientDetails={() => handleIngredientDetails(ingredient._id)}
-          ></Ingredient>          
+            ingredient={ingredient}
+            key={ingredient._id}
+            handleIngredientDetails={() =>
+              handleIngredientDetails(ingredient._id)
+            }
+          ></Ingredient>
         )
     );
   }
@@ -147,8 +143,6 @@ export default function BurgerIngredients() {
     }
   }
 
- 
-
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
@@ -181,7 +175,7 @@ export default function BurgerIngredients() {
             Булки
           </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {rendererBun}        
+            {rendererBun}
           </ul>
         </li>
         <li>
