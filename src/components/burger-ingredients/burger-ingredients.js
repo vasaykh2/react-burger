@@ -6,6 +6,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,6 +15,8 @@ import {
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../../services/actions/current-ingredient-details';
 
+import { useDrag } from 'react-dnd';
+
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
 
@@ -21,6 +24,15 @@ export default function BurgerIngredients() {
     (state) => state.ingredientsReducer
   );
   //console.log(ingredientsLoad, ingredientsFailed, ingredients );
+
+  const isData = ingredients.length == 0 ? false : true;
+  //console.log(isData);
+
+  const idIngredients = useMemo(
+    () => (!isData ? 0 : ingredients.map((item) => item._id)),
+    [ingredients]
+  );
+  //console.log(idIngredients);
 
   const [current, setCurrent] = React.useState('one');
 
@@ -36,11 +48,12 @@ export default function BurgerIngredients() {
     setModalIngredientDetails(true);
     //console.log(id);
     let currentIngredient = ingredients.find((item) => item._id == id);
+
     const currentModalIngredient = {};
     for (let i in currentModalIngredientDetails.item) {
       currentModalIngredient[i] = currentIngredient[i];
     }
-    //console.log(currentModalIngredient);
+    console.log(currentModalIngredient);
     dispatch({
       type: ADD_CURRENT_INGREDIENT_DETAILS,
       item: currentModalIngredient,
@@ -58,37 +71,11 @@ export default function BurgerIngredients() {
     return ingredients.map(
       (ingredient) =>
         ingredient.type === typeIngredients && (
-          <li
-            className={burgerIngredientsStyles.cardIngredients}
-            key={ingredient._id}
-            onClick={() => handleIngredientDetails(ingredient._id)}
-          >
-            <Counter count={1} size='default' extraClass='m-1' />
-            <img
-              src={ingredient.image}
-              alt={ingredient.name}
-              className={'ml-4 mr-4'}
-            />
-            <div
-              className={
-                'mt-1 mb-1 ' + burgerIngredientsStyles.blockDiscriptionCenter
-              }
-            >
-              <p className='text text_type_digits-default'>
-                {ingredient.price}
-              </p>
-              <CurrencyIcon type='primary' />
-            </div>
-            <p
-              className={
-                ' Apptext text_type_main-default pl-1 pr-1 ' +
-                burgerIngredientsStyles.blockCenter +
-                burgerIngredientsStyles.discriptionIngredients
-              }
-            >
-              {ingredient.name}
-            </p>
-          </li>
+          <Ingredient
+          ingredient={ingredient}
+          key={ingredient._id}
+          handleIngredientDetails={() => handleIngredientDetails(ingredient._id)}
+          ></Ingredient>          
         )
     );
   }
@@ -160,6 +147,8 @@ export default function BurgerIngredients() {
     }
   }
 
+ 
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
@@ -192,7 +181,7 @@ export default function BurgerIngredients() {
             Булки
           </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
-            {rendererBun}
+            {rendererBun}        
           </ul>
         </li>
         <li>

@@ -17,9 +17,12 @@ import {
   postOrderDetails,
 } from '../../services/actions/order-details';
 
+import { useDrop } from "react-dnd";
+
 export let listId = '';
 
 export default function BurgerConstructor() {
+
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
     (state) => state.ingredientsReducer
   );
@@ -68,6 +71,30 @@ export default function BurgerConstructor() {
     [constructorState]
   );
 
+  const onDropHandler = (itemId) => {
+    dispatch({
+      type: GET_CONSTRUCTOR_LIST,
+      data: ingredients,
+    });
+  };
+
+  const itemId = '60d3b41abdacab0026a733cc';
+
+
+  const [{ isHover }, drop] = useDrop({
+    accept: "sauce",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+  }),
+    drop(itemId) {
+        onDropHandler(itemId);
+    },    
+});
+
+const borderColor = isHover ? 'lightgreen' : 'transparent';
+
+
+
   function renderedIngredients() {
     return !isData
       ? null
@@ -100,7 +127,7 @@ export default function BurgerConstructor() {
   );
 
   return (
-    <section className={burgerConstructorStyles.section}>
+    <section     className={burgerConstructorStyles.section}>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
         {!isData ? null : (
           <ConstructorElement
@@ -112,7 +139,8 @@ export default function BurgerConstructor() {
           />
         )}
       </div>
-      <ul className={burgerConstructorStyles.blockTipes}>
+      <ul ref={drop}    style={{borderColor}}
+        className={burgerConstructorStyles.blockTipes}>
         {rendererIngredients}
       </ul>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
