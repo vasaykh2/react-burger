@@ -1,8 +1,4 @@
-import React from 'react';
-import { applyMiddleware } from 'redux';
-
-import { BASE_URL } from '../../utils/constants';
-import { request } from '../../utils/request';
+//import React from 'react';
 
 import {
   UPDATE_ORDER_DETAILS,
@@ -22,14 +18,14 @@ export const orderDetailsReducer = (
       return {
         ...state,
         isLoading: false,
-      isModalOrderDetails: false,
-              };
+        isModalOrderDetails: false,
+      };
     }
     case UPDATE_ORDER_DETAILS_REQUEST: {
       return {
         ...state,
         isLoading: true,
-      isModalOrderDetails: false,
+        isModalOrderDetails: false,
       };
     }
     case UPDATE_ORDER_DETAILS_SUCCESS: {
@@ -55,3 +51,12 @@ export const orderDetailsReducer = (
   }
 };
 
+/*const orderDetailses = {
+    name: '',
+    order: {
+      number: 8888,
+    },
+    success: true,
+    isLoading: false,
+    isModalOrderDetails: false,
+  }*/

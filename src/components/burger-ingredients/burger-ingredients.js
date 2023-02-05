@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,27 +8,18 @@ import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-//import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredientsList } from '../../services/actions/ingredients';
 import {
   ADD_CURRENT_INGREDIENT_DETAILS,
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../../services/actions/current-ingredient-details';
 
 export default function BurgerIngredients() {
+  const dispatch = useDispatch();
+
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
     (state) => state.ingredientsReducer
   );
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Отправляем экшен-функцию
-    dispatch(getIngredientsList());
-  }, []);
-
   //console.log(ingredientsLoad, ingredientsFailed, ingredients );
 
   const [current, setCurrent] = React.useState('one');
@@ -36,30 +27,10 @@ export default function BurgerIngredients() {
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
-  //const ingredientsState = useContext(BurgerIngredientsContext);
-  //console.log(ingredients[0])
-
   const currentModalIngredientDetails = useSelector(
     (state) => state.currentIngredientDetailsReducer
   );
-
-  console.log(currentModalIngredientDetails);
-  /*
-  useEffect(() => {
-    dispatch({
-  type: ADD_CURRENT_INGREDIENT_DETAILS,
-  item: {
-    _id: 0,
-    image_large: '',
-    name: '',
-    calories: 0,
-    proteins: 0,
-    fat: 0,
-    carbohydrates: 0,
-  },
-});
-}, []);
-*/
+  //console.log(currentModalIngredientDetails);
 
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
@@ -75,31 +46,6 @@ export default function BurgerIngredients() {
       item: currentModalIngredient,
     });
   };
-
-  /*const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
-    React.useState({
-      _id: 0,
-      image_large: '',
-      name: '',
-      calories: 0,
-      proteins: 0,
-      fat: 0,
-      carbohydrates: 0,
-    });
-
-  const handleIngredientDetails = (id) => {
-    setModalIngredientDetails(true);
-    //console.log(id);
-    let currentIngredient = ingredients.find(
-      (item) => item._id == id
-    );
-    const currentModalIngredient = {};
-    for (let i in currentModalIngredientDetails) {
-      currentModalIngredient[i] = currentIngredient[i];
-    }
-    setcurrentModalIngredientDetails(currentModalIngredient);
-  };
-  */
 
   const handleClose = () => {
     setModalIngredientDetails(false);
@@ -197,9 +143,6 @@ export default function BurgerIngredients() {
     );
     /*const distSauce = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);
     const distMain = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);*/
-
-    //console.log(Math.min(distBun, distSauce, distMain));
-
     const scale = distBun > 800 ? 'three' : distBun < 200 ? 'one' : 'two';
 
     switch (scale) {
@@ -208,7 +151,6 @@ export default function BurgerIngredients() {
         break;
       case 'two':
         setCurrent('two');
-        console.log('two');
         break;
       case 'three':
         setCurrent('three');

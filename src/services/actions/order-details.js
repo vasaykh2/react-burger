@@ -41,7 +41,7 @@ export function postOrderDetails() {
         }
       })
       .then((res) => {
-       //console.log(res);
+        //console.log(res);
         dispatch({
           type: UPDATE_ORDER_DETAILS_SUCCESS,
           result: res,

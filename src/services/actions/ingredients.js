@@ -9,7 +9,6 @@ export const DELETE_CURRENT_INGREDIENT_DETAILS =
   'DELETE_CURRENT_INGREDIENT_DETAILS';
 export const UPDATE_ORDER_DETAILS = 'UPDATE_ORDER_DETAILS';
 
-
 const urlDomen = BASE_URL + 'ingredients';
 
 export function getIngredientsList() {
@@ -20,7 +19,7 @@ export function getIngredientsList() {
     fetch(urlDomen)
       .then((res) => {
         if (res.ok) {
-           //console.log(res.json());
+          //console.log(res.json());
           return res.json();
         } else {
           dispatch({
@@ -29,12 +28,12 @@ export function getIngredientsList() {
         }
       })
       .then((res) => {
-         //console.log(res);
+        //console.log(res);
         dispatch({
-            type: GET_INGREDIENTS_LIST_SUCCESS,
-            result: res.data            
-          })
-        })
+          type: GET_INGREDIENTS_LIST_SUCCESS,
+          result: res.data,
+        });
+      })
       .catch((err) => {
         dispatch({
           type: GET_INGREDIENTS_LIST_FAILED,

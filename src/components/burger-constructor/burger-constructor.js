@@ -8,128 +8,123 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
-import { BASE_URL } from '../../utils/constants';
-
-import { TotalPriceContext } from '../../services/app-context';
-
-import { BurgerConstructorContext } from '../../services/burger-constructor-context';
-import { request } from '../../utils/request';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { GET_CONSTRUCTOR_LIST } from '../../services/actions/constructor';
+
 import {
-  GET_CONSTRUCTOR_LIST,
-  getIngredientsList,
-} from '../../services/actions/constructor';
+  UPDATE_ORDER_DETAILS,
+  postOrderDetails,
+} from '../../services/actions/order-details';
 
-import { UPDATE_ORDER_DETAILS, postOrderDetails } from '../../services/actions/order-details';
-
-const urlOrders = BASE_URL + 'orders';
-
-export let listId = 0;
+export let listId = '';
 
 export default function BurgerConstructor() {
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
     (state) => state.ingredientsReducer
   );
 
-  const { data } = useSelector((state) => state.constructorReducer);
-  //console.log(data);
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-        dispatch({
+  const { data } = useSelector((state) => state.constructorReducer);
+  //console.log(data.length);
+  const isData = data.length == 0 ? false : true;
+  //console.log(isData);
+
+  const handleAllIngredients = () => {
+    dispatch({
       type: GET_CONSTRUCTOR_LIST,
       data: ingredients,
     });
-  }, []);
+  };
 
-  const constructorState = useContext(BurgerConstructorContext);
+  const constructorState = data;
 
   listId = useMemo(
-    () => constructorState.data.map((item) => item._id),
-    [constructorState.data]
-  );  
+    () => (!isData ? 0 : constructorState.map((item) => item._id)),
+    [constructorState]
+  );
+  //console.log(listId);
 
+  const orderDetails = useSelector((state) => state.orderDetailsReducer);
+  // console.log(orderDetails);
 
-
-
-const orderDetails = useSelector((state) => state.orderDetailsReducer);
- // console.log(data);
-
-  const [orderDetailses, setModalOrderDetails] = useState({
-    name: '',
-    order: {
-      number: 8888,
-    },
-    success: true,
-    isLoading: false,
-    isModalOrderDetails: false,
-  });
-
-
-
-
-  const handleOrder = () => {    
-    dispatch(postOrderDetails());    
+  const handleOrder = () => {
+    dispatch(postOrderDetails());
   };
 
   const handleClose = () => {
-    dispatch({type: UPDATE_ORDER_DETAILS});
+    dispatch({ type: UPDATE_ORDER_DETAILS });
   };
-  const totalPrice = useContext(TotalPriceContext);
+
+  const totalPrice = useMemo(
+    () =>
+      !isData
+        ? 0
+        : constructorState.reduce(
+            (acc, item) => acc + item.price,
+            !isData ? 0 : constructorState[0].price
+          ),
+    [constructorState]
+  );
 
   function renderedIngredients() {
-    return constructorState.data.map((item) => {
-      if (item.type === 'sauce' || item.type === 'main') {
-        return (
-          <li
-            className={burgerConstructorStyles.blockString + ' pr-2'}
-            key={item._id}
-          >
-            <DragIcon type='primary' />
-            <div className={burgerConstructorStyles.blockItem}>
-              <ConstructorElement
-                text={item.name}
-                thumbnail={item.image}
-                price={item.price}
-                type='undefined'
-                isLocked=''
-              />
-            </div>
-          </li>
-        );
-      }
-    });
+    return !isData
+      ? null
+      : constructorState.map((item) => {
+          if (item.type === 'sauce' || item.type === 'main') {
+            return (
+              <li
+                className={burgerConstructorStyles.blockString + ' pr-2'}
+                key={item._id}
+              >
+                <DragIcon type='primary' />
+                <div className={burgerConstructorStyles.blockItem}>
+                  <ConstructorElement
+                    text={item.name}
+                    thumbnail={item.image}
+                    price={item.price}
+                    type='undefined'
+                    isLocked=''
+                  />
+                </div>
+              </li>
+            );
+          }
+        });
   }
 
   const rendererIngredients = useMemo(
     () => renderedIngredients(),
-    [constructorState.data]
+    [constructorState]
   );
 
   return (
     <section className={burgerConstructorStyles.section}>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-        <ConstructorElement
-          text={constructorState.data[0].name + ' (верх)'}
-          thumbnail={constructorState.data[0].image}
-          price={constructorState.data[0].price}
-          type='top'
-          isLocked='undefined'
-        />
+        {!isData ? null : (
+          <ConstructorElement
+            text={constructorState[0].name + ' (верх)'}
+            thumbnail={constructorState[0].image}
+            price={constructorState[0].price}
+            type='top'
+            isLocked='undefined'
+          />
+        )}
       </div>
       <ul className={burgerConstructorStyles.blockTipes}>
         {rendererIngredients}
       </ul>
       <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-        <ConstructorElement
-          text={constructorState.data[0].name + ' (низ)'}
-          thumbnail={constructorState.data[0].image}
-          price={constructorState.data[0].price}
-          type='bottom'
-          isLocked='undefined'
-        />
+        {!isData ? null : (
+          <ConstructorElement
+            text={constructorState[0].name + ' (низ)'}
+            thumbnail={constructorState[0].image}
+            price={constructorState[0].price}
+            type='bottom'
+            isLocked='undefined'
+          />
+        )}
       </div>
       <div className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}>
         {orderDetails.isLoading && (
@@ -144,7 +139,10 @@ const orderDetails = useSelector((state) => state.orderDetailsReducer);
           />
         )}
         <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
-        <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
+        <div
+          onClick={handleAllIngredients}
+          className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}
+        >
           <CurrencyIcon type='primary' />
         </div>
         <button
