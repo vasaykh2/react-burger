@@ -3,11 +3,12 @@
 import {
   GET_CONSTRUCTOR_LIST,
   ADD_CONSTRUCTOR_LIST,
+  SORT_CONSTRUCTOR,
 } from '../actions/constructor';
 
 const constructorInitialState = {
   bun: null,
-  toppings: [],  
+  toppings: [],
 };
 
 export const constructorReducer = (state = constructorInitialState, action) => {
@@ -20,10 +21,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
         bun: {
           data: action.payload[0],
         },
-        toppings: [
-          ...state,
-          { data: action.payload },
-        ],       
+        toppings: [...state, { data: action.payload }],
       };
     case ADD_CONSTRUCTOR_LIST:
       return action.payload.ingredient.type !== 'bun'
@@ -31,15 +29,21 @@ export const constructorReducer = (state = constructorInitialState, action) => {
             ...state,
             toppings: [
               ...state.toppings,
-              { data: action.payload.ingredient },
+              { data: action.payload.ingredient, id: action.payload.id },
             ],
           }
         : {
             ...state,
             bun: {
               data: action.payload.ingredient,
+              id: action.payload.id,
             },
           };
+    case SORT_CONSTRUCTOR:
+      return {
+        ...state,
+        toppings: action.payload,
+      };
 
     default:
       return state;

@@ -1,20 +1,17 @@
-import React, { useContext, useState, useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
+import { Topping } from '../topping/topping';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  GET_CONSTRUCTOR_LIST,
-  ADD_CONSTRUCTOR_LIST,
-  addConstructorList,
-} from '../../services/actions/constructor';
+import { addConstructorList } from '../../services/actions/constructor';
 
 import {
   UPDATE_ORDER_DETAILS,
@@ -26,10 +23,6 @@ import { useDrop } from 'react-dnd';
 export let listId = '';
 
 export default function BurgerConstructor() {
-  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
-    (state) => state.ingredientsReducer
-  );
-
   const dispatch = useDispatch();
 
   const { bun, toppings } = useSelector((state) => state.constructorReducer);
@@ -52,7 +45,7 @@ export default function BurgerConstructor() {
   listId.push(bunId);
   //console.log(listId);
 
-  const { orderNumber, isLoading, isModalOrderDetails } = useSelector(
+  const { order, isLoading, isModalOrderDetails } = useSelector(
     (state) => state.orderDetailsReducer
   );
   // console.log(orderDetails);
@@ -65,16 +58,14 @@ export default function BurgerConstructor() {
     dispatch({ type: UPDATE_ORDER_DETAILS });
   };
 
-  const counterTotalPrice = useMemo(
-    () => {
-      const bunTotalPrice = bun ?  2 * bun.data.price : 0;
-      const totalPrice = toppings.reduce(
-        (acc, item) => acc + item.data.price, bunTotalPrice
-        );
-        return totalPrice;
-    },
-    [bun, toppings]
-  );
+  const counterTotalPrice = useMemo(() => {
+    const bunTotalPrice = bun ? 2 * bun.data.price : 0;
+    const totalPrice = toppings.reduce(
+      (acc, item) => acc + item.data.price,
+      bunTotalPrice
+    );
+    return totalPrice;
+  }, [bun, toppings]);
 
   const handleOnDrop = (ingredient) => {
     dispatch(addConstructorList(ingredient));
@@ -94,33 +85,16 @@ export default function BurgerConstructor() {
   function renderedIngredients() {
     return !toppings
       ? null
-      : toppings.map((item) => {
+      : toppings.map((item, i) => {
           if (item.data.type === 'sauce' || item.data.type === 'main') {
             return (
-              <li
-                className={burgerConstructorStyles.blockString + ' pr-2'}
-                key={item.data._id}
-              >
-                <DragIcon type='primary' />
-                <div className={burgerConstructorStyles.blockItem}>
-                  <ConstructorElement
-                    text={item.data.name}
-                    thumbnail={item.data.image}
-                    price={item.data.price}
-                    type='undefined'
-                    isLocked=''
-                  />
-                </div>
-              </li>
+              <Topping ingredient={item} key={item.id} index={i}></Topping>
             );
           }
         });
   }
 
-  const rendererIngredients = useMemo(
-    () => renderedIngredients(),
-    [toppings]
-  );
+  const rendererIngredients = useMemo(() => renderedIngredients(), [toppings]);
 
   return (
     <section className={burgerConstructorStyles.section}>
@@ -169,7 +143,9 @@ export default function BurgerConstructor() {
               secondaryColor='white'
             />
           )}
-          <p className='text text_type_digits-medium pr-2'>{counterTotalPrice}</p>
+          <p className='text text_type_digits-medium pr-2'>
+            {counterTotalPrice}
+          </p>
           <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
             <CurrencyIcon type='primary' />
           </div>
@@ -183,7 +159,7 @@ export default function BurgerConstructor() {
       </div>
       {isModalOrderDetails && (
         <Modal onClose={handleClose}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails orderNumber={order.number} />
         </Modal>
       )}
     </section>
