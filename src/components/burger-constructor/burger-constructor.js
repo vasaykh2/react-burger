@@ -10,7 +10,11 @@ import { Modal } from '../modal/modal';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { GET_CONSTRUCTOR_LIST, ADD_CONSTRUCTOR_LIST, addConstructorList } from '../../services/actions/constructor';
+import {
+  GET_CONSTRUCTOR_LIST,
+  ADD_CONSTRUCTOR_LIST,
+  addConstructorList,
+} from '../../services/actions/constructor';
 
 import {
   UPDATE_ORDER_DETAILS,
@@ -28,27 +32,29 @@ export default function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const { data } = useSelector((state) => state.constructorReducer);
+  const { bun, toppings } = useSelector((state) => state.constructorReducer);
   //console.log(data.length);
-  const isData = data.length == 0 ? false : true;
+  //const isData = data.length == 0 ? false : true;
   //console.log(isData);
 
-  const handleAllIngredients = () => {
+  /*const handleAllIngredients = () => {
     dispatch({
       type: GET_CONSTRUCTOR_LIST,
-      data: ingredients,
+      payload: ingredients,
     });
-  };
-
-  const constructorState = data;
+  };*/
 
   listId = useMemo(
-    () => (!isData ? 0 : constructorState.map((item) => item._id)),
-    [constructorState]
+    () => (!toppings ? '' : toppings.map((item) => item.data._id)),
+    [toppings]
   );
+  const bunId = bun ? bun.data._id : '';
+  listId.push(bunId);
   //console.log(listId);
 
-  const orderDetails = useSelector((state) => state.orderDetailsReducer);
+  const { orderNumber, isLoading, isModalOrderDetails } = useSelector(
+    (state) => state.orderDetailsReducer
+  );
   // console.log(orderDetails);
 
   const handleOrder = () => {
@@ -59,19 +65,20 @@ export default function BurgerConstructor() {
     dispatch({ type: UPDATE_ORDER_DETAILS });
   };
 
-  const totalPrice = useMemo(
-    () =>
-      !isData
-        ? 0
-        : constructorState.reduce(
-            (acc, item) => acc + item.price,
-            !isData ? 0 : constructorState[0].price
-          ),
-    [constructorState]
+  const counterTotalPrice = useMemo(
+    () => {
+      const bunTotalPrice = bun ?  2 * bun.data.price : 0;
+      const totalPrice = toppings.reduce(
+        (acc, item) => acc + item.data.price, bunTotalPrice
+        );
+        return totalPrice;
+    },
+    [bun, toppings]
   );
 
   const handleOnDrop = (ingredient) => {
-    dispatch(addConstructorList (ingredient)) };
+    dispatch(addConstructorList(ingredient));
+  };
 
   const [{ isHover, canDrop }, dropTarget] = useDrop({
     accept: 'ingredients',
@@ -85,21 +92,21 @@ export default function BurgerConstructor() {
   });
 
   function renderedIngredients() {
-    return !isData
+    return !toppings
       ? null
-      : constructorState.map((item) => {
-          if (item.type === 'sauce' || item.type === 'main') {
+      : toppings.map((item) => {
+          if (item.data.type === 'sauce' || item.data.type === 'main') {
             return (
               <li
                 className={burgerConstructorStyles.blockString + ' pr-2'}
-                key={item._id}
+                key={item.data._id}
               >
                 <DragIcon type='primary' />
                 <div className={burgerConstructorStyles.blockItem}>
                   <ConstructorElement
-                    text={item.name}
-                    thumbnail={item.image}
-                    price={item.price}
+                    text={item.data.name}
+                    thumbnail={item.data.image}
+                    price={item.data.price}
                     type='undefined'
                     isLocked=''
                   />
@@ -112,7 +119,7 @@ export default function BurgerConstructor() {
 
   const rendererIngredients = useMemo(
     () => renderedIngredients(),
-    [constructorState]
+    [toppings]
   );
 
   return (
@@ -124,11 +131,11 @@ export default function BurgerConstructor() {
         ref={dropTarget}
       >
         <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-          {!isData ? null : (
+          {!bun ? null : (
             <ConstructorElement
-              text={constructorState[0].name + ' (верх)'}
-              thumbnail={constructorState[0].image}
-              price={constructorState[0].price}
+              text={bun.data.name + ' (верх)'}
+              thumbnail={bun.data.image}
+              price={bun.data.price}
               type='top'
               isLocked='undefined'
             />
@@ -138,11 +145,11 @@ export default function BurgerConstructor() {
           {rendererIngredients}
         </ul>
         <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-          {!isData ? null : (
+          {!bun ? null : (
             <ConstructorElement
-              text={constructorState[0].name + ' (низ)'}
-              thumbnail={constructorState[0].image}
-              price={constructorState[0].price}
+              text={bun.data.name + ' (низ)'}
+              thumbnail={bun.data.image}
+              price={bun.data.price}
               type='bottom'
               isLocked='undefined'
             />
@@ -151,7 +158,7 @@ export default function BurgerConstructor() {
         <div
           className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}
         >
-          {orderDetails.isLoading && (
+          {isLoading && (
             <Oval
               ariaLabel='loading-indicator'
               height={70}
@@ -162,11 +169,8 @@ export default function BurgerConstructor() {
               secondaryColor='white'
             />
           )}
-          <p className='text text_type_digits-medium pr-2'>{totalPrice}</p>
-          <div
-            onClick={handleAllIngredients}
-            className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}
-          >
+          <p className='text text_type_digits-medium pr-2'>{counterTotalPrice}</p>
+          <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
             <CurrencyIcon type='primary' />
           </div>
           <button
@@ -177,9 +181,9 @@ export default function BurgerConstructor() {
           </button>
         </div>
       </div>
-      {orderDetails.isModalOrderDetails && (
+      {isModalOrderDetails && (
         <Modal onClose={handleClose}>
-          <OrderDetails orderDetails={orderDetails} />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
     </section>

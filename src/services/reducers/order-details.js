@@ -7,7 +7,12 @@ import {
   UPDATE_ORDER_DETAILS_FAILED,
 } from '../actions/order-details';
 
-const orderDetailsInitialState = {};
+const orderDetailsInitialState = {
+  orderNumber: null,
+  isLoading: false,
+  isModalOrderDetails: false,
+  success: true,
+};
 
 export const orderDetailsReducer = (
   state = orderDetailsInitialState,

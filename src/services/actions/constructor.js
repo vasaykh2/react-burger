@@ -5,7 +5,7 @@ export function getConstructorList(ingredients) {
   return function (dispatch) {
        dispatch({
       type: GET_CONSTRUCTOR_LIST,
-      data: ingredients,
+      payload: ingredients,
     });
   };
 }

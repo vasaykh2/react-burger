@@ -6,9 +6,8 @@ import {
 } from '../actions/constructor';
 
 const constructorInitialState = {
-  selectedBun: {},
-  selectedToppings: [],
-  data: [],
+  bun: null,
+  toppings: [],  
 };
 
 export const constructorReducer = (state = constructorInitialState, action) => {
@@ -18,23 +17,26 @@ export const constructorReducer = (state = constructorInitialState, action) => {
       //console.log(action);
       return {
         ...state,
-        selectedToppings: [
+        bun: {
+          data: action.payload[0],
+        },
+        toppings: [
           ...state,
-          { data: action.data },
+          { data: action.payload },
         ],       
       };
     case ADD_CONSTRUCTOR_LIST:
       return action.payload.ingredient.type !== 'bun'
         ? {
             ...state,
-            selectedToppings: [
-              ...state.selectedToppings,
+            toppings: [
+              ...state.toppings,
               { data: action.payload.ingredient },
             ],
           }
         : {
             ...state,
-            selectedBun: {
+            bun: {
               data: action.payload.ingredient,
             },
           };
