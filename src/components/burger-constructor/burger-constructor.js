@@ -16,6 +16,7 @@ import { addConstructorList, deleteConstructorList, resetConstructor} from '../.
 import {
   UPDATE_ORDER_DETAILS,
   postOrderDetails,
+  closeOrderDetails,
 } from '../../services/actions/order-details';
 
 import { useDrop } from 'react-dnd';
@@ -62,7 +63,8 @@ export default function BurgerConstructor() {
   };
 
   const handleClose = () => {
-    dispatch({ type: UPDATE_ORDER_DETAILS });
+    dispatch(closeOrderDetails());
+    dispatch(resetConstructor());
   };
 
   const counterTotalPrice = useMemo(() => {

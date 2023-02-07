@@ -2,13 +2,7 @@ import { BASE_URL } from '../../utils/constants';
 
 import { listId } from '../../components/burger-constructor/burger-constructor';
 
-export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENT_LIST_REQUEST';
-export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENT_LIST_FAILED';
-export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENT_LIST_SUCCESS';
-export const GET_CONSTRUCTOR_LIST = 'GET_CONSTRUCTOR_LIST';
-export const ADD_CURRENT_INGREDIENT_DETAILS = 'ADD_CURRENT_INGREDIENT_DETAILS';
-export const DELETE_CURRENT_INGREDIENT_DETAILS =
-  'DELETE_CURRENT_INGREDIENT_DETAILS';
+export const CLOSE_ORDER_DETAILS = 'CLOSE_ORDER_DETAILS';
 export const UPDATE_ORDER_DETAILS = 'UPDATE_ORDER_DETAILS';
 export const UPDATE_ORDER_DETAILS_SUCCESS = 'UPDATE_ORDER_DETAILS_SUCCESS';
 export const UPDATE_ORDER_DETAILS_REQUEST = 'UPDATE_ORDER_DETAILS_REQUEST';
@@ -55,3 +49,7 @@ export function postOrderDetails() {
       });
   };
 }
+
+export const closeOrderDetails = () => ({
+  type: CLOSE_ORDER_DETAILS,
+});

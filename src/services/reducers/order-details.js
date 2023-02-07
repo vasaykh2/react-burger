@@ -5,10 +5,12 @@ import {
   UPDATE_ORDER_DETAILS_SUCCESS,
   UPDATE_ORDER_DETAILS_REQUEST,
   UPDATE_ORDER_DETAILS_FAILED,
+  CLOSE_ORDER_DETAILS
 } from '../actions/order-details';
 
 const orderDetailsInitialState = {
-  orderNumber: null,
+  order: {number: null},
+  name: '',
   isLoading: false,
   isModalOrderDetails: false,
   success: true,
@@ -38,6 +40,8 @@ export const orderDetailsReducer = (
       return {
         ...state,
         order: action.result.order,
+        name: action.result.name,
+        success: action.result.success,
         isLoading: false,
         isModalOrderDetails: true,
       };
@@ -50,6 +54,8 @@ export const orderDetailsReducer = (
         isModalOrderDetails: false,
       };
     }
+    case CLOSE_ORDER_DETAILS:
+      return orderDetailsInitialState;
     default: {
       return state;
     }
