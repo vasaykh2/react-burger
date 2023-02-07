@@ -47,7 +47,7 @@ export default function BurgerIngredients() {
     for (let i in currentModalIngredientDetails.item) {
       currentModalIngredient[i] = currentIngredient[i];
     }
-    console.log(currentModalIngredient);
+    //console.log(currentModalIngredient);
     dispatch({
       type: ADD_CURRENT_INGREDIENT_DETAILS,
       item: currentModalIngredient,
