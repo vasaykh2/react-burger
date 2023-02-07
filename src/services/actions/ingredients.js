@@ -19,12 +19,7 @@ export function getIngredientsList() {
     fetch(urlDomen)
       .then((res) => {
         if (res.ok) {
-          //console.log(res.json());
           return res.json();
-        } else {
-          dispatch({
-            type: GET_INGREDIENTS_LIST_FAILED,
-          });
         }
       })
       .then((res) => {

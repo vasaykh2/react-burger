@@ -26,12 +26,7 @@ export function postOrderDetails() {
     })
       .then((res) => {
         if (res.ok) {
-          //console.log(res.json());
           return res.json();
-        } else {
-          dispatch({
-            type: UPDATE_ORDER_DETAILS_FAILED,
-          });
         }
       })
       .then((res) => {
