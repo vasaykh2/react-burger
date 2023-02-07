@@ -1,7 +1,11 @@
 import React, { useMemo, useCallback } from 'react';
 import { Oval } from 'react-loader-spinner';
 
-import { CurrencyIcon, Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  CurrencyIcon,
+  Button,
+  ConstructorElement,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
@@ -16,7 +20,6 @@ import {
 } from '../../services/actions/constructor';
 
 import {
-  UPDATE_ORDER_DETAILS,
   postOrderDetails,
   closeOrderDetails,
 } from '../../services/actions/order-details';
@@ -135,11 +138,15 @@ export default function BurgerConstructor() {
             />
           )}
         </div>
-        {toppings.length  ?  (<ul className={burgerConstructorStyles.blockTipes}>
-          {rendererIngredients}
-        </ul>) : (<p className='text text_type_main-medium mt-5 mb-5 ml-8 pr-5'>
-              Выберите и перетащите сюда начинки
-            </p>)}
+        {toppings.length ? (
+          <ul className={burgerConstructorStyles.blockTipes}>
+            {rendererIngredients}
+          </ul>
+        ) : (
+          <p className='text text_type_main-medium mt-5 mb-5 ml-8 pr-5'>
+            Выберите и перетащите сюда начинки
+          </p>
+        )}
         <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
           {!bun ? null : (
             <ConstructorElement
@@ -174,9 +181,9 @@ export default function BurgerConstructor() {
           <Button
             className={burgerConstructorStyles.button}
             onClick={handleOrder}
-            htmlType="button"
-            type="primary"
-            size="large"
+            htmlType='button'
+            type='primary'
+            size='large'
             disabled={!toppings.length || !bun}
           >
             Оформить заказ

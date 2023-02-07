@@ -1,16 +1,15 @@
-import React, {  useRef } from 'react';
+import React, { useRef } from 'react';
 
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  DragIcon,
+  ConstructorElement,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import toppingStyles from './topping-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrag, useDrop, } from 'react-dnd';
-import {
-  sortConstructor,  
-} from '../../services/actions/constructor';
-
+import { useDrag, useDrop } from 'react-dnd';
+import { sortConstructor } from '../../services/actions/constructor';
 
 export function Topping({ ingredient, index, handleClose }) {
   const dispatch = useDispatch();
@@ -73,7 +72,6 @@ export function Topping({ ingredient, index, handleClose }) {
   drag(drop(ref));
 
   const opacity = isDragging ? 0 : 1;
-
 
   return (
     <li

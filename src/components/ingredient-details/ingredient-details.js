@@ -68,4 +68,15 @@ export function IngredientDetails(props) {
   );
 }
 
-IngredientDetails.propTypes = PropTypes.object.isRequired;
+
+IngredientDetails.propTypes = {
+  item: {
+    _id: PropTypes.string,
+    image_large: PropTypes.string,
+    name: PropTypes.string,
+    calories: PropTypes.number,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
+  }.isRequired,
+};
