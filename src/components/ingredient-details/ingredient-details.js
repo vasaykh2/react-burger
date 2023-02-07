@@ -68,7 +68,6 @@ export function IngredientDetails(props) {
   );
 }
 
-
 IngredientDetails.propTypes = {
   item: {
     _id: PropTypes.string,
