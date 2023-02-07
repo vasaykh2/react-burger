@@ -1,9 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { Oval } from 'react-loader-spinner';
 
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
@@ -11,7 +9,11 @@ import { Topping } from '../topping/topping';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addConstructorList, deleteConstructorList, resetConstructor} from '../../services/actions/constructor';
+import {
+  addConstructorList,
+  deleteConstructorList,
+  resetConstructor,
+} from '../../services/actions/constructor';
 
 import {
   UPDATE_ORDER_DETAILS,
@@ -97,7 +99,12 @@ export default function BurgerConstructor() {
       : toppings.map((item, i) => {
           if (item.data.type === 'sauce' || item.data.type === 'main') {
             return (
-              <Topping ingredient={item} key={item.id} index={i} handleClose={() => handleDeleteButton(item)}></Topping>
+              <Topping
+                ingredient={item}
+                key={item.id}
+                index={i}
+                handleClose={() => handleDeleteButton(item)}
+              ></Topping>
             );
           }
         });
@@ -114,7 +121,11 @@ export default function BurgerConstructor() {
         ref={dropTarget}
       >
         <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
-          {!bun ? null : (
+          {!bun ? (
+            <p className='text text_type_main-medium mt-15 mb-5 pr-5'>
+              Выберите и перетащите сюда булку
+            </p>
+          ) : (
             <ConstructorElement
               text={bun.data.name + ' (верх)'}
               thumbnail={bun.data.image}
@@ -124,9 +135,11 @@ export default function BurgerConstructor() {
             />
           )}
         </div>
-        <ul className={burgerConstructorStyles.blockTipes}>
+        {toppings.length  ?  (<ul className={burgerConstructorStyles.blockTipes}>
           {rendererIngredients}
-        </ul>
+        </ul>) : (<p className='text text_type_main-medium mt-5 mb-5 ml-8 pr-5'>
+              Выберите и перетащите сюда начинки
+            </p>)}
         <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
           {!bun ? null : (
             <ConstructorElement
@@ -158,12 +171,16 @@ export default function BurgerConstructor() {
           <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
             <CurrencyIcon type='primary' />
           </div>
-          <button
+          <Button
             className={burgerConstructorStyles.button}
             onClick={handleOrder}
+            htmlType="button"
+            type="primary"
+            size="large"
+            disabled={!toppings.length || !bun}
           >
             Оформить заказ
-          </button>
+          </Button>
         </div>
       </div>
       {isModalOrderDetails && (
