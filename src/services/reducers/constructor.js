@@ -3,7 +3,9 @@
 import {
   GET_CONSTRUCTOR_LIST,
   ADD_CONSTRUCTOR_LIST,
+  DELETE_CONSTRUCTOR_LIST,
   SORT_CONSTRUCTOR,
+  RESET_CONSTRUCTOR,
 } from '../actions/constructor';
 
 const constructorInitialState = {
@@ -39,12 +41,20 @@ export const constructorReducer = (state = constructorInitialState, action) => {
               id: action.payload.id,
             },
           };
+          case DELETE_CONSTRUCTOR_LIST:
+            return {
+              ...state,
+              toppings: state.toppings.filter(
+                (ingredient) => ingredient.id !== action.payload.id
+              ),
+            };
     case SORT_CONSTRUCTOR:
       return {
         ...state,
         toppings: action.payload,
       };
-
+      case RESET_CONSTRUCTOR:
+        return constructorInitialState; 
     default:
       return state;
   }

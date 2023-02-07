@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,7 @@ import { Topping } from '../topping/topping';
 import burgerConstructorStyles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addConstructorList } from '../../services/actions/constructor';
+import { addConstructorList, deleteConstructorList, resetConstructor} from '../../services/actions/constructor';
 
 import {
   UPDATE_ORDER_DETAILS,
@@ -24,6 +24,13 @@ export let listId = '';
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
+
+  const handleDeleteButton = useCallback(
+    (ingredient) => {
+      dispatch(deleteConstructorList(ingredient));
+    },
+    [dispatch]
+  );
 
   const { bun, toppings } = useSelector((state) => state.constructorReducer);
   //console.log(data.length);
@@ -88,7 +95,7 @@ export default function BurgerConstructor() {
       : toppings.map((item, i) => {
           if (item.data.type === 'sauce' || item.data.type === 'main') {
             return (
-              <Topping ingredient={item} key={item.id} index={i}></Topping>
+              <Topping ingredient={item} key={item.id} index={i} handleClose={() => handleDeleteButton(item)}></Topping>
             );
           }
         });

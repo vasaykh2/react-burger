@@ -12,7 +12,7 @@ import {
 } from '../../services/actions/constructor';
 
 
-export function Topping({ ingredient, index }) {
+export function Topping({ ingredient, index, handleClose }) {
   const dispatch = useDispatch();
 
   const { toppings } = useSelector((state) => state.constructorReducer);
@@ -88,6 +88,7 @@ export function Topping({ ingredient, index }) {
           text={ingredient.data.name}
           thumbnail={ingredient.data.image}
           price={ingredient.data.price}
+          handleClose={handleClose}
         />
       </div>
     </li>
