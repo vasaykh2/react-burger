@@ -1,4 +1,5 @@
 import { BASE_URL } from '../../utils/constants';
+import { request } from '../../utils/request';
 
 import { listId } from '../../components/burger-constructor/burger-constructor';
 
@@ -15,7 +16,7 @@ export function postOrderDetails() {
     dispatch({
       type: UPDATE_ORDER_DETAILS_REQUEST,
     });
-    fetch(urlOrders, {
+    request(urlOrders, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,11 +25,6 @@ export function postOrderDetails() {
         ingredients: listId,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
       .then((res) => {
         //console.log(res);
         dispatch({
