@@ -1,4 +1,6 @@
 import { BASE_URL } from '../../utils/constants';
+import { request } from '../../utils/request';
+
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENT_LIST_REQUEST';
 export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENT_LIST_FAILED';
@@ -16,12 +18,7 @@ export function getIngredientsList() {
     dispatch({
       type: GET_INGREDIENTS_LIST_REQUEST,
     });
-    fetch(urlDomen)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
+    request(urlDomen)
       .then((res) => {
         //console.log(res);
         dispatch({
