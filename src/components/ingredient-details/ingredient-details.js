@@ -69,7 +69,7 @@ export function IngredientDetails(props) {
 }
 
 
-IngredientDetails.prop = {
+IngredientDetails.propTypes = {
   currentModalIngredientDetails: PropTypes.shape({
     _id: PropTypes.string,
     calories: PropTypes.number,
