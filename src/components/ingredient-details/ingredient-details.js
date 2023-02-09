@@ -68,16 +68,15 @@ export function IngredientDetails(props) {
   );
 }
 
-IngredientDetails.propTypes = PropTypes.currentModalIngredientDetails;
 
-/*PropTypes.shape({
-  _id: PropTypes.string,
-  image_large: PropTypes.string,
-  name: PropTypes.string,
-  calories: PropTypes.number,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-});*/
-
-//.isRequired)
+IngredientDetails.prop = {
+  currentModalIngredientDetails: PropTypes.shape({
+    _id: PropTypes.string,
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image_large: PropTypes.string,
+    name: PropTypes.string,    
+    proteins: PropTypes.number,    
+  }.isRequired)
+};
