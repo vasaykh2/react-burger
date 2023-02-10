@@ -1,111 +1,101 @@
-import React, { useContext, useMemo, useRef } from 'react';
-
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
-import { BurgerIngredientsContext } from '../../services/burger-ingredients-context';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  ADD_CURRENT_INGREDIENT_DETAILS,
+  DELETE_CURRENT_INGREDIENT_DETAILS,
+} from '../../services/actions/current-ingredient-details';
 
 export default function BurgerIngredients() {
+  const dispatch = useDispatch();
+
+  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
+    (state) => state.ingredientsReducer
+  );
+  //console.log(ingredientsLoad, ingredientsFailed, ingredients );
+
+  const isData = ingredients.length == 0 ? false : true;
+  //console.log(isData);
+
+  const idIngredients = useMemo(
+    () => (!isData ? 0 : ingredients.map((item) => item._id)),
+    [ingredients]
+  );
+  //console.log(idIngredients);
+
   const [current, setCurrent] = React.useState('one');
 
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
-  const ingredientsState = useContext(BurgerIngredientsContext);
-
-  const [currentModalIngredientDetails, setcurrentModalIngredientDetails] =
-    React.useState({
-      _id: ingredientsState.data[0]._id,
-      image_large: ingredientsState.data[0].image_large,
-      name: ingredientsState.data[0].name,
-      calories: ingredientsState.data[0].calories,
-      proteins: ingredientsState.data[0].proteins,
-      fat: ingredientsState.data[0].fat,
-      carbohydrates: ingredientsState.data[0].carbohydrates,
-    });
+  const currentModalIngredientDetails = useSelector(
+    (state) => state.currentIngredientDetailsReducer
+  );
+  //console.log(currentModalIngredientDetails);
 
   const handleIngredientDetails = (id) => {
     setModalIngredientDetails(true);
     //console.log(id);
-    let currentIngredient = ingredientsState.data.find(
-      (item) => item._id == id
-    );
+    let currentIngredient = ingredients.find((item) => item._id == id);
+
     const currentModalIngredient = {};
-    for (let i in currentModalIngredientDetails) {
+    for (let i in currentModalIngredientDetails.item) {
       currentModalIngredient[i] = currentIngredient[i];
     }
-    setcurrentModalIngredientDetails(currentModalIngredient);
+    //console.log(currentModalIngredient);
+    dispatch({
+      type: ADD_CURRENT_INGREDIENT_DETAILS,
+      item: currentModalIngredient,
+    });
   };
 
   const handleClose = () => {
     setModalIngredientDetails(false);
+    dispatch({
+      type: DELETE_CURRENT_INGREDIENT_DETAILS,
+    });
   };
 
   function renderedIngredients(typeIngredients) {
-    return ingredientsState.data.map(
+    return ingredients.map(
       (ingredient) =>
         ingredient.type === typeIngredients && (
-          <li
-            className={burgerIngredientsStyles.cardIngredients}
+          <Ingredient
+            ingredient={ingredient}
             key={ingredient._id}
-            onClick={() => handleIngredientDetails(ingredient._id)}
-          >
-            <Counter count={1} size='default' extraClass='m-1' />
-            <img
-              src={ingredient.image}
-              alt={ingredient.name}
-              className={'ml-4 mr-4'}
-            />
-            <div
-              className={
-                'mt-1 mb-1 ' + burgerIngredientsStyles.blockDiscriptionCenter
-              }
-            >
-              <p className='text text_type_digits-default'>
-                {ingredient.price}
-              </p>
-              <CurrencyIcon type='primary' />
-            </div>
-            <p
-              className={
-                ' Apptext text_type_main-default pl-1 pr-1 ' +
-                burgerIngredientsStyles.blockCenter +
-                burgerIngredientsStyles.discriptionIngredients
-              }
-            >
-              {ingredient.name}
-            </p>
-          </li>
+            handleIngredientDetails={() =>
+              handleIngredientDetails(ingredient._id)
+            }
+          ></Ingredient>
         )
     );
   }
 
-  const rendererBun = useMemo(
-    () => renderedIngredients('bun'),
-    [ingredientsState.data]
-  );
+  const rendererBun = useMemo(() => renderedIngredients('bun'), [ingredients]);
 
   const rendererSauce = useMemo(
     () => renderedIngredients('sauce'),
-    [ingredientsState.data]
+    [ingredients]
   );
 
   const rendererMain = useMemo(
     () => renderedIngredients('main'),
-    [ingredientsState.data]
+    [ingredients]
   );
 
+  const refeHeder = useRef('heder');
   const refBun = useRef('bun');
   const refSauce = useRef('sauce');
   const refMain = useRef('main');
 
   function handleOnClickCurrent(e) {
     //console.log(refMain.current);
+
     setCurrent(e);
     switch (e) {
       case 'one':
@@ -122,10 +112,41 @@ export default function BurgerIngredients() {
     }
   }
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, true);
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, []);
+
+  function handleScroll() {
+    const distBun = Math.abs(
+      refBun.current.getBoundingClientRect().top -
+        refeHeder.current.getBoundingClientRect().top
+    );
+    /*const distSauce = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);
+    const distMain = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);*/
+    const scale = distBun > 800 ? 'three' : distBun < 200 ? 'one' : 'two';
+
+    switch (scale) {
+      case 'one':
+        setCurrent('one');
+        break;
+      case 'two':
+        setCurrent('two');
+        break;
+      case 'three':
+        setCurrent('three');
+        break;
+      default:
+        return;
+    }
+  }
+
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
-      <div className={burgerIngredientsStyles.blockTab}>
+      <div ref={refeHeder} className={burgerIngredientsStyles.blockTab}>
         <Tab
           value='one'
           active={current === 'one'}
@@ -177,7 +198,7 @@ export default function BurgerIngredients() {
       {isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
-            currentModalIngredientDetails={currentModalIngredientDetails}
+            currentModalIngredientDetails={currentModalIngredientDetails.item}
           />
         </Modal>
       )}

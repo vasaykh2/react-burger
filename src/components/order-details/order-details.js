@@ -7,7 +7,7 @@ export function OrderDetails(props) {
   return (
     <div className={OrderDetailsStyles.block}>
       <p className='text text_type_digits-large pt-2 pb-8'>
-        {props.orderDetails.order.number}
+        {props.orderNumber}
       </p>
       <p className='text text_type_main-medium pb-15'>Идентификатор заказа</p>
       <img src={orderAccpetedDone} alt='Заказ начали готовитьа' />
@@ -22,8 +22,5 @@ export function OrderDetails(props) {
 }
 
 OrderDetails.propTypes = {
-  name: PropTypes.string,
-  order: { number: PropTypes.number },
-  success: PropTypes.bool,
-  isModalOrderDetails: PropTypes.bool,
+  orderNumber: PropTypes.number,
 }.isRequired;
