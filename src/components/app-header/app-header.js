@@ -10,37 +10,46 @@ import { NavLink, useLocation } from 'react-router-dom';
 import styles from './app-header-styles.module.css';
 
 export default function AppHeader() {
-  //const { pathname } = useLocation();
-  const pathname = '/';
+  const { pathname } = useLocation();
 
   return (
-    <header className={styles.header + ' ' + styles.blocks}>
-      <div className={'mr-2 ' + styles.blocks}>
-        <div className='mt-4 mb-4 ml-5'>
-          <BurgerIcon type='primary' />
-        </div>
-        <p className='text text_type_main-default mt-4 mr-5 mb-4 ml-2'>
-          Конструктор
-        </p>
-      </div>
-      <div className={styles.blocks}>
-        <div className='mt-4 mb-4 ml-5'>
-          <ListIcon type='secondary' />
-        </div>
-        <p className='text text_type_main-default mt-4 mr-5 mb-4 ml-2 text_color_inactive'>
-          Лента заказов
-        </p>
-      </div>
-      <div className={styles.logo}>
-        <Logo />
-      </div>
-      <div className={styles.blocks}>
-        <div className='mt-4 mb-4 ml-5'>
-          <ProfileIcon type='secondary' />
-        </div>
-        <p className='text text_type_main-default mt-4 mr-5 mb-4 ml-2 text_color_inactive'>
-          Личный кабинет
-        </p>
+    <header className={`${styles.header} pt-4 pb-4 pr-4 pl-4`}>
+      <div className={`${styles.container}`}>
+        <ul className={styles.nav}>
+          <li className='mr-5 pr-4'>
+            <NavLink
+              to='/'
+              className={styles.link}
+              activeClassName={styles.link_active}
+            >
+              <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
+              <p className='text text_type_main-default ml-2'>Конструктор</p>
+            </NavLink>
+          </li>
+          <li className='pl-4 pr-4'>
+            <NavLink
+              to='/'
+              className={styles.link}
+              activeClassName={styles.link_active}
+            >
+              <ListIcon type={pathname === '/' ? 'primary' : 'secondary'} />
+              <p className='text text_type_main-default ml-2'>Лента заказов</p>
+            </NavLink>
+          </li>
+        </ul>
+        <NavLink to='/'>
+          <Logo />
+        </NavLink>
+        <NavLink
+          to='/profile'
+          className={styles.link}
+          activeClassName={styles.link_active}
+        >
+          <ProfileIcon
+            type={pathname.startsWith('/profile') ? 'primary' : 'secondary'}
+          />
+          <p className='text text_type_main-default ml-2'>Личный кабинет</p>
+        </NavLink>
       </div>
     </header>
   );

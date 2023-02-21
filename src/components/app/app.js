@@ -26,7 +26,7 @@ export default function App() {
       {!ingredientsLoad && !ingredientsFailed && (
         <>
           <AppHeader />
-          <BrowserRouter>
+          
             <Routes>
               <Route path='/' element={<BurgerMain />} />
               <Route path='/login' element={<Login />} />
@@ -35,7 +35,7 @@ export default function App() {
               <Route path='/reset-password' element={<ResetPassword />} />
               <Route path='/profile' element={<Profile />} />
             </Routes>
-          </BrowserRouter>
+          
         </>
       )}
     </>
