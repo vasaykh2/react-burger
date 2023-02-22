@@ -63,8 +63,8 @@ export default function BurgerConstructor() {
   );
   // console.log(orderDetails);
 
-  const handleOrder = () => {
-    dispatch(postOrderDetails());
+  const handleOrder = (listId) => {
+    dispatch(postOrderDetails(listId));
   };
 
   const handleClose = () => {
@@ -180,7 +180,7 @@ export default function BurgerConstructor() {
           </div>
           <Button
             className={burgerConstructorStyles.button}
-            onClick={handleOrder}
+            onClick={() => handleOrder(listId)}
             htmlType='button'
             type='primary'
             size='large'

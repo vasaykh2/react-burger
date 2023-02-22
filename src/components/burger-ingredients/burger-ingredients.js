@@ -15,7 +15,7 @@ export default function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
-    (state) => state.ingredientsReducer
+    (state) => state.ingredients
   );
   //console.log(ingredientsLoad, ingredientsFailed, ingredients );
 

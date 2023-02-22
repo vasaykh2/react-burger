@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
+import { requestPasswordReset } from "../../services/actions/user";
 import { useForm } from '../../services/hooks/useForm';
 import styles from './forgot-password.module.css';
 
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    //dispatch(requestPasswordReset(values));
+    dispatch(requestPasswordReset(values));
   };
 
   return (

@@ -1,6 +1,4 @@
-import { BASE_URL } from '../../utils/constants';
-import { request } from '../../utils/request';
-
+import { api } from '../../utils/api';
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENT_LIST_REQUEST';
 export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENT_LIST_FAILED';
@@ -11,16 +9,14 @@ export const DELETE_CURRENT_INGREDIENT_DETAILS =
   'DELETE_CURRENT_INGREDIENT_DETAILS';
 export const UPDATE_ORDER_DETAILS = 'UPDATE_ORDER_DETAILS';
 
-const urlDomen = BASE_URL + 'ingredients';
-
 export function getIngredientsList() {
   return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_LIST_REQUEST,
     });
-    request(urlDomen)
+    api
+      .getIngredients()
       .then((res) => {
-        //console.log(res);
         dispatch({
           type: GET_INGREDIENTS_LIST_SUCCESS,
           result: res.data,
