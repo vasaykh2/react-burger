@@ -7,8 +7,8 @@ import { userReducer } from './user';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  constructorReducer: constructorReducer,
-  currentIngredientDetailsReducer: currentIngredientDetailsReducer,
-  orderDetailsReducer: orderDetailsReducer,
+  constructorBurger: constructorReducer,
+  currentIngredientDetails: currentIngredientDetailsReducer,
+  orderDetails: orderDetailsReducer,
   user: userReducer,
 });

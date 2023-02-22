@@ -38,7 +38,7 @@ export default function BurgerConstructor() {
     [dispatch]
   );
 
-  const { bun, toppings } = useSelector((state) => state.constructorReducer);
+  const { bun, toppings } = useSelector((state) => state.constructorBurger);
   //console.log(data.length);
   //const isData = data.length == 0 ? false : true;
   //console.log(isData);
@@ -59,7 +59,7 @@ export default function BurgerConstructor() {
   //console.log(listId);
 
   const { order, isLoading, isModalOrderDetails } = useSelector(
-    (state) => state.orderDetailsReducer
+    (state) => state.orderDetails
   );
   // console.log(orderDetails);
 

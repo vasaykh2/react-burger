@@ -17,7 +17,7 @@ export function Ingredient({ ingredient, handleIngredientDetails }) {
     }),
   });
 
-  const { toppings, bun } = useSelector((state) => state.constructorReducer);
+  const { toppings, bun } = useSelector((state) => state.constructorBurger);
 
   const countIngredient = useMemo(() => {
     if (ingredient.type !== 'bun') {

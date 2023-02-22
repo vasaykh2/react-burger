@@ -14,7 +14,7 @@ import { sortConstructor } from '../../services/actions/constructor';
 export function Topping({ ingredient, index, handleClose }) {
   const dispatch = useDispatch();
 
-  const { toppings } = useSelector((state) => state.constructorReducer);
+  const { toppings } = useSelector((state) => state.constructorBurger);
   const id = ingredient.id;
 
   const ref = useRef(null);

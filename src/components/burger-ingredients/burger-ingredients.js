@@ -34,7 +34,7 @@ export default function BurgerIngredients() {
     React.useState(false);
 
   const currentModalIngredientDetails = useSelector(
-    (state) => state.currentIngredientDetailsReducer
+    (state) => state.currentIngredientDetails
   );
   //console.log(currentModalIngredientDetails);
 
