@@ -16,7 +16,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  //console.log(location);
+  //console.log(location.state);
   const { userInfo, isAuthChecked } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(
     { email: '', password: '' },

@@ -11,7 +11,7 @@ import {
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../../services/actions/current-ingredient-details';
 
-export default function BurgerIngredients() {
+function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
@@ -195,13 +195,15 @@ export default function BurgerIngredients() {
           </ul>
         </li>
       </ul>
-      {isModalIngredientDetails && (
+      {/*{isModalIngredientDetails && (
         <Modal header={'Детали ингредиента'} onClose={handleClose}>
           <IngredientDetails
-            currentModalIngredientDetails={currentModalIngredientDetails.item}
+            currentModalIngredientDetails={ingredients}
           />
         </Modal>
-      )}
+      )}*/}
     </section>
   );
 }
+
+export default BurgerIngredients;

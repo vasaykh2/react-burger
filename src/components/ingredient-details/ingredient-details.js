@@ -1,13 +1,29 @@
-import React from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/types';
-import IngredientDetailsStyles from './ingredient-details-styles.module.css';
+import { useParams, useLocation } from 'react-router-dom';
+import { ingredientType } from '../../utils/types';
+import styles from './ingredient-details-styles.module.css';
 
-export function IngredientDetails(props) {
-  const currentIngredientDetails = props.currentModalIngredientDetails;
+import NotFound from '../../pages/not-found/not-found';
 
-  return (
-    <div className={IngredientDetailsStyles.block}>
+function IngredientDetails({ ingredients }) {
+  //const currentIngredientDetails = props.currentModalIngredientDetails;
+
+  const location = useLocation();
+  const background = location.state?.background;
+  const { id } = useParams();
+
+  const currentIngredientDetails = useMemo(
+    () => ingredients?.find((el) => el._id === id),
+    [ingredients, id]
+  );
+
+  return currentIngredientDetails ? (
+    <div
+      className={`${styles.container} ${
+        !background && styles.container_fullPage
+      }`}
+    >
       <img
         src={currentIngredientDetails.image_large}
         alt={currentIngredientDetails.name}
@@ -15,60 +31,39 @@ export function IngredientDetails(props) {
       <p className='text text_type_main-medium pt-2 pb-8'>
         {currentIngredientDetails.name}
       </p>
-      <div className={IngredientDetailsStyles.contentString}>
-        <div className={IngredientDetailsStyles.content}>
-          <p className='text text_type_main-default text_color_inactive pb-2'>
-            Калории, ккал
-          </p>
-          <p
-            className={
-              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-            }
-          >
+      <ul className={styles.contentString}>
+        <li className={styles.content}>
+          <span className='text text_type_main-default'>Калории, ккал</span>
+          <p className={'text text_type_digits-default'}>
             {currentIngredientDetails.calories}
           </p>
-        </div>
-        <div className={IngredientDetailsStyles.content}>
-          <p className='text text_type_main-default text_color_inactive pb-2'>
-            Белки, г
-          </p>
-          <p
-            className={
-              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-            }
-          >
+        </li>
+        <li className={styles.content}>
+          <span className='text text_type_main-default'>Белки, г</span>
+          <p className={'text text_type_digits-default'}>
             {currentIngredientDetails.proteins}
           </p>
-        </div>
-        <div className={IngredientDetailsStyles.content}>
-          <p className='text text_type_main-default text_color_inactive pb-2'>
-            Жиры, г
-          </p>
-          <p
-            className={
-              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-            }
-          >
+        </li>
+        <li className={styles.content}>
+          <span className='text text_type_main-default'>Жиры, г</span>
+          <p className={'text text_type_digits-default'}>
             {currentIngredientDetails.fat}
           </p>
-        </div>
-        <div className={IngredientDetailsStyles.content}>
-          <p className='text text_type_main-default text_color_inactive pb-2'>
-            Углеводы, г
-          </p>
-          <p
-            className={
-              'text  text_color_inactive ' + IngredientDetailsStyles.textValue
-            }
-          >
+        </li>
+        <li className={styles.content}>
+          <span className='text text_type_main-default'>Углеводы, г</span>
+          <p className={'text text_type_digits-default'}>
             {currentIngredientDetails.carbohydrates}
           </p>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
+  ) : (
+    <NotFound />
   );
 }
 
+export default IngredientDetails;
 
 /*IngredientDetails.propTypes = {
   currentModalIngredientDetails: PropTypes.shape({
@@ -82,6 +77,6 @@ export function IngredientDetails(props) {
   }.isRequired)
 };*/
 
-IngredientDetails.propTypes = {
-  currentModalIngredientDetails:ingredientType.isRequired
-};
+/*IngredientDetails.propTypes = {
+  currentModalIngredientDetails: ingredientType.isRequired,
+};*/

@@ -10,7 +10,7 @@ export function ProtectedRouteElement({ onlyForAuth, element }) {
   const userInfo = user.userInfo;
   //const location = useLocation();
 
-console.log(element.type.name);
+//console.log(element.type.name);
 
   //let { getUser, ...auth } = useAuth();
   //const [isUserLoaded, setUserLoaded] = useState(false);
