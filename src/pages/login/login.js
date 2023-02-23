@@ -5,15 +5,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-//import { logIn } from '../../services/actions/user';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 import { useForm } from '../../services/hooks/useForm';
+import { logIn } from '../../services/actions/user';
 
 import styles from './login.module.css';
 
 const Login = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  //console.log(location);
+  const { userInfo, isAuthChecked } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(
     { email: '', password: '' },
     false
@@ -21,8 +25,17 @@ const Login = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    //dispatch(logIn(values));
+    dispatch(logIn(values));
+    //console.log(document.cookie);
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      location.state && location.state.from
+        ? navigate(location.state.from.pathname)
+        : navigate('/');
+    }
+  }, [userInfo, navigate, location]);
 
   return (
     <div className={`${styles.container}`}>

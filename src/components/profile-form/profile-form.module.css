@@ -1,0 +1,21 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    grid-area: content;
+    margin-top: 80px;
+    width: max-content;
+}
+
+    .containerOfButtons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 28px;
+        width: 100%;
+    }
+
+    .cancelButton {
+        padding-right: 0;
+        padding-left: 0;
+    }

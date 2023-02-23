@@ -1,27 +1,9 @@
 import { BASE_URL } from './constants';
 
-/*export function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
-
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-}*/
-
 class Api {
   constructor(url) {
     this.url = url;
   }
-
-  /* _checkResponce(res) {
-    return res.ok
-      ? res.json().then((data) => data)
-      : res.json().then((data) => Promise.reject(data));
-  }*/
-
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -42,7 +24,7 @@ class Api {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        Authorization: token,
+        authorization: token,
       },
       body: JSON.stringify({
         ingredients: listId,
@@ -100,8 +82,6 @@ class Api {
     });
   }
 
-
-
   refreshToken(token) {
     return this._request(`${this.url}/auth/token`, {
       method: 'POST',
@@ -113,7 +93,6 @@ class Api {
       }),
     });
   }
-
 
   getOrder(orderNumber) {
     return this._request(`${this.url}/orders/${orderNumber}`, {
@@ -129,7 +108,7 @@ class Api {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
-        Authorization: token,
+        authorization: token,
       },
     });
   }
@@ -139,7 +118,7 @@ class Api {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json',
-        Authorization: token,
+        authorization: token,
       },
       body: JSON.stringify({ email, password, name }),
     });

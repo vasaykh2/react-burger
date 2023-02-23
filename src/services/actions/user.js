@@ -1,5 +1,5 @@
 import { api } from '../../utils/api';
-//import { setCookie, deleteCookie, getCookie } from "../../utils/cookie";
+import { setCookie, deleteCookie, getCookie } from '../../utils/cookie';
 
 export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS: 'REGISTER_SUCCESS' = 'REGISTER_SUCCESS';
@@ -40,12 +40,7 @@ export const CHECK_AUTH: 'CHECK_AUTH' = 'CHECK_AUTH';
 export const SHOW_INFO_BOARD: 'SHOW_INFO_BOARD' = 'SHOW_INFO_BOARD';
 export const HIDE_INFO_BOARD: 'HIDE_INFO_BOARD' = 'HIDE_INFO_BOARD';
 
-/*
-export const register= ({
-  email,
-  password,
-  name,
-}) => {
+export const register = ({ email, password, name }) => {
   return function (dispatch) {
     dispatch({
       type: REGISTER_REQUEST,
@@ -58,8 +53,8 @@ export const register= ({
             type: REGISTER_SUCCESS,
             payload: res.user,
           });
-          localStorage.setItem("refreshToken", res.refreshToken);
-          setCookie("accessToken", res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
         }
       })
       .catch((err) =>
@@ -77,7 +72,7 @@ export const getUserInfo = () => {
       type: GET_USER_REQUEST,
     });
     api
-      .getUserInfo(getCookie("accessToken"))
+      .getUserInfo(getCookie('accessToken'))
       .then((res) => {
         res &&
           res.success &&
@@ -87,7 +82,7 @@ export const getUserInfo = () => {
           });
       })
       .catch((err) => {
-        if (err.message === "jwt expired") {
+        if (err.message === 'jwt expired') {
           dispatch(refreshToken());
         }
         dispatch({
@@ -102,23 +97,19 @@ export const getUserInfo = () => {
   };
 };
 
-export const patchUserInfo= ({
-  email,
-  password,
-  name,
-}) => {
+export const patchUserInfo = ({ email, password, name }) => {
   return function (dispatch) {
     dispatch({
       type: PATCH_USER_REQUEST,
     });
     api
-      .patchUserInfo(email, password, name, getCookie("accessToken"))
+      .patchUserInfo(email, password, name, getCookie('accessToken'))
       .then((res) => {
         res &&
           res.success &&
           dispatch({
             type: PATCH_USER_SUCCESS,
-            payload: { userInfo: res.user, message: "User info changed" },
+            payload: { userInfo: res.user, message: 'User info changed' },
           });
       })
       .catch((err) => {
@@ -133,11 +124,11 @@ export const patchUserInfo= ({
 export const refreshToken = () => {
   return function (dispatch) {
     api
-      .refreshToken(localStorage.getItem("refreshToken"))
+      .refreshToken(localStorage.getItem('refreshToken'))
       .then((res) => {
         if (res && res.success) {
-          localStorage.setItem("refreshToken", res.refreshToken);
-          setCookie("accessToken", res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
           dispatch(getUserInfo());
         }
       })
@@ -148,7 +139,6 @@ export const refreshToken = () => {
       );
   };
 };
-
 
 export const logIn = ({ email, password }) => {
   return function (dispatch) {
@@ -163,8 +153,9 @@ export const logIn = ({ email, password }) => {
             type: LOGIN_SUCCESS,
             payload: res.user,
           });
-          localStorage.setItem("refreshToken", res.refreshToken);
-          setCookie("accessToken", res.accessToken);
+          console.log(res);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          setCookie('accessToken', res.accessToken);
         }
       })
       .catch((err) =>
@@ -182,14 +173,14 @@ export const logOut = () => {
       type: LOGOUT_REQUEST,
     });
     api
-      .logOut(localStorage.getItem("refreshToken"))
+      .logOut(localStorage.getItem('refreshToken'))
       .then((res) => {
         if (res && res.success) {
           dispatch({
             type: LOGOUT_SUCCESS,
           });
-          localStorage.removeItem("refreshToken");
-          deleteCookie("accessToken");
+          localStorage.removeItem('refreshToken');
+          deleteCookie('accessToken');
         }
       })
       .catch((err) =>
@@ -200,7 +191,6 @@ export const logOut = () => {
       );
   };
 };
-*/
 
 export const requestPasswordReset = ({ email }) => {
   return function (dispatch) {

@@ -11,6 +11,7 @@ import {
   Profile,
 } from '../../pages';
 import { Notifications } from '../notifications/notifications';
+import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
 import { getIngredientsList } from '../../services/actions/ingredients';
 
 export default function App() {
@@ -35,11 +36,12 @@ export default function App() {
           <AppHeader />
           <Routes>
             <Route path='/' element={<BurgerMain />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/forgot-password' element={<ForgotPassword />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/login' element={<ProtectedRouteElement onlyForAuth={false} element={<Login />}/>} />
+            <Route path='/register' element={<ProtectedRouteElement onlyForAuth={false} element={<Register />}/>} />
+            <Route path='/forgot-password' element={<ProtectedRouteElement onlyForAuth={false} element={<ForgotPassword />}/>} />
+            <Route path='/reset-password' element={<ProtectedRouteElement onlyForAuth={false} element={<ResetPassword />}/>} />
+            <Route path='/profile' element={<ProtectedRouteElement onlyForAuth element={<Profile />}/>} />
+            <Route path='/profile/orders' element={<ProtectedRouteElement onlyForAuth element={<Profile />}/>} />
           </Routes>
         </>
       )}

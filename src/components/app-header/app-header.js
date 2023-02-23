@@ -19,8 +19,7 @@ export default function AppHeader() {
           <li className='mr-5 pr-4'>
             <NavLink
               to='/'
-              className={styles.link}
-              activeClassName={styles.link_active}
+              className={ ({isActive}) => (isActive ? `${styles.link} ${styles.link_active}` : styles.link)}              
             >
               <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
               <p className='text text_type_main-default ml-2'>Конструктор</p>
@@ -29,8 +28,7 @@ export default function AppHeader() {
           <li className='pl-4 pr-4'>
             <NavLink
               to='/'
-              className={styles.link}
-              activeClassName={styles.link_active}
+              className={ ({isActive}) => (isActive ? `${styles.link} ${styles.link_active}` : styles.link)}
             >
               <ListIcon type={pathname === '/' ? 'primary' : 'secondary'} />
               <p className='text text_type_main-default ml-2'>Лента заказов</p>
@@ -42,8 +40,7 @@ export default function AppHeader() {
         </NavLink>
         <NavLink
           to='/profile'
-          className={styles.link}
-          activeClassName={styles.link_active}
+          className={ ({isActive}) => (isActive ? `${styles.link} ${styles.link_active}` : styles.link)}
         >
           <ProfileIcon
             type={pathname.startsWith('/profile') ? 'primary' : 'secondary'}
