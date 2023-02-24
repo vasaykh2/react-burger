@@ -58,7 +58,7 @@ function BurgerConstructor() {
   );
   // console.log(orderDetails);
 
-  const handleOrder = (listId) => {
+  const handleOrder = () => {
     if (userInfo) {
       dispatch(postOrderDetails(listId));
     } else {
@@ -175,7 +175,7 @@ function BurgerConstructor() {
           </div>
           <Button
             className={styles.button}
-            onClick={() => handleOrder(listId)}
+            onClick={handleOrder}
             htmlType='button'
             type='primary'
             size='large'
