@@ -47,14 +47,14 @@ const ProfileForm = () => {
         placeholder='Имя'
         name='name'
         onChange={(evt) => handleChange(evt)}
-        value={values.name ? values.name : ''}
+        value={values.name || ''}
         icon={'EditIcon'}
       />
       <EmailInput
         placeholder='E-mail'
         name='email'
         onChange={(evt) => handleChange(evt)}
-        value={values.email ? values.email : ''}
+        value={values.email || ''}
         isIcon={true}
       />
       <PasswordInput
@@ -63,7 +63,7 @@ const ProfileForm = () => {
         onChange={(evt) => {
           handleChange(evt);
         }}
-        value={values.password ? values.password : ''}
+        value={values.password || ''}
         icon={'EditIcon'}
       />
       {isValidChanges ? (
