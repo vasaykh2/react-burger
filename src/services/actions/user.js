@@ -147,7 +147,7 @@ export const logIn = ({ email, password }) => {
             type: LOGIN_SUCCESS,
             payload: res.user,
           });
-          console.log(res);
+          //console.log(res);
           localStorage.setItem('refreshToken', res.refreshToken);
           setCookie('accessToken', res.accessToken);
         }

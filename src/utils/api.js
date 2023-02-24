@@ -40,11 +40,11 @@ class Api {
   }
 
   getIngredients() {
-    return this._fetchWithRefresh(`${this.url}/ingredients`);
+    return this._request(`${this.url}/ingredients`);
   }
 
   postOrderDetails(listId, token = '') {
-    return this._request(`${this.url}/orders`, {
+    return this._fetchWithRefresh(`${this.url}/orders`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

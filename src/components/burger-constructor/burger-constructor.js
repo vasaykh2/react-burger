@@ -28,7 +28,7 @@ import {
 
 import { useDrop } from 'react-dnd';
 
-let listId = '';
+//let listId = '';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -45,22 +45,20 @@ function BurgerConstructor() {
 
   const { bun, toppings } = useSelector((state) => state.constructorBurger);
 
-  listId = useMemo(
-    () => (!toppings ? '' : toppings.map((item) => item.data._id)),
-    [toppings]
-  );
-  const bunId = bun ? bun.data._id : '';
-  listId.push(bunId);
-  //console.log(listId);
-
   const { order, isLoading, isModalOrderDetails } = useSelector(
     (state) => state.orderDetails
   );
   // console.log(orderDetails);
 
   const handleOrder = () => {
+    const ingredientsIds = [
+      bun.data._id,
+      ...toppings.map((item) => item.data._id),
+      bun.data._id,
+    ];
     if (userInfo) {
-      dispatch(postOrderDetails(listId));
+      dispatch(postOrderDetails(ingredientsIds));
+      //console.log(ingredientsIds);
     } else {
       navigate('/login');
     }
@@ -194,4 +192,4 @@ function BurgerConstructor() {
   );
 }
 
-export { BurgerConstructor, listId };
+export { BurgerConstructor };
