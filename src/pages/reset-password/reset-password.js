@@ -3,8 +3,8 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { resetPassword } from '../../services/actions/user';
 

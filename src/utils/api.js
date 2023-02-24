@@ -1,5 +1,5 @@
 import { BASE_URL } from './constants';
-import { setCookie, deleteCookie, getCookie } from '../utils/cookie';
+import { setCookie } from '../utils/cookie';
 
 class Api {
   constructor(url) {

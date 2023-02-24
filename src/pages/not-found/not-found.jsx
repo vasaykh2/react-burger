@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './not-found.module.css';
 
 const NotFound = () => {

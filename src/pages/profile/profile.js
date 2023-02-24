@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOut } from '../../services/actions/user';
@@ -72,7 +72,7 @@ const Profile = () => {
       </p>
       {pathname === '/profile' ? (
         <ProfileForm />
-      ) : pathname == '/profile/orders' ? (
+      ) : pathname === '/profile/orders' ? (
         <ProfileOrders />
       ) : null}
     </main>
