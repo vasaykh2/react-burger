@@ -5,8 +5,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { resetPassword } from "../../services/actions/user";
+import { Link } from 'react-router-dom';
+import { resetPassword } from '../../services/actions/user';
 
 import { useForm } from '../../services/hooks/useForm';
 import styles from './reset-password.module.css';

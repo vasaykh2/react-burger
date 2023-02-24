@@ -1,4 +1,3 @@
-import img from '../../images/order accpeted-done.png';
 import { useCallback } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -14,11 +13,7 @@ const NotFound = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <span className={styles.errorNumber}>4</span>
-        <img src={img} alt='галочка' />
-        <span className={styles.errorNumber}>4</span>
-      </div>
+      <div className={styles.container}>404</div>
       <p className='text text_type_main-medium mb-15'>
         Ошибочный путь - возвращайтесь.
       </p>

@@ -15,44 +15,54 @@ import { ProtectedRouteElement } from '../protected-route-element/protected-rout
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
 
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
-export default function App() {
+function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state?.background;
-  console.log(location);
 
   useEffect(() => {
     dispatch(getIngredientsList());
     dispatch(getUserInfo());
   }, [dispatch]);
 
-  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
-    (state) => state.ingredients
-  );
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const { errorMessage } = useSelector((state) => state.user);
 
-  const closeModal = () => {
+  const idIngredientDetails = location.state?.idIngredientDetails;
+
+  //console.log(location.pathname);
+
+  const idPadge = `${location.pathname}`.split('/')[2];
+
+  //console.log([!!background, idIngredientDetails,]);
+
+  function closeModal() {
     navigate(-1);
-  };
+  }
 
   return (
     <>
       <Notifications>
-        {ingredientsLoad && 'Загрузка...'}
-        {ingredientsFailed && 'Произошла ошибка'}
+        {!ingredients && 'Загрузка...'}
+        {errorMessage && 'Произошла ошибка'}
       </Notifications>
-      {!ingredientsLoad && !ingredientsFailed && (
+      {ingredients && !errorMessage && (
         <>
           <AppHeader />
           <Routes location={background || location}>
             <Route path='/' element={<BurgerMain />} />
-            <Route path='/ingredients/:id' element={ingredients.length && (
-                <IngredientDetails ingredients={ingredients} />
-              )} />
-              
-            
+            <Route
+              path='/ingredients/:id'
+              element={
+                !background && ingredients.length ? (
+                  <IngredientDetails ingredients={ingredients} id={idPadge} />
+                ) : null
+              }
+            />
             <Route
               path='/login'
               element={
@@ -102,8 +112,21 @@ export default function App() {
               }
             />
           </Routes>
+
+          {background && (
+            <Modal closeModal={closeModal}>
+              {ingredients.length ? (
+                <IngredientDetails
+                  ingredients={ingredients}
+                  id={idIngredientDetails}
+                />
+              ) : null}
+            </Modal>
+          )}
         </>
       )}
     </>
   );
 }
+
+export default App;

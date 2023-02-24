@@ -9,7 +9,7 @@ import ProfileOrders from '../../components/profile-orders/profile-orders';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
+
   const { pathname } = useLocation();
 
   const profileCaption = () => {
@@ -69,8 +69,12 @@ const Profile = () => {
         className={`${styles.profile__caption} text text_type_main-default text_color_inactive`}
       >
         {profileCaption()}
-      </p>     
-      {pathname === '/profile' ? <ProfileForm /> : pathname == '/profile/orders' ? <ProfileOrders /> : null}      
+      </p>
+      {pathname === '/profile' ? (
+        <ProfileForm />
+      ) : pathname == '/profile/orders' ? (
+        <ProfileOrders />
+      ) : null}
     </main>
   );
 };

@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
 
 import {
   DragIcon,
@@ -92,3 +94,9 @@ export function Topping({ ingredient, index, handleClose }) {
     </li>
   );
 }
+
+Topping.propTypes = {
+  ingredient: { data: ingredientType, id: PropTypes.string },
+  index: PropTypes.number,
+  handleClose: PropTypes.func,
+}.isRequired;

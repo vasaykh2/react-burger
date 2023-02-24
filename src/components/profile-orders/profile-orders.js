@@ -1,11 +1,10 @@
-import { useEffect, useMemo} from "react";
+import { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-
 import { Oval } from 'react-loader-spinner';
-import { getCookie } from "../../utils/cookie";
-import { refreshToken } from "../../services/actions/user";
-import styles from "./profile-orders.module.css";
+//import { getCookie } from "../../utils/cookie";
+import { refreshToken } from '../../services/actions/user';
+import styles from './profile-orders.module.css';
 
 const ProfileOrders = () => {
   const dispatch = useDispatch();
@@ -14,9 +13,7 @@ const ProfileOrders = () => {
     (state) => state.wsOrders
   );
 
-  const token = getCookie("accessToken")?.replace("Bearer ", "");
-
-  
+  //const token = getCookie("accessToken")?.replace("Bearer ", "");
 
   const orders = useMemo(
     () => userOrders && [...userOrders.orders].reverse(),
@@ -34,7 +31,7 @@ const ProfileOrders = () => {
       }
       if (
         userOrders.message &&
-        userOrders.message === "Invalid or missing token"
+        userOrders.message === 'Invalid or missing token'
       ) {
         dispatch(refreshToken());
       }
@@ -42,28 +39,28 @@ const ProfileOrders = () => {
       return (
         <div className={styles.loader}>
           <Oval
-              ariaLabel='loading-indicator'
-              height={70}
-              width={70}
-              strokeWidth={5}
-              strokeWidthSecondary={2}
-              color='blue'
-              secondaryColor='white'
-            />
+            ariaLabel='loading-indicator'
+            height={70}
+            width={70}
+            strokeWidth={5}
+            strokeWidthSecondary={2}
+            color='blue'
+            secondaryColor='white'
+          />
         </div>
       );
     } else {
       return (
         <div className={styles.loader}>
           <Oval
-              ariaLabel='loading-indicator'
-              height={70}
-              width={70}
-              strokeWidth={5}
-              strokeWidthSecondary={2}
-              color='blue'
-              secondaryColor='white'
-            />
+            ariaLabel='loading-indicator'
+            height={70}
+            width={70}
+            strokeWidth={5}
+            strokeWidthSecondary={2}
+            color='blue'
+            secondaryColor='white'
+          />
         </div>
       );
     }

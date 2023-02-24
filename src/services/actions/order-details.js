@@ -1,4 +1,5 @@
 import { api } from '../../utils/api';
+import { getCookie } from '../../utils/cookie';
 
 export const CLOSE_ORDER_DETAILS = 'CLOSE_ORDER_DETAILS';
 export const UPDATE_ORDER_DETAILS = 'UPDATE_ORDER_DETAILS';
@@ -12,7 +13,7 @@ export function postOrderDetails(listId) {
       type: UPDATE_ORDER_DETAILS_REQUEST,
     });
     api
-      .postOrderDetails(listId)
+      .postOrderDetails(listId, getCookie('accessToken'))
       .then((res) => {
         //console.log(res);
         dispatch({

@@ -5,14 +5,7 @@
     margin-top: 50px;
 }
 
-.errorNumber {
-    font-size: 500px;
-    line-height: 1px;
-    font-family: 'Alien';
-    margin: 0;
-    -webkit-animation: blink 5s linear infinite;
-    animation: blink 5s linear infinite;
-}
+
 
 @font-face {
     src: url(../../fonts/KrAlien-YXp2.ttf) format('truetype');

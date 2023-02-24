@@ -60,6 +60,12 @@
 
 .cardIngredients {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 272px;
+  cursor: grab;
+  text-decoration: none;
+  color: #f2f2f3;
   transition: opacity 0.5s linear;
 }
 
@@ -77,5 +83,5 @@
 .block {
   height: 100px;
   width: 200px;
-  border: 1px solid #8585ad
+  border: 1px solid #8585ad;
 }

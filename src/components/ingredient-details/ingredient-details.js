@@ -1,22 +1,24 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, useLocation } from 'react-router-dom';
-import { ingredientType } from '../../utils/types';
+import { useLocation } from 'react-router-dom';
+import { ingredientsType } from '../../utils/types';
 import styles from './ingredient-details-styles.module.css';
 
 import NotFound from '../../pages/not-found/not-found';
 
-function IngredientDetails({ ingredients }) {
+function IngredientDetails({ ingredients, id }) {
   //const currentIngredientDetails = props.currentModalIngredientDetails;
 
   const location = useLocation();
   const background = location.state?.background;
-  const { id } = useParams();
+  //const  {id}  = useParams();
 
   const currentIngredientDetails = useMemo(
     () => ingredients?.find((el) => el._id === id),
     [ingredients, id]
   );
+
+  //console.log(id);
 
   return currentIngredientDetails ? (
     <div
@@ -65,6 +67,11 @@ function IngredientDetails({ ingredients }) {
 
 export default IngredientDetails;
 
+IngredientDetails.propTypes = {
+  ingredients: ingredientsType,
+  id: PropTypes.number,
+}.isRequired;
+
 /*IngredientDetails.propTypes = {
   currentModalIngredientDetails: PropTypes.shape({
     _id: PropTypes.string,
@@ -75,8 +82,4 @@ export default IngredientDetails;
     name: PropTypes.string,    
     proteins: PropTypes.number,    
   }.isRequired)
-};*/
-
-/*IngredientDetails.propTypes = {
-  currentModalIngredientDetails: ingredientType.isRequired,
 };*/

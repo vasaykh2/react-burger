@@ -6,7 +6,7 @@ import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { register } from "../../services/actions/user";
+import { register } from '../../services/actions/user';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../services/hooks/useForm';
 import styles from './register.module.css';
@@ -14,9 +14,9 @@ import styles from './register.module.css';
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userInfo, isAuthChecked } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(
-    { name: "", email: "", password: "" },
+    { name: '', email: '', password: '' },
     false
   );
 
@@ -26,7 +26,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    userInfo && navigate("/");
+    userInfo && navigate('/');
   }, [userInfo, navigate]);
 
   return (
