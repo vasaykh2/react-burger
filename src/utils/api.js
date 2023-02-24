@@ -1,4 +1,5 @@
 import { BASE_URL } from './constants';
+import { setCookie, deleteCookie, getCookie } from '../utils/cookie';
 
 class Api {
   constructor(url) {
@@ -15,8 +16,31 @@ class Api {
     return fetch(url, options).then(this._checkResponse);
   }
 
+  async _fetchWithRefresh(url, options) {
+    try {
+      const res = await fetch(url, options);
+      return await this._checkResponse(res);
+    } catch (err) {
+      if (err.message === 'jwt expired') {
+        const refreshData = await this.refreshToken(
+          localStorage.getItem('refreshToken')
+        );
+        if (!refreshData.success) {
+          Promise.reject(refreshData);
+        }
+        localStorage.setItem('refreshToken', refreshData.refreshToken);
+        setCookie('accessToken', refreshData.accessToken);
+        options.headers.authorization = refreshData.accessToken;
+        const res = await fetch(url, options);
+        return await this._checkResponse(res);
+      } else {
+        return Promise.reject(err);
+      }
+    }
+  }
+
   getIngredients() {
-    return this._request(`${this.url}/ingredients`);
+    return this._fetchWithRefresh(`${this.url}/ingredients`);
   }
 
   postOrderDetails(listId, token = '') {
@@ -31,6 +55,19 @@ class Api {
       }),
     });
   }
+
+  /*postOrderDetails(listId, token = '') {
+    return this._request(`${this.url}/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
+        ingredients: listId,
+      }),
+    });
+  }*/
 
   requestPasswordReset(email) {
     return this._request(`${this.url}/password-reset`, {
@@ -104,7 +141,7 @@ class Api {
   }
 
   getUserInfo(token = '') {
-    return this._request(`${this.url}/auth/user`, {
+    return this._fetchWithRefresh(`${this.url}/auth/user`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -114,7 +151,7 @@ class Api {
   }
 
   patchUserInfo(email, password, name, token = '') {
-    return this._request(`${this.url}/auth/user`, {
+    return this._fetchWithRefresh(`${this.url}/auth/user`, {
       method: 'PATCH',
       headers: {
         'Content-type': 'application/json',
