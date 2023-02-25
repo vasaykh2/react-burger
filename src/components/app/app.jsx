@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import AppHeader from '../app-header/app-header.js';
+import AppHeader from '../app-header/app-header';
 import {
   BurgerMain,
   Login,
