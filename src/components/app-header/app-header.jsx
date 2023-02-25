@@ -29,12 +29,12 @@ export default function AppHeader() {
           </li>
           <li className='pl-4 pr-4'>
             <NavLink
-              to='/'
+              to='/feed'
               className={({ isActive }) =>
                 isActive ? `${styles.link} ${styles.link_active}` : styles.link
               }
             >
-              <ListIcon type={pathname === '/' ? 'primary' : 'secondary'} />
+              <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />
               <p className='text text_type_main-default ml-2'>Лента заказов</p>
             </NavLink>
           </li>
