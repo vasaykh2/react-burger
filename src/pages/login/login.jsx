@@ -16,8 +16,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
-  const { userInfo, isAuthChecked } = useSelector((state) => state.user);
+
+  console.log(localStorage.getItem('stateFrom'));
+
+  const { userInfo,  } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(
     { email: '', password: '' },
     false
@@ -30,6 +32,7 @@ const Login = () => {
   };
 
   useEffect(() => {
+    //console.log(location);
     if (userInfo) {
       location.state && location.state.from
         ? navigate(location.state.from.pathname)

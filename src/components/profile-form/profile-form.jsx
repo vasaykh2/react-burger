@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   EmailInput,
   PasswordInput,
@@ -12,6 +13,7 @@ import styles from './profile-form.module.css';
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user.userInfo);
   const { name, email } = userInfo || { name: '', email: '' };
 
@@ -28,6 +30,7 @@ const ProfileForm = () => {
     evt.preventDefault();
     dispatch(patchUserInfo(values));
     setValues({ ...values, password: '' });
+    navigate('/profile', { state: { from: { pathname: '/profile' } } });
   };
 
   const isValidChanges = useMemo(

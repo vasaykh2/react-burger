@@ -23,6 +23,7 @@ const Register = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(register(values));
+    navigate('/login', { state: { from: { pathname: '/login' } } });
   };
 
   useEffect(() => {

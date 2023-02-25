@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AppHeader from '../app-header/app-header';
@@ -9,8 +9,10 @@ import {
   ForgotPassword,
   ResetPassword,
   Profile,
+  NotFound,
 } from '../../pages';
 import { Notifications } from '../notifications/notifications';
+import InfoBoard from '../info-board/info-board';
 import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
@@ -50,6 +52,7 @@ function App() {
         {!ingredients && 'Загрузка...'}
         {errorMessage && 'Произошла ошибка'}
       </Notifications>
+      {errorMessage && <InfoBoard />}
       {ingredients && !errorMessage && (
         <>
           <AppHeader />
@@ -102,17 +105,23 @@ function App() {
             <Route
               path='/profile'
               element={
-                <ProtectedRouteElement onlyForAuth element={<Profile />} />
+                <ProtectedRouteElement
+                  onlyForAuth={true}
+                  element={<Profile />}
+                />
               }
             />
             <Route
               path='/profile/orders'
               element={
-                <ProtectedRouteElement onlyForAuth element={<Profile />} />
+                <ProtectedRouteElement
+                  onlyForAuth={true}
+                  element={<Profile />}
+                />
               }
             />
+            <Route path='*' element={<NotFound />} />
           </Routes>
-
           {background && (
             <Modal closeModal={closeModal}>
               {ingredients.length ? (

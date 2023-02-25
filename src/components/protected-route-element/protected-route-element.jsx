@@ -1,18 +1,16 @@
 //import { useAuth } from '../services/auth';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Navigate,  } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { getUserInfo } from '../../services/actions/user';
 
 export function ProtectedRouteElement({ onlyForAuth, element }) {
   const user = useSelector((state) => state.user);
-  const userInfo = user.userInfo;
+
   //const location = useLocation();
-
   //console.log(element.type.name);
-
   //const [isUserLoaded, setUserLoaded] = useState(false);
 
   const dispatch = useDispatch();
@@ -21,11 +19,17 @@ export function ProtectedRouteElement({ onlyForAuth, element }) {
     dispatch(getUserInfo());
   }, []);
 
+  const userInfo = user.userInfo;
+
   if (
     element.type.name === 'ResetPassword' &&
     !(user.forgotPasswordSuccess || user.forgotPasswordRequest)
   ) {
     return <Navigate to='/forgot-password' replace />;
+  }
+
+  if (element.type.name === 'Profile' && userInfo) {
+    return element;
   }
 
   if (!onlyForAuth && userInfo) {

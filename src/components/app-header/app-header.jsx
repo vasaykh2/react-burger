@@ -19,6 +19,7 @@ export default function AppHeader() {
           <li className='mr-5 pr-4'>
             <NavLink
               to='/'
+              state={{ from: { pathname: '/' } }}
               className={({ isActive }) =>
                 isActive ? `${styles.link} ${styles.link_active}` : styles.link
               }
@@ -30,6 +31,7 @@ export default function AppHeader() {
           <li className='pl-4 pr-4'>
             <NavLink
               to='/feed'
+              state={{ from: { pathname: '/feed' } }}
               className={({ isActive }) =>
                 isActive ? `${styles.link} ${styles.link_active}` : styles.link
               }
@@ -43,7 +45,8 @@ export default function AppHeader() {
           <Logo />
         </NavLink>
         <NavLink
-          to='/profile'
+          to={'/profile'}
+          state={{ from: { pathname: '/profile' } }}
           className={({ isActive }) =>
             isActive ? `${styles.link} ${styles.link_active}` : styles.link
           }

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -9,8 +10,9 @@ import ProfileOrders from '../../components/profile-orders/profile-orders';
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const { pathname } = useLocation();
+  const { pathname } = location;
 
   const profileCaption = () => {
     switch (pathname) {
@@ -25,45 +27,47 @@ const Profile = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
+    localStorage.setItem('stateFrom', '');
   };
+
+  useEffect(() => {
+    if (location.state && location.state.from) {
+      localStorage.setItem('stateFrom', location.state.from.pathname);
+    }
+    //console.log(location);
+  }, [location]);
 
   return (
     <main className={styles.profile}>
       <ul className={styles.nav}>
         <li>
           <p className={styles.link}>
-          <NavLink
-            exact
-            to='/profile'
-            /*isActive={(match, location) => {
-              if (match) {
-                return true;
-              } else {
-                return false;
+            <NavLink
+              to='/profile'
+              className={({ isActive }) =>
+                'text text_type_main-medium' +
+                (isActive && pathname === '/profile'
+                  ? ` ${styles.link_active}`
+                  : ` ${styles.link}`)
               }
-            }}*/
-            className={({ isActive }) =>
-              'text text_type_main-medium' +
-              (isActive && pathname === '/profile'
-                ? ` ${styles.link_active}`
-                : ` ${styles.link}`)
-            }
-          >
-            Профиль
-          </NavLink>
+              state={{ from: { pathname: '/profile' } }}
+            >
+              Профиль
+            </NavLink>
           </p>
         </li>
         <li>
-        <p className={styles.link}>
-          <NavLink
-            to='/profile/orders'
-            className={({ isActive }) =>
-              'text text_type_main-medium' +
-              (isActive ? ` ${styles.link_active}` : ` ${styles.link}`)
-            }
-          >
-            История заказов
-          </NavLink>
+          <p className={styles.link}>
+            <NavLink
+              to='/profile/orders'
+              className={({ isActive }) =>
+                'text text_type_main-medium' +
+                (isActive ? ` ${styles.link_active}` : ` ${styles.link}`)
+              }
+              state={{ from: { pathname: '/profile' } }}
+            >
+              История заказов
+            </NavLink>
           </p>
         </li>
         <li>
