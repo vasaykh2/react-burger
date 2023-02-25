@@ -1,42 +1,42 @@
 .profile {
-  margin-top: 40px;
+  margin: 40px auto 0;
   max-width: 1240px;
   width: 100%;
   display: grid;
   grid-template-columns: 320px 860px;
   grid-template-rows: min-content 1fr;
-  grid-template-areas: 'nav content'
-                       'caption content';
-  column-gap: 60px; 
-}                    
+  grid-template-areas:
+    'nav content'
+    'caption content';
+  column-gap: 60px;
+}
 
-  .nav {
-    list-style: none;
-    margin-top: 96px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    row-gap: 36px;
-    grid-area: nav;
-    padding-bottom: 80px;
-  }
+.nav {
+  list-style: none;
+  margin-top: 96px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 36px;
+  grid-area: nav;
+  padding-bottom: 80px;
+}
 
-  .link {
-    text-decoration: none;
-    color: #8585AD;
-  }
+.link {
+  text-decoration: none;
+  color: #8585ad;
+}
 
-    .link_active {
-      color: #F2F2F3;
-    }
+.link_active {
+  color: #f2f2f3;
+}
 
-    .link :hover {
-      color: #F2F2F3;
-      opacity: 0.7;
-    }
-  
+.link :hover {
+  color: #f2f2f3;
+  opacity: 0.8;
+}
 
-  caption {
-    opacity: 0.4;
-    grid-area: caption;
-  }
+.caption {
+  opacity: 0.4;
+  grid-area: caption;
+}

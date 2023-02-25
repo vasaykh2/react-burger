@@ -56,11 +56,12 @@ function BurgerConstructor() {
       ...toppings.map((item) => item.data._id),
       bun.data._id,
     ];
-    if (userInfo) {
+    if (!userInfo) {
+      navigate('/login');
+      
+    } else {
       dispatch(postOrderDetails(ingredientsIds));
       //console.log(ingredientsIds);
-    } else {
-      navigate('/login');
     }
   };
 
@@ -172,7 +173,7 @@ function BurgerConstructor() {
             <CurrencyIcon type='primary' />
           </div>
           <Button
-            className={styles.button}
+            className={styles.button + ` ${(!toppings.length || !bun) && styles.buttonInvisible}`}
             onClick={handleOrder}
             htmlType='button'
             type='primary'

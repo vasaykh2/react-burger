@@ -79,6 +79,10 @@
   opacity: 0.6;
 }
 
+.buttonInvisible {
+  visibility: hidden;
+}
+
 .blockCurrencyIcon {
   width: 24px;
   height: 24px;

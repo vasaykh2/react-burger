@@ -31,28 +31,40 @@ const Profile = () => {
     <main className={styles.profile}>
       <ul className={styles.nav}>
         <li>
+          <p className={styles.link}>
           <NavLink
+            exact
             to='/profile'
+            /*isActive={(match, location) => {
+              if (match) {
+                return true;
+              } else {
+                return false;
+              }
+            }}*/
             className={({ isActive }) =>
-              isActive
-                ? `text text_type_main-medium ${styles.link_active}`
-                : `${styles.link} text text_type_main-medium`
+              'text text_type_main-medium' +
+              (isActive && pathname === '/profile'
+                ? ` ${styles.link_active}`
+                : ` ${styles.link}`)
             }
           >
             Профиль
           </NavLink>
+          </p>
         </li>
         <li>
+        <p className={styles.link}>
           <NavLink
             to='/profile/orders'
             className={({ isActive }) =>
-              isActive
-                ? `text text_type_main-medium ${styles.link_active}`
-                : `${styles.link} text text_type_main-medium`
+              'text text_type_main-medium' +
+              (isActive ? ` ${styles.link_active}` : ` ${styles.link}`)
             }
           >
             История заказов
           </NavLink>
+          </p>
         </li>
         <li>
           <Button
@@ -66,7 +78,7 @@ const Profile = () => {
         </li>
       </ul>
       <p
-        className={`${styles.profile__caption} text text_type_main-default text_color_inactive`}
+        className={`${styles.caption} text text_type_main-default text_color_inactive`}
       >
         {profileCaption()}
       </p>
