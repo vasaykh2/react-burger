@@ -10,6 +10,7 @@ import {
   ResetPassword,
   Profile,
   NotFound,
+  Feed,
 } from '../../pages';
 import { Notifications } from '../notifications/notifications';
 import InfoBoard from '../info-board/info-board';
@@ -58,6 +59,7 @@ function App() {
           <AppHeader />
           <Routes location={background || location}>
             <Route path='/' element={<BurgerMain />} />
+            <Route path='/feed' element={<Feed />} />
             <Route
               path='/ingredients/:id'
               element={
