@@ -11,6 +11,7 @@ import OrdersBriefList from '../orders-brief-list/orders-brief-list';
 import { getCookie } from '../../utils/cookie';
 import { refreshToken } from '../../services/actions/user';
 import styles from './profile-orders.module.css';
+import { Ingredient } from '../ingredient/ingredient';
 
 const ProfileOrders = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,36 @@ const ProfileOrders = () => {
   /*const { userOrders, userConnectionError } = useSelector(
     (state) => state.wsOrders
   );*/
-  const userOrders = { orders: ['Икс'] };
-  const userConnectionError = false;
+  const userOrders = {
+    orders: [
+      {
+        _id: '63f8b302936b17001be610ed',
+        ingredients: [
+          '60d3b41abdacab0026a733cd',
+          '60d3b41abdacab0026a733cd',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+          '60d3b41abdacab0026a733c6',
+        ],
+        status: 'done',
+        name: 'Space краторный бургер',
+        createdAt: '2023-02-24T12:52:19.000Z',
+        updatedAt: '2023-02-24T12:52:19.387Z',
+        number: '41607',
+      },
+    ],
+    total: '41703',
+    totalToday: '54',
+  };
+  const userConnectionError = null;
 
   const token = getCookie('accessToken')?.replace('Bearer ', '');
 
@@ -37,7 +66,7 @@ const ProfileOrders = () => {
   );
 
   const render = () => {
-    if (userInfo /*&& userOrders*/) {
+    if (userInfo && userOrders) {
       if (orders) {
         return userOrders.orders.length ? (
           <OrdersBriefList orders={orders} />
@@ -47,12 +76,12 @@ const ProfileOrders = () => {
           </p>
         );
       }
-      /*if (
+      if (
         userOrders.message &&
-        userOrders.message === "Invalid or missing token"
+        userOrders.message === 'Invalid or missing token'
       ) {
         dispatch(refreshToken());
-      }*/
+      }
     } else if (userConnectionError) {
       return (
         <div className={styles.loader}>

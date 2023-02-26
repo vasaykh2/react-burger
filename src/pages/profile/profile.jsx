@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOut } from '../../services/actions/user';
 import styles from './profile.module.css';
-import ProfileForm from '../../components/profile-form/profile-form';
-import ProfileOrders from '../../components/profile-orders/profile-orders';
+import { ProfileForm, ProfileOrders } from '../../components';
 
 const Profile = () => {
   const dispatch = useDispatch();
