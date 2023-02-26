@@ -31,11 +31,11 @@ import {
   ProfileOrders,
   ProtectedRouteElement,
   Topping,
+  OderDetailsFromList,
 } from '../../components';
 
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
-
 
 function App() {
   const dispatch = useDispatch();
@@ -76,6 +76,10 @@ function App() {
           <Routes location={background || location}>
             <Route path='/' element={<BurgerMain />} />
             <Route path='/feed' element={<Feed />} />
+            <Route path='/feed/:number' element={
+            !background ? (
+              <OderDetailsFromList />
+            ) : null} />
             <Route
               path='/ingredients/:id'
               element={

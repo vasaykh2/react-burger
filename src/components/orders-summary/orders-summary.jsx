@@ -1,6 +1,5 @@
 import { useMemo, useCallback } from 'react';
 import styles from './orders-summary.module.css';
-//import { TWsOrders } from "../../types/wsOrders";
 
 const OrdersSummary = ({ orders }) => {
   const { total, totalToday } = orders;

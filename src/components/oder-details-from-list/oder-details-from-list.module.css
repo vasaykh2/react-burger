@@ -1,0 +1,75 @@
+.container {
+  display: grid;
+  width: 100%;
+  max-width: 640px;
+  margin: 40px;
+}
+
+.container_fullPage {
+  margin-top: 120px;
+}
+
+.number_fullPage {
+  justify-self: center;
+}
+
+.doneStatus {
+  color: #00cccc;
+}
+
+.ingredients {
+  margin-top: 60px;
+}
+
+.ingredients _container {
+  margin: 24px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  max-height: 312px;
+  overflow-y: scroll;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients ::-webkit-scrollbar-track {
+  background: #2f2f37;
+  height: 312px;
+}
+
+.ingredients ::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  height: 140px;
+}
+
+.ingredient {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.ingredient_image {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  background: linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(63.18deg, #801ab2, #4c4cff) border-box;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.ingredient_priceContainer {
+  display: flex;
+  gap: 9px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

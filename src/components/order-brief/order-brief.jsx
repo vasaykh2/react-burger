@@ -71,8 +71,8 @@ const OrderBrief = ({ order, forUser }) => {
         className={styles.orderBrief}
         to={{
           pathname: `${path}/${number}`,
-          state: { background: location },
         }}
+        state={{ background: location }}
       >
         <div className={styles.orderBrief__flexContainer}>
           <p className='text text_type_digits-default'>{headerNumber}</p>
