@@ -1,7 +1,5 @@
-import { BASE_URL } from '../../utils/constants';
-import { request } from '../../utils/request';
-
-import { listId } from '../../components/burger-constructor/burger-constructor';
+import { api } from '../../utils/api';
+import { getCookie } from '../../utils/cookie';
 
 export const CLOSE_ORDER_DETAILS = 'CLOSE_ORDER_DETAILS';
 export const UPDATE_ORDER_DETAILS = 'UPDATE_ORDER_DETAILS';
@@ -9,22 +7,13 @@ export const UPDATE_ORDER_DETAILS_SUCCESS = 'UPDATE_ORDER_DETAILS_SUCCESS';
 export const UPDATE_ORDER_DETAILS_REQUEST = 'UPDATE_ORDER_DETAILS_REQUEST';
 export const UPDATE_ORDER_DETAILS_FAILED = 'UPDATE_ORDER_DETAILS_FAILED';
 
-const urlOrders = BASE_URL + 'orders';
-
-export function postOrderDetails() {
+export function postOrderDetails(listId) {
   return function (dispatch) {
     dispatch({
       type: UPDATE_ORDER_DETAILS_REQUEST,
     });
-    request(urlOrders, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ingredients: listId,
-      }),
-    })
+    api
+      .postOrderDetails(listId, getCookie('accessToken'))
       .then((res) => {
         //console.log(res);
         dispatch({

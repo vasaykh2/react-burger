@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import {
@@ -8,11 +8,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { OrderDetails } from '../order-details/order-details';
-import { Modal } from '../modal/modal';
+import { default as Modal } from '../modal/modal';
 import { Topping } from '../topping/topping';
-import burgerConstructorStyles from './burger-constructor-styles.module.css';
+import styles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 import {
   addConstructorList,
   deleteConstructorList,
@@ -26,10 +28,11 @@ import {
 
 import { useDrop } from 'react-dnd';
 
-export let listId = '';
+//let listId = '';
 
-export default function BurgerConstructor() {
+function BurgerConstructor() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDeleteButton = useCallback(
     (ingredient) => {
@@ -38,36 +41,31 @@ export default function BurgerConstructor() {
     [dispatch]
   );
 
-  const { bun, toppings } = useSelector((state) => state.constructorReducer);
-  //console.log(data.length);
-  //const isData = data.length == 0 ? false : true;
-  //console.log(isData);
+  const userInfo = useSelector((state) => state.user.userInfo);
 
-  /*const handleAllIngredients = () => {
-    dispatch({
-      type: GET_CONSTRUCTOR_LIST,
-      payload: ingredients,
-    });
-  };*/
-
-  listId = useMemo(
-    () => (!toppings ? '' : toppings.map((item) => item.data._id)),
-    [toppings]
-  );
-  const bunId = bun ? bun.data._id : '';
-  listId.push(bunId);
-  //console.log(listId);
+  const { bun, toppings } = useSelector((state) => state.constructorBurger);
 
   const { order, isLoading, isModalOrderDetails } = useSelector(
-    (state) => state.orderDetailsReducer
+    (state) => state.orderDetails
   );
   // console.log(orderDetails);
 
   const handleOrder = () => {
-    dispatch(postOrderDetails());
+    const ingredientsIds = [
+      bun.data._id,
+      ...toppings.map((item) => item.data._id),
+      bun.data._id,
+    ];
+    if (!userInfo) {
+      navigate('/login');
+      
+    } else {
+      dispatch(postOrderDetails(ingredientsIds));
+      //console.log(ingredientsIds);
+    }
   };
 
-  const handleClose = () => {
+  const closeModal = () => {
     dispatch(closeOrderDetails());
     dispatch(resetConstructor());
   };
@@ -116,14 +114,14 @@ export default function BurgerConstructor() {
   const rendererIngredients = useMemo(() => renderedIngredients(), [toppings]);
 
   return (
-    <section className={burgerConstructorStyles.section}>
+    <section className={styles.section}>
       <div
-        className={`${
-          canDrop && !isHover && burgerConstructorStyles.dropActive
-        } ${isHover && burgerConstructorStyles.dropHover}`}
+        className={`${canDrop && !isHover && styles.dropActive} ${
+          isHover && styles.dropHover
+        }`}
         ref={dropTarget}
       >
-        <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
+        <div className={styles.blockItem + ' pl-8 pr-4'}>
           {!bun ? (
             <p className='text text_type_main-medium mt-15 mb-5 pr-5'>
               Выберите и перетащите сюда булку
@@ -139,15 +137,13 @@ export default function BurgerConstructor() {
           )}
         </div>
         {toppings.length ? (
-          <ul className={burgerConstructorStyles.blockTipes}>
-            {rendererIngredients}
-          </ul>
+          <ul className={styles.blockTipes}>{rendererIngredients}</ul>
         ) : (
           <p className='text text_type_main-medium mt-5 mb-5 ml-8 pr-5'>
             Выберите и перетащите сюда начинки
           </p>
         )}
-        <div className={burgerConstructorStyles.blockItem + ' pl-8 pr-4'}>
+        <div className={styles.blockItem + ' pl-8 pr-4'}>
           {!bun ? null : (
             <ConstructorElement
               text={bun.data.name + ' (низ)'}
@@ -158,9 +154,7 @@ export default function BurgerConstructor() {
             />
           )}
         </div>
-        <div
-          className={burgerConstructorStyles.blockPrice + ' mt-6 mb-10 pr-4'}
-        >
+        <div className={styles.blockPrice + ' mt-6 mb-10 pr-4'}>
           {isLoading && (
             <Oval
               ariaLabel='loading-indicator'
@@ -175,11 +169,11 @@ export default function BurgerConstructor() {
           <p className='text text_type_digits-medium pr-2'>
             {counterTotalPrice}
           </p>
-          <div className={burgerConstructorStyles.blockCurrencyIcon + ' mr-10'}>
+          <div className={styles.blockCurrencyIcon + ' mr-10'}>
             <CurrencyIcon type='primary' />
           </div>
           <Button
-            className={burgerConstructorStyles.button}
+            className={styles.button + ` ${(!toppings.length || !bun) && styles.buttonInvisible}`}
             onClick={handleOrder}
             htmlType='button'
             type='primary'
@@ -191,10 +185,12 @@ export default function BurgerConstructor() {
         </div>
       </div>
       {isModalOrderDetails && (
-        <Modal onClose={handleClose}>
+        <Modal closeModal={closeModal}>
           <OrderDetails orderNumber={order.number} />
         </Modal>
       )}
     </section>
   );
 }
+
+export { BurgerConstructor };

@@ -1,8 +1,9 @@
 .header {
-  max-width: 1920px;
-  max-height: 88px;
-  padding: 16px 0 16px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   background-color: #1c1c21;
+  box-sizing: border-box;
 }
 
 .blocks {
@@ -14,3 +15,36 @@
 .logo {
   margin: 0 289px 0 112px;
 }
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+  max-width: 1240px;
+  width: 100%;
+}
+
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-self: left;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #8585AD;
+  justify-self: right;
+}
+
+  .link_active {
+      color: #F2F2F3;
+  }
+
+  .link :hover {
+      opacity: 0.7;
+  }

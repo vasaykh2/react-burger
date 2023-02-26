@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
 
 import {
   DragIcon,
@@ -14,7 +16,7 @@ import { sortConstructor } from '../../services/actions/constructor';
 export function Topping({ ingredient, index, handleClose }) {
   const dispatch = useDispatch();
 
-  const { toppings } = useSelector((state) => state.constructorReducer);
+  const { toppings } = useSelector((state) => state.constructorBurger);
   const id = ingredient.id;
 
   const ref = useRef(null);
@@ -92,3 +94,9 @@ export function Topping({ ingredient, index, handleClose }) {
     </li>
   );
 }
+
+Topping.propTypes = {
+  ingredient: { data: ingredientType, id: PropTypes.string },
+  index: PropTypes.number,
+  handleClose: PropTypes.func,
+}.isRequired;

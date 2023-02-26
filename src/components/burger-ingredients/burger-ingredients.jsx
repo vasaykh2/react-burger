@@ -1,7 +1,6 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect, useCallback } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
+
 import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
@@ -10,56 +9,46 @@ import {
   ADD_CURRENT_INGREDIENT_DETAILS,
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../../services/actions/current-ingredient-details';
+import { addConstructorList } from '../../services/actions/constructor';
 
-export default function BurgerIngredients() {
+function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
-    (state) => state.ingredientsReducer
+    (state) => state.ingredients
   );
-  //console.log(ingredientsLoad, ingredientsFailed, ingredients );
 
-  const isData = ingredients.length == 0 ? false : true;
+  const [current, setCurrent] = React.useState('one');
+
+  /* const isData = ingredients.length == 0 ? false : true;
   //console.log(isData);
-
+  
   const idIngredients = useMemo(
     () => (!isData ? 0 : ingredients.map((item) => item._id)),
     [ingredients]
   );
   //console.log(idIngredients);
-
-  const [current, setCurrent] = React.useState('one');
-
+  
   const [isModalIngredientDetails, setModalIngredientDetails] =
     React.useState(false);
 
   const currentModalIngredientDetails = useSelector(
-    (state) => state.currentIngredientDetailsReducer
+    (state) => state.currentIngredientDetails
   );
-  //console.log(currentModalIngredientDetails);
-
-  const handleIngredientDetails = (id) => {
-    setModalIngredientDetails(true);
-    //console.log(id);
-    let currentIngredient = ingredients.find((item) => item._id == id);
-
-    const currentModalIngredient = {};
-    for (let i in currentModalIngredientDetails.item) {
-      currentModalIngredient[i] = currentIngredient[i];
-    }
-    //console.log(currentModalIngredient);
-    dispatch({
-      type: ADD_CURRENT_INGREDIENT_DETAILS,
-      item: currentModalIngredient,
-    });
-  };
 
   const handleClose = () => {
     setModalIngredientDetails(false);
     dispatch({
       type: DELETE_CURRENT_INGREDIENT_DETAILS,
     });
-  };
+  };*/
+
+  const handleRightClick = useCallback(
+    (ingredient) => {
+      dispatch(addConstructorList(ingredient));
+    },
+    [dispatch]
+  );
 
   function renderedIngredients(typeIngredients) {
     return ingredients.map(
@@ -68,24 +57,28 @@ export default function BurgerIngredients() {
           <Ingredient
             ingredient={ingredient}
             key={ingredient._id}
-            handleIngredientDetails={() =>
-              handleIngredientDetails(ingredient._id)
-            }
+            onRightClick={(evt) => {
+              evt.preventDefault();
+              handleRightClick(ingredient);
+            }}
           ></Ingredient>
         )
     );
   }
 
-  const rendererBun = useMemo(() => renderedIngredients('bun'), [ingredients]);
+  const rendererBun = useMemo(
+    () => renderedIngredients('bun'),
+    [ingredients, handleRightClick]
+  );
 
   const rendererSauce = useMemo(
     () => renderedIngredients('sauce'),
-    [ingredients]
+    [ingredients, handleRightClick]
   );
 
   const rendererMain = useMemo(
     () => renderedIngredients('main'),
-    [ingredients]
+    [ingredients, handleRightClick]
   );
 
   const refeHeder = useRef('heder');
@@ -124,8 +117,7 @@ export default function BurgerIngredients() {
       refBun.current.getBoundingClientRect().top -
         refeHeder.current.getBoundingClientRect().top
     );
-    /*const distSauce = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);
-    const distMain = Math.abs(refBun.current.getBoundingClientRect().top - refeHeder.current.getBoundingClientRect().top);*/
+
     const scale = distBun > 800 ? 'three' : distBun < 200 ? 'one' : 'two';
 
     switch (scale) {
@@ -195,13 +187,8 @@ export default function BurgerIngredients() {
           </ul>
         </li>
       </ul>
-      {isModalIngredientDetails && (
-        <Modal header={'Детали ингредиента'} onClose={handleClose}>
-          <IngredientDetails
-            currentModalIngredientDetails={currentModalIngredientDetails.item}
-          />
-        </Modal>
-      )}
     </section>
   );
 }
+
+export default BurgerIngredients;

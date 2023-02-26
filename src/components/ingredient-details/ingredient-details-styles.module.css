@@ -1,21 +1,30 @@
-.block {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin: 56px 40px;
+}
+
+.container_page {
+  margin: 135px 0;
 }
 
 .contentString {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; 
-  gap: 46px; 
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 .content {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: 8px;
 }
 
 .textValue {
