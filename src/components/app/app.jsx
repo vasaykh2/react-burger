@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import AppHeader from '../app-header/app-header';
+
 import {
   BurgerMain,
   Login,
@@ -12,14 +12,30 @@ import {
   NotFound,
   Feed,
 } from '../../pages';
-import { Notifications } from '../notifications/notifications';
-import InfoBoard from '../info-board/info-board';
-import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
+
+import {
+  AppHeader,
+  BurgerConstructor,
+  BurgerIngredients,
+  InfoBoard,
+  Ingredient,
+  IngredientDetails,
+  Modal,
+  ModalOverlay,
+  Notifications,
+  OrderBrief,
+  OrderDetails,
+  OrdersBriefList,
+  OrdersSummary,
+  ProfileForm,
+  ProfileOrders,
+  ProtectedRouteElement,
+  Topping,
+} from '../../components';
+
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
 
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 
 function App() {
   const dispatch = useDispatch();

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { getUserInfo } from '../../services/actions/user';
 
-export function ProtectedRouteElement({ onlyForAuth, element }) {
+export default function ProtectedRouteElement({ onlyForAuth, element }) {
   const user = useSelector((state) => state.user);
 
   //const location = useLocation();

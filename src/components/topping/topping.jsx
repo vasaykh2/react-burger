@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { sortConstructor } from '../../services/actions/constructor';
 
-export function Topping({ ingredient, index, handleClose }) {
+function Topping({ ingredient, index, handleClose }) {
   const dispatch = useDispatch();
 
   const { toppings } = useSelector((state) => state.constructorBurger);
@@ -100,3 +100,5 @@ Topping.propTypes = {
   index: PropTypes.number,
   handleClose: PropTypes.func,
 }.isRequired;
+
+export  {Topping}

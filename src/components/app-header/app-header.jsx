@@ -9,7 +9,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 import styles from './app-header-styles.module.css';
 
-export default function AppHeader() {
+  function AppHeader() {
   const { pathname } = useLocation();
 
   return (
@@ -60,3 +60,5 @@ export default function AppHeader() {
     </header>
   );
 }
+
+export default AppHeader;

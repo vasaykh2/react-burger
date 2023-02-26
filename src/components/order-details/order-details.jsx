@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import orderAccpetedDone from '../../images/order accpeted-done.png';
 import styles from './order-details-styles.module.css';
 
-export function OrderDetails({ orderNumber }) {
+function OrderDetails({ orderNumber }) {
   return (
     <div className={styles.block}>
       <p className='text text_type_digits-large pt-2 pb-8'>{orderNumber}</p>
@@ -19,6 +19,8 @@ export function OrderDetails({ orderNumber }) {
     </div>
   );
 }
+
+export default OrderDetails;
 
 OrderDetails.propTypes = {
   orderNumber: PropTypes.number,
