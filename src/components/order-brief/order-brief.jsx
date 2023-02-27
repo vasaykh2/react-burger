@@ -74,7 +74,7 @@ const OrderBrief = ({ order, forUser }) => {
         }}
         state={{ background: location }}
       >
-        <div className={styles.orderBrief__flexContainer}>
+        <div className={styles.orderBrief_flexContainer}>
           <p className='text text_type_digits-default'>{headerNumber}</p>
           <p className='text text_type_main-default text_color_inactive'>
             <FormattedDate date={new Date(createdAt)} />
@@ -84,24 +84,24 @@ const OrderBrief = ({ order, forUser }) => {
         {forUser && (
           <span
             className={`text text_type_main-small mt-2 ${
-              status === 'done' ? styles.orderBrief__doneStatus : null
+              status === 'done' ? styles.orderBrief_doneStatus : null
             }`}
           >
             {OrderStatuses[status]}
           </span>
         )}
-        <div className={`${styles.orderBrief__flexContainer} mt-6`}>
-          <ul className={styles.orderBrief__imageList}>
+        <div className={`${styles.orderBrief_flexContainer} mt-6`}>
+          <ul className={styles.orderBrief_imageList}>
             {selectedIngredients.map(
               (ingredient, index) =>
                 index < 6 && (
                   <li
-                    className={styles.orderBrief__imageContainer}
+                    className={styles.orderBrief_imageContainer}
                     key={ingredient._id}
                     style={{ zIndex: 6 - index }}
                   >
                     <img
-                      className={styles.orderBrief__image}
+                      className={styles.orderBrief_image}
                       src={ingredient.image}
                       alt={ingredient.name}
                     />
@@ -109,14 +109,14 @@ const OrderBrief = ({ order, forUser }) => {
                       <Counter
                         count={ingredient.count}
                         size='small'
-                        extraClass={styles.orderBrief__counter}
+                        extraClass={styles.orderBrief_counter}
                       />
                     )}
                     {index === 5 && (
                       <>
-                        <div className={styles.orderBrief__imageOverlay}></div>
+                        <div className={styles.orderBrief_imageOverlay}></div>
                         <span
-                          className={`${styles.orderBrief__hiddenCount} text text_type_main-small`}
+                          className={`${styles.orderBrief_hiddenCount} text text_type_main-small`}
                         >{`+${hiddenImagesCount}`}</span>
                       </>
                     )}
@@ -124,7 +124,7 @@ const OrderBrief = ({ order, forUser }) => {
                 )
             )}
           </ul>
-          <div className={styles.orderBrief__flexContainer}>
+          <div className={styles.orderBrief_flexContainer}>
             <p className='text text_type_digits-default mr-2'>{totalPrice}</p>
             <CurrencyIcon type='primary' />
           </div>

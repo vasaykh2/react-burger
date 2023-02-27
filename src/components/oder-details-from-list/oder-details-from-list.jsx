@@ -16,6 +16,7 @@ const OderDetailsFromList = () => {
   const { number } = useParams();
   //console.log(number);
   //const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
+  console.log(location);
 
   const publicOrders = {
     orders: [
@@ -173,19 +174,19 @@ const OderDetailsFromList = () => {
           </span>
           <div className={styles.ingredients}>
             <h2 className='text text_type_main-medium'>Состав:</h2>
-            <ul className={styles.ingredients__container}>
+            <ul className={styles.ingredients_container}>
               {orderIngredients &&
                 orderIngredients.ingredients.map((ingredient, index) => (
                   <li className={styles.ingredient} key={index}>
                     <img
-                      className={styles.ingredient__image}
+                      className={styles.ingredient_image}
                       src={ingredient.image}
                       alt={ingredient.name}
                     ></img>
                     <p className='text text_type_main-default'>
                       {ingredient.name}
                     </p>
-                    <div className={styles.ingredient__priceContainer}>
+                    <div className={styles.ingredient_priceContainer}>
                       <span className='text text_type_digits-default'>{`${ingredient.count} x ${ingredient.price}`}</span>
                       <CurrencyIcon type='primary' />
                     </div>
@@ -197,7 +198,7 @@ const OderDetailsFromList = () => {
             <p className='text text_type_main-default text_color_inactive'>
               <FormattedDate date={new Date(order.createdAt)} />
             </p>
-            <div className={styles.ingredient__priceContainer}>
+            <div className={styles.ingredient_priceContainer}>
               <span className='text text_type_digits-default'>
                 {orderIngredients && orderIngredients.totalPrice}
               </span>

@@ -83,6 +83,10 @@ function App() {
               element={!background ? <OderDetailsFromList /> : null}
             />
             <Route
+              path='/profile/orders/:number'
+              element={!background ? <OderDetailsFromList /> : null}
+            />
+            <Route
               path='/ingredients/:id'
               element={
                 !background && ingredients.length ? (
@@ -90,6 +94,7 @@ function App() {
                 ) : null
               }
             />
+
             <Route
               path='/login'
               element={
@@ -143,7 +148,7 @@ function App() {
                   element={<Profile />}
                 />
               }
-            />
+            />   
             <Route path='*' element={<NotFound />} />
           </Routes>
 
@@ -164,8 +169,7 @@ function App() {
           ) : null}
 
           {background &&
-          location.state?.background?.state?.from?.pathname ===
-            '/profile' ? (
+          location.state?.background?.state?.from?.pathname === '/profile' ? (
             <Modal closeModal={closeModal}>
               <OderDetailsFromList />
             </Modal>

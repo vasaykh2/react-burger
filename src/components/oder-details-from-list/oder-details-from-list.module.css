@@ -6,7 +6,7 @@
 }
 
 .container_fullPage {
-  margin-top: 120px;
+  margin: 120px auto 40px;
 }
 
 .number_fullPage {
@@ -21,7 +21,7 @@
   margin-top: 60px;
 }
 
-.ingredients _container {
+.ingredients_container {
   margin: 24px 0 48px;
   display: flex;
   flex-direction: column;
