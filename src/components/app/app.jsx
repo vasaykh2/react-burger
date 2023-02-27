@@ -42,6 +42,8 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state?.background;
+  //console.log(location.state?.background?.state?.from?.pathname);
+  //console.log(location);
 
   useEffect(() => {
     dispatch(getIngredientsList());
@@ -76,10 +78,10 @@ function App() {
           <Routes location={background || location}>
             <Route path='/' element={<BurgerMain />} />
             <Route path='/feed' element={<Feed />} />
-            <Route path='/feed/:number' element={
-            !background ? (
-              <OderDetailsFromList />
-            ) : null} />
+            <Route
+              path='/feed/:number'
+              element={!background ? <OderDetailsFromList /> : null}
+            />
             <Route
               path='/ingredients/:id'
               element={
@@ -144,16 +146,30 @@ function App() {
             />
             <Route path='*' element={<NotFound />} />
           </Routes>
-          {background && (
+
+          {background && ingredients.length ? (
             <Modal closeModal={closeModal}>
-              {ingredients.length ? (
-                <IngredientDetails
-                  ingredients={ingredients}
-                  id={idIngredientDetails}
-                />
-              ) : null}
+              <IngredientDetails
+                ingredients={ingredients}
+                id={idIngredientDetails}
+              />
             </Modal>
-          )}
+          ) : null}
+
+          {background &&
+          location.state?.background?.state?.from?.pathname === '/feed' ? (
+            <Modal closeModal={closeModal}>
+              <OderDetailsFromList />
+            </Modal>
+          ) : null}
+
+          {background &&
+          location.state?.background?.state?.from?.pathname ===
+            '/profile' ? (
+            <Modal closeModal={closeModal}>
+              <OderDetailsFromList />
+            </Modal>
+          ) : null}
         </>
       )}
     </>

@@ -20,10 +20,7 @@ export default function BurgerMain() {
     } else {
       if (location.state && location.state.from) {
         localStorage.setItem('stateFrom', location.state.from.pathname);
-        console.log([
-          location.state.from.pathname,
-          localStorage.getItem('stateFrom'),
-        ]);
+        //console.log([location.state.from.pathname, localStorage.getItem('stateFrom')]);
       }
     }
     dispatch(getUserInfo());

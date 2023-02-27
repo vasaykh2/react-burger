@@ -17,7 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(localStorage.getItem('stateFrom'));
+  //console.log(localStorage.getItem('stateFrom'));
 
   const { userInfo,  } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(

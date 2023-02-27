@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { ingredientsType } from '../../utils/types';
 import styles from './ingredient-details-styles.module.css';
 
@@ -11,14 +11,14 @@ function IngredientDetails({ ingredients, id }) {
 
   const location = useLocation();
   const background = location.state?.background;
-  //const  {id}  = useParams();
+  const { _id_ } = useParams();
 
   const currentIngredientDetails = useMemo(
     () => ingredients?.find((el) => el._id === id),
     [ingredients, id]
   );
 
-  //console.log(id);
+  //console.log(_id_);
 
   return currentIngredientDetails ? (
     <div

@@ -15,7 +15,6 @@ const OderDetailsFromList = () => {
   const background = location.state?.background;
   const { number } = useParams();
   //console.log(number);
-
   //const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
 
   const publicOrders = {
@@ -96,13 +95,14 @@ const OderDetailsFromList = () => {
 
   const order =
     orders?.find((order) => order.number === Number(number)) || orderInfo;
-  console.log(order);
+  //console.log(order);
 
   useEffect(() => {
     if (!order) {
       dispatch(getOrder(number));
     }
   }, [order, number, dispatch]);
+ 
 
   const headerNumber = useMemo(
     () => order !== 'notFound' && `#${String(order?.number).padStart(6, '0')}`,
