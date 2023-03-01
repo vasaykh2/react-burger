@@ -11,14 +11,13 @@ function IngredientDetails({ ingredients, id }) {
 
   const location = useLocation();
   const background = location.state?.background;
-  const { _id_ } = useParams();
+  /*const { _id_ } = useParams();
+  console.log(_id_);*/
 
   const currentIngredientDetails = useMemo(
     () => ingredients?.find((el) => el._id === id),
     [ingredients, id]
   );
-
-  //console.log(_id_);
 
   return currentIngredientDetails ? (
     <div
@@ -71,15 +70,3 @@ IngredientDetails.propTypes = {
   ingredients: ingredientsType,
   id: PropTypes.number,
 }.isRequired;
-
-/*IngredientDetails.propTypes = {
-  currentModalIngredientDetails: PropTypes.shape({
-    _id: PropTypes.string,
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image_large: PropTypes.string,
-    name: PropTypes.string,    
-    proteins: PropTypes.number,    
-  }.isRequired)
-};*/

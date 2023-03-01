@@ -12,58 +12,6 @@ import styles from './feed.module.css';
 const Feed = () => {
   const dispatch = useDispatch();
 
-  /*const wsOrdersInitialState = {
-    isUserConnection: false,
-    isPublicConnection: false,
-    userConnectionError: null,
-    publicConnectionError: null,
-    userOrders: null,
-    publicOrders: {
-      orders: [
-        {
-          _id: '63fb4cbe936b17001be61998',
-          ingredients: [
-            '60d3b41abdacab0026a733c7',
-            '60d3b41abdacab0026a733cd',
-            '60d3b41abdacab0026a733d3',
-            '60d3b41abdacab0026a733d4',
-            '60d3b41abdacab0026a733c7',
-          ],
-          status: 'done',
-          name: 'Астероидный space экзо-плантаго флюоресцентный бургер',
-          createdAt: '2023-02-26T12:12:46.931Z',
-          updatedAt: '2023-02-26T12:12:47.377Z',
-          number: 41793,
-        },
-      ],
-      total: 41700,
-      totalToday: 70,
-    },
-  };*/
-
-  /* const publicOrders = {
-    orders: [
-      {
-        _id: '63fb4cbe936b17001be61998',
-        ingredients: [
-          '60d3b41abdacab0026a733c7',
-          '60d3b41abdacab0026a733cd',
-          '60d3b41abdacab0026a733d3',
-          '60d3b41abdacab0026a733d4',
-          '60d3b41abdacab0026a733c7',
-        ],
-        status: 'done',
-        name: 'Астероидный space экзо-плантаго флюоресцентный бургер',
-        createdAt: '2023-02-26T12:12:46.931Z',
-        updatedAt: '2023-02-26T12:12:47.377Z',
-        number: '41793',
-      },
-    ],
-    total: '41700',
-    totalToday: '70',
-  };
-  const publicConnectionError = null;*/
-
   const { publicOrders, publicConnectionError } = useSelector(
     (state) => state.wsOrders
   );
@@ -81,7 +29,8 @@ const Feed = () => {
   const render = () => {
     if (publicOrders) {
       return (
-        <main className={styles.feed}>
+        <main className={styles.main}>
+          <div className={styles.feed}>
           <section>
             <h1 className='text text_type_main-large mt-10 mb-5'>
               Лента заказов
@@ -89,6 +38,7 @@ const Feed = () => {
             {ordersList && <OrdersBriefList orders={ordersList} />}
           </section>
           <OrdersSummary orders={publicOrders} />
+          </div>
         </main>
       );
     } else if (publicConnectionError) {
@@ -118,7 +68,7 @@ const Feed = () => {
             color='blue'
             secondaryColor='white'
           />
-          <span>Идёт учёт</span>
+          <span>Собираем сведения</span>
         </div>
       );
     }

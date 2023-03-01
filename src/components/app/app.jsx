@@ -15,22 +15,11 @@ import {
 
 import {
   AppHeader,
-  BurgerConstructor,
-  BurgerIngredients,
   InfoBoard,
-  Ingredient,
   IngredientDetails,
   Modal,
-  ModalOverlay,
   Notifications,
-  OrderBrief,
-  OrderDetails,
-  OrdersBriefList,
-  OrdersSummary,
-  ProfileForm,
-  ProfileOrders,
   ProtectedRouteElement,
-  Topping,
   OderDetailsFromList,
 } from '../../components';
 
@@ -57,7 +46,9 @@ function App() {
 
   //console.log(location.pathname);
 
-  const idPadge = `${location.pathname}`.split('/')[2];
+  const idPadge = `${location.pathname}`.split('/')[
+    `${location.pathname}`.split('/').length - 1
+  ];
 
   //console.log([!!background, idIngredientDetails,]);
 
@@ -94,7 +85,6 @@ function App() {
                 ) : null
               }
             />
-
             <Route
               path='/login'
               element={
@@ -151,7 +141,6 @@ function App() {
             />
             <Route path='*' element={<NotFound />} />
           </Routes>
-
           {background && ingredients.length ? (
             <Modal closeModal={closeModal}>
               <IngredientDetails

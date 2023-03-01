@@ -2,7 +2,7 @@ import {
   FormattedDate,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMemo, useEffect } from 'react';
 import { getOrder } from '../../services/actions/order';
@@ -13,68 +13,16 @@ const OderDetailsFromList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state?.background;
-  //const { number } = useParams();
-  const  number = `${location.pathname}`.split('/')[`${location.pathname}`.split('/').length - 1];   
- console.log(number);
+  const number = `${location.pathname}`.split('/')[
+    `${location.pathname}`.split('/').length - 1
+  ];
+  //console.log(number);
 
   const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
   //console.log(location);
 
-  /*const publicOrders = {
-    orders: [
-      {
-        _id: '63fb4cbe936b17001be61998',
-        ingredients: [
-          '60d3b41abdacab0026a733c7',
-          '60d3b41abdacab0026a733cd',
-          '60d3b41abdacab0026a733d3',
-          '60d3b41abdacab0026a733d4',
-          '60d3b41abdacab0026a733c7',
-        ],
-        status: 'done',
-        name: 'Астероидный space экзо-плантаго флюоресцентный бургер',
-        createdAt: '2023-02-26T12:12:46.931Z',
-        updatedAt: '2023-02-26T12:12:47.377Z',
-        number: '41793',
-      },
-    ],
-    total: '41700',
-    totalToday: '70',
-  };
-  const userOrders = {
-    orders: [
-      {
-        _id: '63f8b302936b17001be610ed',
-        ingredients: [
-          '60d3b41abdacab0026a733cd',
-          '60d3b41abdacab0026a733cd',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-          '60d3b41abdacab0026a733c6',
-        ],
-        status: 'done',
-        name: 'Space краторный бургер',
-        createdAt: '2023-02-24T12:52:19.000Z',
-        updatedAt: '2023-02-24T12:52:19.387Z',
-        number: '41793',
-      },
-    ],
-    total: '41703',
-    totalToday: '54',
-  };*/
-
-  //const stateOder =  useSelector((state) => state.oder);  
-  const {orderInfo} =  useSelector((state) => state.oder);
+  const { orderInfo } = useSelector((state) => state.oder);
   //console.log(stateOder);
-  
 
   const { ingredients } = useSelector((state) => state.ingredients);
 
@@ -97,7 +45,6 @@ const OderDetailsFromList = () => {
       dispatch(getOrder(number));
     }
   }, [order, number, dispatch]);
- 
 
   const headerNumber = useMemo(
     () => order !== 'notFound' && `#${String(order?.number).padStart(6, '0')}`,

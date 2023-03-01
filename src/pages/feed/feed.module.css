@@ -1,7 +1,13 @@
+.main {
+  width: 1188px;
+  margin: 0 auto;
+}
+
 .feed {
   display: grid;
   grid-template-columns: 600px 584px;
   column-gap: 60px;
+  
 }
 
 .loader {
