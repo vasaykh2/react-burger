@@ -13,7 +13,7 @@ const OrdersSummary = ({ orders }) => {
     [orders]
   );
 
-  const renderNumber = useCallback((number) => number.padStart(6, '0'), []);
+  const renderNumber = useCallback(number => number.toString().padStart(6, '0'), []);
 
   return (
     <section className={styles.ordersSummary}>

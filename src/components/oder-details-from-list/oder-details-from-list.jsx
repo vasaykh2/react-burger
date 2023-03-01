@@ -13,12 +13,14 @@ const OderDetailsFromList = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state?.background;
-  const { number } = useParams();
-  //console.log(number);
-  //const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
-  console.log(location);
+  //const { number } = useParams();
+  const  number = `${location.pathname}`.split('/')[`${location.pathname}`.split('/').length - 1];   
+ console.log(number);
 
-  const publicOrders = {
+  const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
+  //console.log(location);
+
+  /*const publicOrders = {
     orders: [
       {
         _id: '63fb4cbe936b17001be61998',
@@ -67,20 +69,12 @@ const OderDetailsFromList = () => {
     ],
     total: '41703',
     totalToday: '54',
-  };
+  };*/
 
-  //const { orderInfo } = useSelector((state) => state.order);
-  const orderInfo = {
-    _id: '63fb96da936b17001be61ab1',
-    ingredients: ['60d3b41abdacab0026a733cd', '60d3b41abdacab0026a733c7'],
-    owner: '63ecc2ca936b17001be5e019',
-    status: 'done',
-    name: 'Space флюоресцентный бургер',
-    createdAt: '2023-02-26T17:28:58.420Z',
-    updatedAt: '2023-02-26T17:28:58.807Z',
-    number: '41799',
-    __v: '0',
-  };
+  //const stateOder =  useSelector((state) => state.oder);  
+  const {orderInfo} =  useSelector((state) => state.oder);
+  //console.log(stateOder);
+  
 
   const { ingredients } = useSelector((state) => state.ingredients);
 

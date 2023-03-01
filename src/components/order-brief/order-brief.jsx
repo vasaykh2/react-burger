@@ -57,7 +57,7 @@ const OrderBrief = ({ order, forUser }) => {
     [selectedIngredients]
   );
 
-  const headerNumber = useMemo(() => `${number.padStart(6, '0')}`, [number]);
+  const headerNumber = useMemo(() => `${number.toString().padStart(6, '0')}`, [number]);
 
   const OrderStatuses = {
     created: 'Создан',

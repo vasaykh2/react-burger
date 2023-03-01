@@ -148,7 +148,7 @@ function App() {
                   element={<Profile />}
                 />
               }
-            />   
+            />
             <Route path='*' element={<NotFound />} />
           </Routes>
 

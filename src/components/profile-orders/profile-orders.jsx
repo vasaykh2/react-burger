@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-/*import {
+import {
   startUserWsConnection,
   closeUserWsConnection,
-} from "../../services/actions/wsOrders";*/
+} from '../../services/actions/ws-orders';
 
 import { Oval } from 'react-loader-spinner';
 import OrdersBriefList from '../orders-brief-list/orders-brief-list';
@@ -16,10 +16,11 @@ import { Ingredient } from '../ingredient/ingredient';
 const ProfileOrders = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
-  /*const { userOrders, userConnectionError } = useSelector(
+  const { userOrders, userConnectionError } = useSelector(
     (state) => state.wsOrders
-  );*/
-  const userOrders = {
+  );
+
+  /* const userOrders = {
     orders: [
       {
         _id: '63f8b302936b17001be610ed',
@@ -48,17 +49,16 @@ const ProfileOrders = () => {
     total: '41703',
     totalToday: '54',
   };
-  const userConnectionError = null;
+  const userConnectionError = null;*/
 
   const token = getCookie('accessToken')?.replace('Bearer ', '');
 
-  /*useEffect(() => {
+  useEffect(() => {
     userInfo && token && dispatch(startUserWsConnection(token));
-
     return () => {
       dispatch(closeUserWsConnection());
     };
-  }, [userInfo, token, dispatch]);*/
+  }, [userInfo, token, dispatch]);
 
   const orders = useMemo(
     () => userOrders && [...userOrders.orders].reverse(),

@@ -12,7 +12,7 @@ import styles from './feed.module.css';
 const Feed = () => {
   const dispatch = useDispatch();
 
-  const wsOrdersInitialState = {
+  /*const wsOrdersInitialState = {
     isUserConnection: false,
     isPublicConnection: false,
     userConnectionError: null,
@@ -39,12 +39,9 @@ const Feed = () => {
       total: 41700,
       totalToday: 70,
     },
-  };
+  };*/
 
-  /*const { publicOrders, publicConnectionError } = useSelector(
-    (state) => state.wsOrders
-  );*/
-  const publicOrders = {
+  /* const publicOrders = {
     orders: [
       {
         _id: '63fb4cbe936b17001be61998',
@@ -65,17 +62,21 @@ const Feed = () => {
     total: '41700',
     totalToday: '70',
   };
-  const publicConnectionError = null;
+  const publicConnectionError = null;*/
+
+  const { publicOrders, publicConnectionError } = useSelector(
+    (state) => state.wsOrders
+  );
 
   const ordersList = useMemo(() => publicOrders?.orders, [publicOrders]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(startPublicWsConnection());
 
     return () => {
       dispatch(closePublicWsConnection());
     };
-  }, [dispatch]);*/
+  }, [dispatch]);
 
   const render = () => {
     if (publicOrders) {

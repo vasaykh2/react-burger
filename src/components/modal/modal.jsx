@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+//import { Outlet  } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
@@ -27,7 +28,9 @@ function Modal({ closeModal, children }) {
             <CloseIcon type='primary' />
           </div>
         </div>
+        
         {children}
+        
       </div>
     </>,
     modalRoot
