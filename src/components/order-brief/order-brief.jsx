@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useResolvedPath } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { oderType } from '../../utils/types';
 import {
   FormattedDate,
   CurrencyIcon,
@@ -57,7 +59,10 @@ const OrderBrief = ({ order, forUser }) => {
     [selectedIngredients]
   );
 
-  const headerNumber = useMemo(() => `${number.toString().padStart(6, '0')}`, [number]);
+  const headerNumber = useMemo(
+    () => `${number.toString().padStart(6, '0')}`,
+    [number]
+  );
 
   const OrderStatuses = {
     created: 'Создан',
@@ -135,3 +140,8 @@ const OrderBrief = ({ order, forUser }) => {
 };
 
 export default OrderBrief;
+
+OrderBrief.propTypes = {
+  order: oderType,
+  forUser: PropTypes.string,
+}.isRequired;

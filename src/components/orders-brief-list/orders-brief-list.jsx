@@ -1,6 +1,8 @@
 import OrderBrief from '../order-brief/order-brief';
 import { useResolvedPath } from 'react-router-dom';
 import { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { oderType } from '../../utils/types';
 import styles from './orders-brief-list.module.css';
 
 const OrdersBriefList = ({ orders }) => {
@@ -19,3 +21,5 @@ const OrdersBriefList = ({ orders }) => {
 };
 
 export default OrdersBriefList;
+
+OrdersBriefList.propTypes = PropTypes.shape(oderType).isRequired;
