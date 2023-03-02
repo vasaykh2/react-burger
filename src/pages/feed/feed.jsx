@@ -16,7 +16,7 @@ const Feed = () => {
     (state) => state.wsOrders
   );
 
-  const ordersList = useMemo(() => publicOrders?.orders, [publicOrders]);
+  const ordersList = publicOrders?.orders;
 
   useEffect(() => {
     dispatch(startPublicWsConnection());
