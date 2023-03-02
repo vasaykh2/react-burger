@@ -1,5 +1,7 @@
 import { Middleware, MiddlewareAPI } from 'redux';
 
+import { WS_USER_START } from '../actions/ws-orders';
+
 export const wsMiddleware = (wsUrl, wsActions) => {
   return (store) => {
     let socket = null;
@@ -10,7 +12,7 @@ export const wsMiddleware = (wsUrl, wsActions) => {
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
       if (type === wsInit) {
         socket =
-          type === 'WS_USER_START' && action.payload
+          type === WS_USER_START && action.payload
             ? new WebSocket(`${wsUrl}${action.payload}`)
             : new WebSocket(wsUrl);
       }
@@ -32,6 +34,10 @@ export const wsMiddleware = (wsUrl, wsActions) => {
         };
 
         socket.onclose = () => {
+          dispatch({ type: onClose });
+        };
+
+        socket.wsClose = () => {
           dispatch({ type: onClose });
         };
       }
