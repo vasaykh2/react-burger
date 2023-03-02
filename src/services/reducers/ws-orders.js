@@ -61,9 +61,13 @@ export const wsOrdersReducer = (state = wsOrdersInitialState, action) => {
         publicOrders: null,
       };
     case WS_USER_ORDERS:
+      const userOrders = action.payload;
       return {
         ...state,
-        userOrders: action.payload,
+        userOrders: {
+          ...userOrders,
+          orders: userOrders.orders.reverse(),
+        },
       };
     case WS_PUBLIC_ORDERS:
       return {

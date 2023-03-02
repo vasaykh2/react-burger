@@ -28,10 +28,7 @@ const ProfileOrders = () => {
     };
   }, [userInfo, token, dispatch]);
 
-  const orders = useMemo(
-    () => userOrders && [...userOrders.orders].reverse(),
-    [userOrders]
-  );
+  const orders = userOrders && userOrders.orders;
 
   const render = () => {
     if (userInfo && userOrders) {
