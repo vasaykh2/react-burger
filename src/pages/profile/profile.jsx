@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Outlet } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOut } from '../../services/actions/user';
 import styles from './profile.module.css';
-import { ProfileForm, ProfileOrders } from '../../components';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -85,11 +85,7 @@ const Profile = () => {
       >
         {profileCaption()}
       </p>
-      {pathname === '/profile' ? (
-        <ProfileForm />
-      ) : pathname === '/profile/orders' ? (
-        <ProfileOrders />
-      ) : null}
+      <Outlet />
     </main>
   );
 };

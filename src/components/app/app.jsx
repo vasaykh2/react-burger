@@ -21,6 +21,8 @@ import {
   Notifications,
   ProtectedRouteElement,
   OderDetailsFromList,
+  ProfileForm,
+  ProfileOrders,
 } from '../../components';
 
 import { getIngredientsList } from '../../services/actions/ingredients';
@@ -121,6 +123,7 @@ function App() {
                 />
               }
             />
+
             <Route
               path='/profile'
               element={
@@ -129,16 +132,27 @@ function App() {
                   element={<Profile />}
                 />
               }
-            />
-            <Route
-              path='/profile/orders'
-              element={
-                <ProtectedRouteElement
-                  onlyForAuth={true}
-                  element={<Profile />}
-                />
-              }
-            />
+            >
+              <Route
+                path=''
+                element={
+                  <ProtectedRouteElement
+                    onlyForAuth={true}
+                    element={<ProfileForm />}
+                  />
+                }
+              />
+              <Route
+                path='orders'
+                element={
+                  <ProtectedRouteElement
+                    onlyForAuth={true}
+                    element={<ProfileOrders />}
+                  />
+                }
+              />
+            </Route>
+
             <Route path='*' element={<NotFound />} />
           </Routes>
           {background && ingredients.length ? (
