@@ -5,43 +5,15 @@ import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  ADD_CURRENT_INGREDIENT_DETAILS,
-  DELETE_CURRENT_INGREDIENT_DETAILS,
-} from '../../services/actions/current-ingredient-details';
+
 import { addConstructorList } from '../../services/actions/constructor';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
 
-  const { ingredientsLoad, ingredientsFailed, ingredients } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   const [current, setCurrent] = React.useState('one');
-
-  /* const isData = ingredients.length == 0 ? false : true;
-  //console.log(isData);
-  
-  const idIngredients = useMemo(
-    () => (!isData ? 0 : ingredients.map((item) => item._id)),
-    [ingredients]
-  );
-  //console.log(idIngredients);
-  
-  const [isModalIngredientDetails, setModalIngredientDetails] =
-    React.useState(false);
-
-  const currentModalIngredientDetails = useSelector(
-    (state) => state.currentIngredientDetails
-  );
-
-  const handleClose = () => {
-    setModalIngredientDetails(false);
-    dispatch({
-      type: DELETE_CURRENT_INGREDIENT_DETAILS,
-    });
-  };*/
 
   const handleRightClick = useCallback(
     (ingredient) => {

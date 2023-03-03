@@ -70,6 +70,9 @@ const OrderBrief = ({ order, forUser }) => {
     done: 'Выполнен',
   };
 
+  const mintoppingsCount = 1;
+  const maxIngredientsCount = 6;
+
   return (
     <li>
       <Link
@@ -99,25 +102,26 @@ const OrderBrief = ({ order, forUser }) => {
           <ul className={styles.orderBrief_imageList}>
             {selectedIngredients.map(
               (ingredient, index) =>
-                index < 6 && (
+                index < maxIngredientsCount && (
                   <li
                     className={styles.orderBrief_imageContainer}
                     key={ingredient._id}
-                    style={{ zIndex: 6 - index }}
+                    style={{ zIndex: maxIngredientsCount - index }}
                   >
                     <img
                       className={styles.orderBrief_image}
                       src={ingredient.image}
                       alt={ingredient.name}
                     />
-                    {index < 5 && ingredient.count > 1 && (
-                      <Counter
-                        count={ingredient.count}
-                        size='small'
-                        extraClass={styles.orderBrief_counter}
-                      />
-                    )}
-                    {index === 5 && (
+                    {index < maxIngredientsCount - 1 &&
+                      ingredient.count > mintoppingsCount && (
+                        <Counter
+                          count={ingredient.count}
+                          size='small'
+                          extraClass={styles.orderBrief_counter}
+                        />
+                      )}
+                    {index === maxIngredientsCount - 1 && (
                       <>
                         <div className={styles.orderBrief_imageOverlay}></div>
                         <span
