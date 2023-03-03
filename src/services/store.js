@@ -25,6 +25,7 @@ const wsUserActions = {
   onClose: WS_USER_CLOSED,
   onError: WS_USER_ERROR,
   onMessage: WS_USER_ORDERS,
+  wsClose: WS_USER_CLOSED,
 };
 
 const wsPublicActions = {
@@ -33,6 +34,7 @@ const wsPublicActions = {
   onClose: WS_PUBLIC_CLOSED,
   onError: WS_PUBLIC_ERROR,
   onMessage: WS_PUBLIC_ORDERS,
+  wsClose: WS_PUBLIC_CLOSED,
 };
 
 export const store = createStore(
