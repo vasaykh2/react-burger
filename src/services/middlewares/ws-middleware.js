@@ -1,14 +1,13 @@
-import { Middleware, MiddlewareAPI } from 'redux';
-
-import { WS_USER_START } from '../actions/ws-orders';
+//import { Middleware, MiddlewareAPI } from 'redux';
+import { WS_USER_START } from '../actions/ws-user-orders';
 
 export const wsMiddleware = (wsUrl, wsActions) => {
   return (store) => {
     let socket = null;
 
     return (next) => (action) => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
+      const { dispatch /*getState*/ } = store;
+      const { type /*payload*/ } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
       if (type === wsInit) {
         socket =

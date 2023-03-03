@@ -5,14 +5,16 @@ import { currentIngredientDetailsReducer } from './current-ingredient-details';
 import { orderDetailsReducer } from './order-details';
 import { userReducer } from './user';
 import { orderReducer } from './order';
-import { wsOrdersReducer } from './ws-orders';
+import { wsPublicOrdersReducer } from './ws-public-orders';
+import { wsUserOrdersReducer } from './ws-user-orders';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructorBurger: constructorReducer,
   oder: orderReducer,
   user: userReducer,
-  wsOrders: wsOrdersReducer,
+  wsPublic: wsPublicOrdersReducer,
+  wsUser: wsUserOrdersReducer,
   currentIngredientDetails: currentIngredientDetailsReducer,
   orderDetails: orderDetailsReducer,
 });

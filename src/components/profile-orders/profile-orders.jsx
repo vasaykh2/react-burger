@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   startUserWsConnection,
   closeUserWsConnection,
-} from '../../services/actions/ws-orders';
+} from '../../services/actions/ws-user-orders';
 
 import { Oval } from 'react-loader-spinner';
 import OrdersBriefList from '../orders-brief-list/orders-brief-list';
@@ -16,7 +16,7 @@ const ProfileOrders = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
   const { userOrders, userConnectionError } = useSelector(
-    (state) => state.wsOrders
+    (state) => state.wsUser
   );
 
   const token = getCookie('accessToken')?.replace('Bearer ', '');

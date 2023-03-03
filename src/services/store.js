@@ -4,17 +4,19 @@ import { rootReducer } from './reducers';
 import thunk from 'redux-thunk';
 import { wsMiddleware } from './middlewares/ws-middleware';
 import {
-  WS_USER_START,
   WS_PUBLIC_START,
-  WS_USER_SUCCESS,
   WS_PUBLIC_SUCCESS,
-  WS_USER_ERROR,
   WS_PUBLIC_ERROR,
-  WS_USER_CLOSED,
   WS_PUBLIC_CLOSED,
-  WS_USER_ORDERS,
   WS_PUBLIC_ORDERS,
-} from './actions/ws-orders';
+} from './actions/ws-public-orders';
+import {
+  WS_USER_START,
+  WS_USER_SUCCESS,
+  WS_USER_ERROR,
+  WS_USER_CLOSED,
+  WS_USER_ORDERS,
+} from './actions/ws-user-orders';
 import { ORDERS_URL } from '../utils/constants';
 
 const wsUserActions = {

@@ -18,7 +18,8 @@ const OderDetailsFromList = () => {
   ];
   //console.log(number);
 
-  const { userOrders, publicOrders } = useSelector((state) => state.wsOrders);
+  const {  publicOrders } = useSelector((state) => state.wsPublic);
+  const { userOrders } = useSelector((state) => state.wsUser);
   //console.log(location);
 
   const { orderInfo } = useSelector((state) => state.oder);

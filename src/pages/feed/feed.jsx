@@ -1,19 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import OrdersBriefList from '../../components/orders-brief-list/orders-brief-list';
 import OrdersSummary from '../../components/orders-summary/orders-summary';
 import { Oval } from 'react-loader-spinner';
 import {
   startPublicWsConnection,
   closePublicWsConnection,
-} from '../../services/actions/ws-orders';
+} from '../../services/actions/ws-public-orders';
 import styles from './feed.module.css';
 
 const Feed = () => {
   const dispatch = useDispatch();
 
   const { publicOrders, publicConnectionError } = useSelector(
-    (state) => state.wsOrders
+    (state) => state.wsPublic
   );
 
   const ordersList = publicOrders?.orders;
@@ -31,13 +31,13 @@ const Feed = () => {
       return (
         <main className={styles.main}>
           <div className={styles.feed}>
-          <section>
-            <h1 className='text text_type_main-large mt-10 mb-5'>
-              Лента заказов
-            </h1>
-            {ordersList && <OrdersBriefList orders={ordersList} />}
-          </section>
-          <OrdersSummary orders={publicOrders} />
+            <section>
+              <h1 className='text text_type_main-large mt-10 mb-5'>
+                Лента заказов
+              </h1>
+              {ordersList && <OrdersBriefList orders={ordersList} />}
+            </section>
+            <OrdersSummary orders={publicOrders} />
           </div>
         </main>
       );
