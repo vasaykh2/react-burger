@@ -91,6 +91,14 @@ const OderDetailsFromList = () => {
     done: 'Выполнен',
   };
 
+  /*useEffect(() => {
+        if (location.state && location.state.background) {
+      localStorage.setItem('stateFrom', 'background' + location.pathname);
+      console.log(localStorage.getItem('stateFrom'));
+    }
+    //console.log(location);
+  }, [location]);*/
+
   return (
     <>
       {order && order !== 'notFound' && (

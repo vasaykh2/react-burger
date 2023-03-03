@@ -18,13 +18,32 @@ export default function BurgerMain() {
     if (localStorage.getItem('stateFrom') === '/profile' && !location.state) {
       navigate('/profile', { state: { from: { pathname: '/profile' } } });
     } else {
-      if (location.state && location.state.from) {
-        localStorage.setItem('stateFrom', location.state.from.pathname);
-        //console.log([location.state.from.pathname, localStorage.getItem('stateFrom')]);
+      if (
+        localStorage.getItem('stateFrom') === '/profile/orders' &&
+        !location.state
+      ) {
+        navigate('/profile/orders', {
+          state: { from: { pathname: '/profile/orders' } },
+        });
+      } else {
+        if (
+          false /*localStorage.getItem('stateFrom').includes('background') &&
+          !location.state*/
+        ) {
+          //console.log(localStorage.getItem('stateFrom').split('background')[1]);
+          navigate('/profile/orders', {
+            state: { background: { pathname: '/profile/orders' } },
+          });
+        } else {
+          if (location.state && location.state.from) {
+            localStorage.setItem('stateFrom', location.state.from.pathname);
+            //console.log([location.state.from.pathname, localStorage.getItem('stateFrom')]);
+          }
+        }
       }
     }
     dispatch(getUserInfo());
-  }, []);
+  }, [location.state, navigate, dispatch]);
 
   return (
     <DndProvider backend={HTML5Backend}>

@@ -153,9 +153,10 @@ function App() {
               />
             </Route>
 
-            <Route path='*' element={<NotFound />} />
+            {!background && <Route path='*' element={<NotFound />} />}
           </Routes>
-          {background && ingredients.length ? (
+
+          {background && ingredients.length && idIngredientDetails ? (
             <Modal closeModal={closeModal}>
               <IngredientDetails
                 ingredients={ingredients}
@@ -172,7 +173,8 @@ function App() {
           ) : null}
 
           {background &&
-          location.state?.background?.state?.from?.pathname === '/profile' ? (
+          location.state?.background?.state?.from?.pathname ===
+            '/profile/orders' ? (
             <Modal closeModal={closeModal}>
               <OderDetailsFromList />
             </Modal>
