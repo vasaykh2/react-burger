@@ -146,6 +146,6 @@ const OrderBrief = ({ order, forUser }) => {
 export default OrderBrief;
 
 OrderBrief.propTypes = {
-  order: oderType,
-  forUser: PropTypes.string,
+  order: oderType.isRequired,
+  forUser: PropTypes.string.isRequired,
 }.isRequired;
