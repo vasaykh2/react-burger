@@ -8,7 +8,8 @@ export const wsMiddleware = (wsUrl, wsActions) => {
     return (next) => (action) => {
       const { dispatch /*getState*/ } = store;
       const { type /*payload*/ } = action;
-      const { wsInit, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
+      const { wsInit, onOpen, onClose, onError, onMessage, wsClose } =
+        wsActions;
       if (type === wsInit) {
         socket =
           type === WS_USER_START && action.payload
@@ -36,9 +37,9 @@ export const wsMiddleware = (wsUrl, wsActions) => {
           dispatch({ type: onClose });
         };
 
-        socket.wsclose = () => {
-          dispatch({ type: wsClose });
-        };
+        if (type === wsClose) {
+          socket.close();
+        }
       }
 
       next(action);
