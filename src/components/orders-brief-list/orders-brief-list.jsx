@@ -22,4 +22,4 @@ const OrdersBriefList = ({ orders }) => {
 
 export default OrdersBriefList;
 
-OrdersBriefList.propTypes = PropTypes.shape(oderType).isRequired;
+OrdersBriefList.propTypes = PropTypes.shape(oderType.isRequired).isRequired;
