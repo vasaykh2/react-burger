@@ -16,7 +16,7 @@ export default function ProtectedRouteElement({ onlyForAuth, element }) {
 
   useEffect(() => {
     dispatch(getUserInfo());
-  }, []);
+  }, [dispatch]);
 
   const userInfo = user.userInfo;
 
