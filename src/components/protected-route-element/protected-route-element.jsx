@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 import { getUserInfo } from '../../services/actions/user';
 
 export default function ProtectedRouteElement({ onlyForAuth, element }) {
-  const user = useSelector((state) => state.user);
-
+  const user = useSelector((state) => state.user);  
   //const location = useLocation();
   //console.log(element.type.name);
   //const [isUserLoaded, setUserLoaded] = useState(false);
@@ -28,11 +27,12 @@ export default function ProtectedRouteElement({ onlyForAuth, element }) {
     return <Navigate to='/forgot-password' replace />;
   }
 
-  if (element.type.name === 'Profile' && userInfo) {
+  if ((element.type.name === 'Profile' || element.type.name === 'ProfileOrders') && userInfo) {
     return element;
   }
 
   if (!onlyForAuth && userInfo) {
+    //console.log(localStorage.getItem('stateFrom'));
     return <Navigate to='/' replace />;
   }
 

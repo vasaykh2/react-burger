@@ -16,12 +16,14 @@ export default function BurgerMain() {
 
   useEffect(() => {
     if (localStorage.getItem('stateFrom') === '/profile' && !location.state) {
+      //console.log([location.state?.from?.pathname, localStorage.getItem('stateFrom')]);
       navigate('/profile', { state: { from: { pathname: '/profile' } } });
     } else {
       if (
         localStorage.getItem('stateFrom') === '/profile/orders' &&
         !location.state
       ) {
+        //console.log([location.state?.from?.pathname, localStorage.getItem('stateFrom')]);
         navigate('/profile/orders', {
           state: { from: { pathname: '/profile/orders' } },
         });
