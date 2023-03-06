@@ -56,6 +56,28 @@ class Api {
     });
   }
 
+  postOrder(order, token = '') {
+    return this._fetchWithRefresh(`${this.url}/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
+        ingredients: order,
+      }),
+    });
+  }
+
+  getOrder(orderNumber) {
+    return this._request(`${this.url}/orders/${orderNumber}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+  }
+
   /*postOrderDetails(listId, token = '') {
     return this._request(`${this.url}/orders`, {
       method: 'POST',
@@ -128,15 +150,6 @@ class Api {
       body: JSON.stringify({
         token,
       }),
-    });
-  }
-
-  getOrder(orderNumber) {
-    return this._request(`${this.url}/orders/${orderNumber}`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
     });
   }
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import AppHeader from '../app-header/app-header';
+
 import {
   BurgerMain,
   Login,
@@ -10,21 +10,31 @@ import {
   ResetPassword,
   Profile,
   NotFound,
+  Feed,
 } from '../../pages';
-import { Notifications } from '../notifications/notifications';
-import InfoBoard from '../info-board/info-board';
-import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
+
+import {
+  AppHeader,
+  InfoBoard,
+  IngredientDetails,
+  Modal,
+  Notifications,
+  ProtectedRouteElement,
+  OderDetailsFromList,
+  ProfileForm,
+  ProfileOrders,
+} from '../../components';
+
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
-
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state?.background;
+  //console.log(location.state?.background?.state?.from?.pathname);
+  //console.log(location);
 
   useEffect(() => {
     dispatch(getIngredientsList());
@@ -38,7 +48,9 @@ function App() {
 
   //console.log(location.pathname);
 
-  const idPadge = `${location.pathname}`.split('/')[2];
+  const idPadge = `${location.pathname}`.split('/')[
+    `${location.pathname}`.split('/').length - 1
+  ];
 
   //console.log([!!background, idIngredientDetails,]);
 
@@ -58,6 +70,15 @@ function App() {
           <AppHeader />
           <Routes location={background || location}>
             <Route path='/' element={<BurgerMain />} />
+            <Route path='/feed' element={<Feed />} />
+            <Route
+              path='/feed/:number'
+              element={!background ? <OderDetailsFromList /> : null}
+            />
+            <Route
+              path='/profile/orders/:number'
+              element={!background ? <OderDetailsFromList /> : null}
+            />
             <Route
               path='/ingredients/:id'
               element={
@@ -102,6 +123,7 @@ function App() {
                 />
               }
             />
+
             <Route
               path='/profile'
               element={
@@ -110,28 +132,53 @@ function App() {
                   element={<Profile />}
                 />
               }
-            />
-            <Route
-              path='/profile/orders'
-              element={
-                <ProtectedRouteElement
-                  onlyForAuth={true}
-                  element={<Profile />}
-                />
-              }
-            />
-            <Route path='*' element={<NotFound />} />
+            >
+              <Route
+                path=''
+                element={
+                  <ProtectedRouteElement
+                    onlyForAuth={true}
+                    element={<ProfileForm />}
+                  />
+                }
+              />
+              <Route
+                path='orders'
+                element={
+                  <ProtectedRouteElement
+                    onlyForAuth={true}
+                    element={<ProfileOrders />}
+                  />
+                }
+              />
+            </Route>
+
+            {!background && <Route path='*' element={<NotFound />} />}
           </Routes>
-          {background && (
+
+          {background && ingredients.length && idIngredientDetails ? (
             <Modal closeModal={closeModal}>
-              {ingredients.length ? (
-                <IngredientDetails
-                  ingredients={ingredients}
-                  id={idIngredientDetails}
-                />
-              ) : null}
+              <IngredientDetails
+                ingredients={ingredients}
+                id={idIngredientDetails}
+              />
             </Modal>
-          )}
+          ) : null}
+
+          {background &&
+          location.state?.background?.state?.from?.pathname === '/feed' ? (
+            <Modal closeModal={closeModal}>
+              <OderDetailsFromList />
+            </Modal>
+          ) : null}
+
+          {background &&
+          location.state?.background?.state?.from?.pathname ===
+            '/profile/orders' ? (
+            <Modal closeModal={closeModal}>
+              <OderDetailsFromList />
+            </Modal>
+          ) : null}
         </>
       )}
     </>

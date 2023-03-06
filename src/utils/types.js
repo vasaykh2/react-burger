@@ -16,3 +16,13 @@ export const ingredientType = {
 };
 
 export const ingredientsType = PropTypes.shape(ingredientType);
+
+export const oderType = {
+  _id: PropTypes.string,
+  ingredients: PropTypes.arrayOf(PropTypes.string),
+  status: PropTypes.string,
+  name: PropTypes.string,
+  createdAt: PropTypes.string,
+  updatedAt: PropTypes.string,
+  number: PropTypes.number,
+};

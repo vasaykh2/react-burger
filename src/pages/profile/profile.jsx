@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Outlet } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOut } from '../../services/actions/user';
 import styles from './profile.module.css';
-import ProfileForm from '../../components/profile-form/profile-form';
-import ProfileOrders from '../../components/profile-orders/profile-orders';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -34,6 +33,10 @@ const Profile = () => {
     if (location.state && location.state.from) {
       localStorage.setItem('stateFrom', location.state.from.pathname);
     }
+    if (location.state && location.state.background) {
+      localStorage.setItem('stateFrom', location);
+    }
+
     //console.log(location);
   }, [location]);
 
@@ -64,7 +67,7 @@ const Profile = () => {
                 'text text_type_main-medium' +
                 (isActive ? ` ${styles.link_active}` : ` ${styles.link}`)
               }
-              state={{ from: { pathname: '/profile' } }}
+              state={{ from: { pathname: '/profile/orders' } }}
             >
               История заказов
             </NavLink>
@@ -86,11 +89,7 @@ const Profile = () => {
       >
         {profileCaption()}
       </p>
-      {pathname === '/profile' ? (
-        <ProfileForm />
-      ) : pathname === '/profile/orders' ? (
-        <ProfileOrders />
-      ) : null}
+      <Outlet />
     </main>
   );
 };

@@ -6,7 +6,7 @@ import styles from './notifications-styles.module.css';
 
 const notificationRoot = document.getElementById('react-notifications');
 
-export function Notifications(children) {
+function Notifications(children) {
   return children
     ? null
     : ReactDOM.createPortal(
@@ -17,4 +17,7 @@ export function Notifications(children) {
       );
 }
 
+export default Notifications;
+
 Notifications.propTypes = PropTypes.node.isRequired;
+

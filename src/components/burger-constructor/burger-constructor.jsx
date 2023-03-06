@@ -7,9 +7,8 @@ import {
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { OrderDetails } from '../order-details/order-details';
-import { default as Modal } from '../modal/modal';
-import { Topping } from '../topping/topping';
+import { OrderDetails, Modal, Topping } from '../../components';
+
 import styles from './burger-constructor-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -193,4 +192,4 @@ function BurgerConstructor() {
   );
 }
 
-export { BurgerConstructor };
+export {BurgerConstructor} ;
