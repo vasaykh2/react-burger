@@ -35,6 +35,7 @@ function App() {
   const background = location.state?.background;
   //console.log(location.state?.background?.state?.from?.pathname);
   //console.log(location);
+  //console.log(background);
 
   useEffect(() => {
     dispatch(getIngredientsList());
@@ -90,65 +91,58 @@ function App() {
             <Route
               path='/login'
               element={
-                <ProtectedRouteElement
-                  onlyForAuth={false}
-                  element={<Login />}
-                />
+                <ProtectedRouteElement onlyForAuth={false}>
+                  <Login />
+                </ProtectedRouteElement>
               }
             />
             <Route
               path='/register'
               element={
-                <ProtectedRouteElement
-                  onlyForAuth={false}
-                  element={<Register />}
-                />
+                <ProtectedRouteElement onlyForAuth={false}>
+                  <Register />
+                </ProtectedRouteElement>
               }
             />
             <Route
               path='/forgot-password'
               element={
-                <ProtectedRouteElement
-                  onlyForAuth={false}
-                  element={<ForgotPassword />}
-                />
+                <ProtectedRouteElement onlyForAuth={false}>
+                  <ForgotPassword />
+                </ProtectedRouteElement>
               }
             />
             <Route
               path='/reset-password'
               element={
-                <ProtectedRouteElement
-                  onlyForAuth={false}
-                  element={<ResetPassword />}
-                />
+                <ProtectedRouteElement onlyForAuth={false}>
+                  <ResetPassword />
+                </ProtectedRouteElement>
               }
             />
 
             <Route
               path='/profile'
               element={
-                <ProtectedRouteElement
-                  onlyForAuth={true}
-                  element={<Profile />}
-                />
+                <ProtectedRouteElement onlyForAuth={true}>
+                  <Profile />
+                </ProtectedRouteElement>
               }
             >
               <Route
                 path=''
                 element={
-                  <ProtectedRouteElement
-                    onlyForAuth={true}
-                    element={<ProfileForm />}
-                  />
+                  <ProtectedRouteElement onlyForAuth={true}>
+                    <ProfileForm />
+                  </ProtectedRouteElement>
                 }
               />
               <Route
                 path='orders'
                 element={
-                  <ProtectedRouteElement
-                    onlyForAuth={true}
-                    element={<ProfileOrders />}
-                  />
+                  <ProtectedRouteElement onlyForAuth={true}>
+                    <ProfileOrders />
+                  </ProtectedRouteElement>
                 }
               />
             </Route>
