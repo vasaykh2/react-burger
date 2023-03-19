@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink, useLocation, Outlet } from 'react-router-dom';
+import { NavLink, useLocation, Outlet, useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +10,7 @@ import styles from './profile.module.css';
 const Profile = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-
+  const navigate = useNavigate();
   const { pathname } = location;
 
   const profileCaption = () => {
@@ -27,6 +27,10 @@ const Profile = () => {
   const handleLogout = () => {
     dispatch(logOut());
     localStorage.setItem('stateFrom', '');
+    navigate('/login', {
+      state: { from: { pathname: '/login' } },
+      replace: true,
+    });
   };
 
   useEffect(() => {

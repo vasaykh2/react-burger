@@ -12,10 +12,10 @@ import styles from './protected-route-element.module.css';
 export default function ProtectedRouteElement({ onlyForAuth, children }) {
   const user = useSelector((state) => state.user);
   //const location = useLocation();
-  console.log(children.type.name);
+  //console.log(children.type.name);
   //const [isUserLoaded, setUserLoaded] = useState(false);
 
-  let awaitUserInfo = true;
+  //let awaitUserInfo = true;
 
   const dispatch = useDispatch();
 
@@ -25,6 +25,7 @@ export default function ProtectedRouteElement({ onlyForAuth, children }) {
 
   const userInfo = user.userInfo;
   //console.log(localStorage.getItem('stateFrom'));
+  //console.log(location.state);
 
   if (
     children.type.name === 'ResetPassword' &&
@@ -38,9 +39,9 @@ export default function ProtectedRouteElement({ onlyForAuth, children }) {
       children.type.name === 'ProfileOrders') &&
     !userInfo
   ) {
-    awaitUserInfo = setTimeout(() => false, 8000);
+    //awaitUserInfo = setTimeout(() => false, 8000);
     //console.log(user.getUserRequest);
-    console.log(awaitUserInfo);
+    //console.log(awaitUserInfo);
     return !user.getUserFailed ? (
       <div className={styles.loader}>
         <Oval
