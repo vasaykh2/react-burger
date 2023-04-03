@@ -17,7 +17,7 @@ const BurgerIngredients: FC = () => {
 
   const { ingredients } = useSelector((state: any) => state.ingredients);
 
-  const [current, setCurrent] = React.useState('one');
+  const [current, setCurrent] = React.useState(bun);
 
   const handleRightClick = useCallback(
     (ingredient: TIngredient) => {
@@ -57,23 +57,23 @@ const BurgerIngredients: FC = () => {
     [renderedIngredients, main]
   );
 
-  const refeHeder = useRef('heder');
-  const refBun = useRef(bun);
+  const refeHeder = useRef<HTMLInputElement>('heder');
+  const refBun = useRef<HTMLInputElement>(bun);
   const refSauce = useRef(sauce);
   const refMain = useRef(main);
 
-  function handleOnClickCurrent(e) {
+  function handleOnClickCurrent(el: IngredientEnum) {
     //console.log(refMain.current);
 
-    setCurrent(e);
-    switch (e) {
-      case 'one':
+    setCurrent(el);
+    switch (el) {
+      case bun:
         refBun.current.scrollIntoView(true, { behavior: 'smooth' });
         break;
-      case 'two':
+      case sauce:
         refSauce.current.scrollIntoView(true, { behavior: 'smooth' });
         break;
-      case 'three':
+      case main:
         refMain.current.scrollIntoView(true, { behavior: 'smooth' });
         break;
       default:
@@ -116,23 +116,23 @@ const BurgerIngredients: FC = () => {
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
       <div ref={refeHeder} className={burgerIngredientsStyles.blockTab}>
         <Tab
-          value='one'
-          active={current === 'one'}
-          onClick={handleOnClickCurrent}
+          value={`${bun}`}
+          active={current === bun}
+          onClick={() => handleOnClickCurrent (bun)}
         >
           Булки
         </Tab>
         <Tab
-          value='two'
-          active={current === 'two'}
-          onClick={handleOnClickCurrent}
+          value={`${sauce}`}
+          active={current === sauce}
+          onClick={() => handleOnClickCurrent(sauce)}
         >
           Соусы
         </Tab>
         <Tab
-          value='three'
-          active={current === 'three'}
-          onClick={handleOnClickCurrent}
+          value={`${main}`}
+          active={current === main}
+          onClick={() => handleOnClickCurrent(main)}
         >
           Начинки
         </Tab>
