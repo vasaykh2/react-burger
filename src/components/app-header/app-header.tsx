@@ -6,10 +6,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { NavLink, useLocation } from 'react-router-dom';
+import { FC } from 'react';
 
 import styles from './app-header-styles.module.css';
 
-  function AppHeader() {
+const AppHeader: FC = () => {
   const { pathname } = useLocation();
 
   return (

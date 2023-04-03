@@ -15,8 +15,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import {
-  addConstructorList,
-  deleteConstructorList,
+  addIngredient,
+  deleteIngredient,
   resetConstructor,
 } from '../../services/actions/constructor';
 
@@ -35,7 +35,7 @@ function BurgerConstructor() {
 
   const handleDeleteButton = useCallback(
     (ingredient) => {
-      dispatch(deleteConstructorList(ingredient));
+      dispatch(deleteIngredient(ingredient));
     },
     [dispatch]
   );
@@ -79,7 +79,7 @@ function BurgerConstructor() {
   }, [bun, toppings]);
 
   const handleOnDrop = (ingredient) => {
-    dispatch(addConstructorList(ingredient));
+    dispatch(addIngredient(ingredient));
   };
 
   const [{ isHover, canDrop }, dropTarget] = useDrop({

@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 //import { Outlet  } from "react-router-dom";
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 import styles from './modal-styles.module.css';
 
-function Modal({ closeModal, children }) {
-  const modalRoot = document.getElementById('react-modals');
+type TModalProps = {
+  closeModal: () => void;
+  children: ReactNode;
+};
+
+const Modal: FC<TModalProps> = ({ closeModal, children }) => {
+  const modalRoot = document.getElementById('react-modals') as HTMLElement;
 
   React.useEffect(() => {
-    const keydownHandler = ({ key }) => {
-      key === 'Escape' && closeModal();
+    const keydownHandler = (event: KeyboardEvent) => {
+      event.key === 'Escape' && closeModal();
     };
 
     document.addEventListener('keydown', keydownHandler);
@@ -28,18 +32,12 @@ function Modal({ closeModal, children }) {
             <CloseIcon type='primary' />
           </div>
         </div>
-        
+
         {children}
-        
       </div>
     </>,
     modalRoot
   );
-}
+};
 
 export default Modal;
-
-Modal.propTypes = {
-  children: PropTypes.node,
-  closeModal: PropTypes.func,
-}.isRequired;

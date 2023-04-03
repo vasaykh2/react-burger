@@ -1,14 +1,15 @@
 import ReactDOM from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideInfoBoard } from '../../services/actions/user';
 
 import styles from './info-board.module.css';
 
-function InfoBoard() {
-  const infoBoardRoot = document.getElementById('infoBoard');
+const infoBoardRoot = document.getElementById('infoBoard') as HTMLElement;
+
+const InfoBoard: FC = () => {
   const dispatch = useDispatch();
-  const boardRef = useRef(null);
+  const boardRef = useRef<HTMLDivElement>(null);
 
   const infoMessage = 'Данные успешно изменены';
 
@@ -34,6 +35,6 @@ function InfoBoard() {
     </div>,
     infoBoardRoot
   );
-}
+};
 
 export default InfoBoard;

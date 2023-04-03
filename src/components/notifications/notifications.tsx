@@ -1,12 +1,17 @@
-//import React from 'react';
+import { FC, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 import styles from './notifications-styles.module.css';
 
-const notificationRoot = document.getElementById('react-notifications');
+type TNotificationsProps = {
+  children: ReactNode;
+};
 
-function Notifications(children) {
+const notificationRoot = document.getElementById(
+  'react-notifications'
+) as HTMLElement;
+
+const Notifications: FC<TNotificationsProps> = (children) => {
   return children
     ? null
     : ReactDOM.createPortal(
@@ -15,9 +20,6 @@ function Notifications(children) {
         </>,
         notificationRoot
       );
-}
+};
 
 export default Notifications;
-
-Notifications.propTypes = PropTypes.node.isRequired;
-

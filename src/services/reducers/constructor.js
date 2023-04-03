@@ -2,8 +2,8 @@
 
 import {
   GET_CONSTRUCTOR_LIST,
-  ADD_CONSTRUCTOR_LIST,
-  DELETE_CONSTRUCTOR_LIST,
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
   SORT_CONSTRUCTOR,
   RESET_CONSTRUCTOR,
 } from '../actions/constructor';
@@ -25,7 +25,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
         },
         toppings: [...state, { data: action.payload }],
       };
-    case ADD_CONSTRUCTOR_LIST:
+    case ADD_INGREDIENT:
       return action.payload.ingredient.type !== 'bun'
         ? {
             ...state,
@@ -41,7 +41,7 @@ export const constructorReducer = (state = constructorInitialState, action) => {
               id: action.payload.id,
             },
           };
-          case DELETE_CONSTRUCTOR_LIST:
+          case DELETE_INGREDIENT:
             return {
               ...state,
               toppings: state.toppings.filter(

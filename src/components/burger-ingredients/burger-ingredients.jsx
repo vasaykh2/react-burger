@@ -6,7 +6,7 @@ import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addConstructorList } from '../../services/actions/constructor';
+import { addIngredient } from '../../services/actions/constructor';
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function BurgerIngredients() {
 
   const handleRightClick = useCallback(
     (ingredient) => {
-      dispatch(addConstructorList(ingredient));
+      dispatch(addIngredient(ingredient));
     },
     [dispatch]
   );
