@@ -1,11 +1,14 @@
-//import React from 'react';
-
 import {
   ADD_CURRENT_INGREDIENT_DETAILS,
   DELETE_CURRENT_INGREDIENT_DETAILS,
 } from '../actions/current-ingredient-details';
 
-const currentIngredientDetailsInitialState = {
+import {
+  TCurrentIngredientDetailsActions,
+  TCurrentIngredientDetailsState,
+} from '../../types/current-ingredient-details';
+
+const currentIngredientDetailsInitialState: TCurrentIngredientDetailsState = {
   item: {
     _id: 0,
     image_large: '',
@@ -19,13 +22,13 @@ const currentIngredientDetailsInitialState = {
 
 export const currentIngredientDetailsReducer = (
   state = currentIngredientDetailsInitialState,
-  action
+  action: TCurrentIngredientDetailsActions
 ) => {
   switch (action.type) {
     case ADD_CURRENT_INGREDIENT_DETAILS:
       return {
         ...state,
-        item: action.item,
+        item: action.payload,
       };
     case DELETE_CURRENT_INGREDIENT_DETAILS:
       return {

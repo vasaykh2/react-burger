@@ -5,13 +5,18 @@ import {
   WS_PUBLIC_ORDERS,
 } from '../actions/ws-public-orders';
 
-const wsPublicOrdersInitialState = {
+import { TWsPublicOrdersActions, TWsPulicOrdersState } from '../../types/ws-public-orders';
+
+const wsPublicOrdersInitialState: TWsPulicOrdersState = {
   isPublicConnection: false,
   publicConnectionError: null,
   publicOrders: null,
 };
 
-export const wsPublicOrdersReducer = (state = wsPublicOrdersInitialState, action) => {
+export const wsPublicOrdersReducer = (
+  state = wsPublicOrdersInitialState,
+  action: TWsPublicOrdersActions
+) => {
   switch (action.type) {
     case WS_PUBLIC_SUCCESS:
       return {

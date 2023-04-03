@@ -6,7 +6,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
-} from "../services/actions/order";
+} from '../services/actions/order';
 
 export type TOrder = {
   ingredients: Array<string>;
@@ -25,14 +25,14 @@ export type TOrderInfo = {
 };
 
 export type TOrderState = {
-  postOrderRequest: boolean,
-  postOrderFailed: boolean,
-  getOrderRequest: boolean,
-  getOrderFailed: boolean,
-  orderInfo: TOrderInfo | "notFound" | null,
-  orderNumber: number | null,
-  isOrderInfoOpened: boolean,
-}
+  postOrderRequest: boolean;
+  postOrderFailed: boolean;
+  getOrderRequest: boolean;
+  getOrderFailed: boolean;
+  orderInfo: TOrderInfo | 'notFound' | null;
+  orderNumber: number | null;
+  isOrderInfoOpened: boolean;
+};
 
 export type TOrderActions =
   | TPostOrderRequestAction
@@ -73,10 +73,10 @@ export type TGetOrderFailedAction = {
   readonly type: typeof GET_ORDER_FAILED;
 };
 
-export type TStatusActions = "created" | "pending" | "done";
+export type TStatusActions = 'created' | 'pending' | 'done';
 
 export enum OrderStatusesEnum {
-  created = "Создан",
-  pending = "Готовится",
-  done = "Выполнен",
+  created = 'Создан',
+  pending = 'Готовится',
+  done = 'Выполнен',
 }

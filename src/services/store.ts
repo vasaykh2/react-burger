@@ -19,7 +19,9 @@ import {
 } from './actions/ws-user-orders';
 import { ORDERS_URL } from '../utils/constants';
 
-const wsUserActions = {
+import { TWsMiddlewareActions } from '../types/ws-public-orders';
+
+const wsUserActions: TWsMiddlewareActions = {
   wsInit: WS_USER_START,
   onOpen: WS_USER_SUCCESS,
   onClose: WS_USER_CLOSED,
@@ -28,7 +30,7 @@ const wsUserActions = {
   wsClose: WS_USER_CLOSED,
 };
 
-const wsPublicActions = {
+const wsPublicActions: TWsMiddlewareActions = {
   wsInit: WS_PUBLIC_START,
   onOpen: WS_PUBLIC_SUCCESS,
   onClose: WS_PUBLIC_CLOSED,

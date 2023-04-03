@@ -3,8 +3,8 @@ import {
   DELETE_INGREDIENT,
   RESET_CONSTRUCTOR,
   SORT_CONSTRUCTOR,
-} from "../services/actions/constructor";
-import { TIngredient } from "./ingredients";
+} from '../services/actions/constructor';
+import { TIngredient } from './ingredients';
 
 export type TConstructorActions =
   | TAddIngredientAction
@@ -18,8 +18,8 @@ export type TConstuctorElement = {
 };
 
 export type TConstructorState = {
-  selectedToppings: Array<TConstuctorElement>;
-  selectedBun: TConstuctorElement | null;
+  bun: TConstuctorElement | null;
+  toppings: Array<TConstuctorElement>;
 };
 
 export type TAddIngredientAction = {

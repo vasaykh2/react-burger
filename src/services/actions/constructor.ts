@@ -9,21 +9,21 @@ import {
   TSortConstructorAction,
 } from "../../types/constructor";
 
-export const GET_CONSTRUCTOR_LIST: 'GET_CONSTRUCTOR_LIST' = 'GET_CONSTRUCTOR_LIST';
+//export const GET_CONSTRUCTOR_LIST: 'GET_CONSTRUCTOR_LIST' = 'GET_CONSTRUCTOR_LIST';
 export const ADD_INGREDIENT: "ADD_INGREDIENT" = "ADD_INGREDIENT";
 export const DELETE_INGREDIENT: "DELETE_INGREDIENT" = "DELETE_INGREDIENT";
 export const SORT_CONSTRUCTOR: 'SORT_CONSTRUCTOR' = 'SORT_CONSTRUCTOR';
 export const RESET_CONSTRUCTOR: 'RESET_CONSTRUCTOR' = 'RESET_CONSTRUCTOR';
 
 
-export function getConstructorList(ingredients: Array<TIngredient>) {
+/*export function getConstructorList(ingredients: Array<TIngredient>) {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_CONSTRUCTOR_LIST,
       payload: ingredients,
     });
   };
-}
+}*/
 
 export const addIngredient = (ingredient: TIngredient): TAddIngredientAction => ({
   type: ADD_INGREDIENT,

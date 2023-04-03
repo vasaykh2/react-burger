@@ -1,30 +1,34 @@
-import React, { useMemo, useRef, useEffect, useCallback } from 'react';
+import React, { useMemo, useRef, useEffect, useCallback, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
-
 import { useSelector, useDispatch } from 'react-redux';
-
+import { TIngredient } from "../../types/ingredients";
 import { addIngredient } from '../../services/actions/constructor';
+import { IngredientEnum } from "../../types/ingredients";
 
-function BurgerIngredients() {
+const BurgerIngredients: FC = () => {
+  const bun = IngredientEnum.bun;
+  const sauce = IngredientEnum.sauce;
+  const main = IngredientEnum.main;
+
   const dispatch = useDispatch();
 
-  const { ingredients } = useSelector((state) => state.ingredients);
+  const { ingredients } = useSelector((state: any) => state.ingredients);
 
   const [current, setCurrent] = React.useState('one');
 
   const handleRightClick = useCallback(
-    (ingredient) => {
+    (ingredient: TIngredient) => {
       dispatch(addIngredient(ingredient));
     },
     [dispatch]
   );
 
-  function renderedIngredients(typeIngredients) {
+  const renderedIngredients = useCallback((typeIngredients: IngredientEnum) => {
     return ingredients.map(
-      (ingredient) =>
+      (ingredient: TIngredient) =>
         ingredient.type === typeIngredients && (
           <Ingredient
             ingredient={ingredient}
@@ -36,27 +40,27 @@ function BurgerIngredients() {
           ></Ingredient>
         )
     );
-  }
+  }, [handleRightClick, ingredients]) 
 
   const rendererBun = useMemo(
-    () => renderedIngredients('bun'),
-    [ingredients, handleRightClick]
+    () => renderedIngredients(bun),
+    [ renderedIngredients, bun]
   );
 
   const rendererSauce = useMemo(
-    () => renderedIngredients('sauce'),
-    [ingredients, handleRightClick]
+    () => renderedIngredients(sauce),
+    [renderedIngredients, sauce]
   );
 
   const rendererMain = useMemo(
-    () => renderedIngredients('main'),
-    [ingredients, handleRightClick]
+    () => renderedIngredients(main),
+    [renderedIngredients, main]
   );
 
   const refeHeder = useRef('heder');
-  const refBun = useRef('bun');
-  const refSauce = useRef('sauce');
-  const refMain = useRef('main');
+  const refBun = useRef(bun);
+  const refSauce = useRef(sauce);
+  const refMain = useRef(main);
 
   function handleOnClickCurrent(e) {
     //console.log(refMain.current);

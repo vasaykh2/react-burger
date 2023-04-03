@@ -23,7 +23,7 @@ import {
   CHECK_AUTH,
   SHOW_INFO_BOARD,
   HIDE_INFO_BOARD,
-} from "../services/actions/user";
+} from '../services/actions/user';
 
 export type TUserActions =
   | TRegisterRequestAction
@@ -58,15 +58,15 @@ export type TForm = {
   token?: string;
 };
 
-export type TRegisterForm = Required<Omit<TForm, "token">>;
+export type TRegisterForm = Required<Omit<TForm, 'token'>>;
 
-export type TUserInfo = Required<Omit<TForm, "token" | "password">>;
+export type TUserInfo = Required<Omit<TForm, 'token' | 'password'>>;
 
-export type TLoginForm = Required<Omit<TForm, "token" | "name">>;
+export type TLoginForm = Required<Omit<TForm, 'token' | 'name'>>;
 
-export type TRequestForm = Required<Pick<TForm, "email">>;
+export type TRequestForm = Required<Pick<TForm, 'email'>>;
 
-export type TResetForm = Required<Omit<TForm, "email" | "name">>;
+export type TResetForm = Required<Omit<TForm, 'email' | 'name'>>;
 
 export type TUserState = {
   userInfo: TUserInfo | null;

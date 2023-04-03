@@ -16,7 +16,7 @@ export const getIngredientsList: AppThunk = () => {
       .then((res) => {
         dispatch({
           type: GET_INGREDIENTS_LIST_SUCCESS,
-          result: res.data,
+          payload: res.data,
         });
       })
       .catch((err) => {

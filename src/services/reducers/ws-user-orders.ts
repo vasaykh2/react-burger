@@ -5,13 +5,15 @@ import {
   WS_USER_ORDERS,
 } from '../actions/ws-user-orders';
 
-const wsUserOrdersInitialState = {
+import { TWsUserOrdersActions, TWsUserOrdersState } from '../../types/ws-user-orders';
+
+const wsUserOrdersInitialState: TWsUserOrdersState = {
   isUserConnection: false,
   userConnectionError: null,
   userOrders: null
 };
 
-export const wsUserOrdersReducer = (state = wsUserOrdersInitialState, action) => {
+export const wsUserOrdersReducer = (state = wsUserOrdersInitialState, action: TWsUserOrdersActions) => {
   switch (action.type) {
     case WS_USER_SUCCESS:
       return {

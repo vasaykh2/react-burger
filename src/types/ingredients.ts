@@ -2,12 +2,12 @@ import {
   GET_INGREDIENTS_LIST_REQUEST,
   GET_INGREDIENTS_LIST_FAILED,
   GET_INGREDIENTS_LIST_SUCCESS,
-} from "../services/actions/ingredients";
+} from '../services/actions/ingredients';
 
 export enum IngredientEnum {
-  bun = "bun",
-  sauce = "sauce",
-  main = "main",
+  bun = 'bun',
+  sauce = 'sauce',
+  main = 'main',
 }
 
 export type TIngredient = {
@@ -46,6 +46,6 @@ export type TIngredientsActions =
 
 export type TIngredientsState = {
   ingredients: Array<TIngredient>;
-  ingredientsRequest: boolean;
+  ingredientsLoad: boolean;
   ingredientsFailed: boolean;
 };

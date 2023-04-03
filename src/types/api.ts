@@ -1,6 +1,6 @@
-import { TIngredient } from "./ingredients";
-import { TUserInfo } from "./user";
-import { TOrderInfo } from "./order";
+import { TIngredient } from './ingredients';
+import { TUserInfo } from './user';
+import { TOrderInfo } from './order';
 
 export type TResponse<T> = {
   success: boolean;

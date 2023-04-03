@@ -8,7 +8,9 @@ import {
   CLOSE_ORDER_INFO,
 } from '../actions/order';
 
-const orderInitialState = {
+import { TOrderActions, TOrderState } from '../../types/order';
+
+const orderInitialState: TOrderState = {
   postOrderRequest: false,
   postOrderFailed: false,
   getOrderRequest: false,
@@ -18,7 +20,10 @@ const orderInitialState = {
   isOrderInfoOpened: false,
 };
 
-export const orderReducer = (state = orderInitialState, action) => {
+export const orderReducer = (
+  state = orderInitialState,
+  action: TOrderActions
+) => {
   switch (action.type) {
     case POST_ORDER_REQUEST:
       return {

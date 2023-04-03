@@ -21,9 +21,8 @@ import {
 } from '../../services/actions/constructor';
 
 import {
-  postOrderDetails,
-  closeOrderDetails,
-} from '../../services/actions/order-details';
+  postOrder, closeOrderInfo,
+} from '../../services/actions/order';
 
 import { useDrop } from 'react-dnd';
 
@@ -59,13 +58,13 @@ function BurgerConstructor() {
       navigate('/login');
       
     } else {
-      dispatch(postOrderDetails(ingredientsIds));
+      dispatch(postOrder(ingredientsIds));
       //console.log(ingredientsIds);
     }
   };
 
   const closeModal = () => {
-    dispatch(closeOrderDetails());
+    dispatch(closeOrderInfo());
     dispatch(resetConstructor());
   };
 

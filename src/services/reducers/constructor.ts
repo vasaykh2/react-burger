@@ -1,21 +1,31 @@
 //import React from 'react';
 
 import {
-  GET_CONSTRUCTOR_LIST,
+  //GET_CONSTRUCTOR_LIST,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   SORT_CONSTRUCTOR,
   RESET_CONSTRUCTOR,
 } from '../actions/constructor';
 
-const constructorInitialState = {
+import {
+  TConstructorActions,
+  TConstructorState,
+} from '../../types/constructor';
+
+import { IngredientEnum } from '../../types/ingredients';
+
+const constructorInitialState: TConstructorState = {
   bun: null,
   toppings: [],
 };
 
-export const constructorReducer = (state = constructorInitialState, action) => {
+export const constructorReducer = (
+  state = constructorInitialState,
+  action: TConstructorActions
+) => {
   switch (action.type) {
-    // Добавление новой задачи в список дел
+    /*// Добавление новой задачи в список дел
     case GET_CONSTRUCTOR_LIST:
       //console.log(action);
       return {
@@ -24,9 +34,9 @@ export const constructorReducer = (state = constructorInitialState, action) => {
           data: action.payload[0],
         },
         toppings: [...state, { data: action.payload }],
-      };
+      };*/
     case ADD_INGREDIENT:
-      return action.payload.ingredient.type !== 'bun'
+      return action.payload.ingredient.type !== IngredientEnum.bun
         ? {
             ...state,
             toppings: [
@@ -41,20 +51,20 @@ export const constructorReducer = (state = constructorInitialState, action) => {
               id: action.payload.id,
             },
           };
-          case DELETE_INGREDIENT:
-            return {
-              ...state,
-              toppings: state.toppings.filter(
-                (ingredient) => ingredient.id !== action.payload.id
-              ),
-            };
+    case DELETE_INGREDIENT:
+      return {
+        ...state,
+        toppings: state.toppings.filter(
+          (ingredient) => ingredient.id !== action.payload.id
+        ),
+      };
     case SORT_CONSTRUCTOR:
       return {
         ...state,
         toppings: action.payload,
       };
-      case RESET_CONSTRUCTOR:
-        return constructorInitialState; 
+    case RESET_CONSTRUCTOR:
+      return constructorInitialState;
     default:
       return state;
   }
