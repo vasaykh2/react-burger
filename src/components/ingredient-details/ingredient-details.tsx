@@ -1,12 +1,18 @@
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useMemo, FC } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { ingredientsType } from '../../utils/types';
 import styles from './ingredient-details-styles.module.css';
-
+import { TIngredient } from '../../types/ingredients';
 import NotFound from '../../pages/not-found/not-found';
 
-function IngredientDetails({ ingredients, id }) {
+type TIngredientDetailsProps = {
+  ingredients: Array<TIngredient>;
+  id: string;
+};
+
+const IngredientDetails: FC<TIngredientDetailsProps> = ({
+  ingredients,
+  id,
+}) => {
   //const currentIngredientDetails = props.currentModalIngredientDetails;
 
   const location = useLocation();
@@ -62,11 +68,6 @@ function IngredientDetails({ ingredients, id }) {
   ) : (
     <NotFound />
   );
-}
+};
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  ingredients: ingredientsType,
-  id: PropTypes.number,
-}.isRequired;
