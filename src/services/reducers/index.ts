@@ -10,7 +10,7 @@ import { currentIngredientDetailsReducer } from './current-ingredient-details';
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructorBurger: constructorReducer,
-  oder: orderReducer,
+  order: orderReducer,
   user: userReducer,
   wsPublic: wsPublicOrdersReducer,
   wsUser: wsUserOrdersReducer,

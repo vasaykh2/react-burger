@@ -13,12 +13,8 @@ const IngredientDetails: FC<TIngredientDetailsProps> = ({
   ingredients,
   id,
 }) => {
-  //const currentIngredientDetails = props.currentModalIngredientDetails;
-
   const location = useLocation();
   const background = location.state?.background;
-  /*const { _id_ } = useParams();
-  console.log(_id_);*/
 
   const currentIngredientDetails = useMemo(
     () => ingredients?.find((el) => el._id === id),

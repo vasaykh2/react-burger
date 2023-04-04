@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../types/store';
 import { TIngredient } from '../../types/ingredients';
 import { addIngredient } from '../../services/actions/constructor';
 import { IngredientEnum } from '../../types/ingredients';
@@ -16,7 +16,7 @@ const BurgerIngredients: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { ingredients } = useSelector((state: any) => state.ingredients);
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   const [current, setCurrent] = React.useState(bun);
 
@@ -30,7 +30,7 @@ const BurgerIngredients: FC = () => {
   const renderedIngredients = useCallback(
     (typeIngredients: IngredientEnum) => {
       return ingredients.map(
-        (ingredient: TIngredient) =>
+        (ingredient) =>
           ingredient.type === typeIngredients && (
             <Ingredient
               ingredient={ingredient}

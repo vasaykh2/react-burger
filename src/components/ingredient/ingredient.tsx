@@ -7,10 +7,9 @@ import {
 
 import styles from './ingredient-styles.module.css';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../types/store';
 import { Link, useLocation } from 'react-router-dom';
-import { TIngredient, IngredientEnum } from "../../types/ingredients";
-import { TConstuctorElement } from "../../types/constructor";
+import { TIngredient, IngredientEnum } from '../../types/ingredients';
 
 export let idIngredientDetails: string;
 const bunString = IngredientEnum.bun;
@@ -20,7 +19,10 @@ type TIngredientProps = {
   onRightClick: (evt: React.MouseEvent<HTMLLIElement>) => void;
 };
 
-export const Ingredient: FC<TIngredientProps> = ({ ingredient, onRightClick }) => {
+export const Ingredient: FC<TIngredientProps> = ({
+  ingredient,
+  onRightClick,
+}) => {
   const location = useLocation();
 
   const [, dragRef] = useDrag({
@@ -31,12 +33,12 @@ export const Ingredient: FC<TIngredientProps> = ({ ingredient, onRightClick }) =
     }),
   });
 
-  const { toppings, bun } = useSelector((state: any) => state.constructorBurger);
+  const { toppings, bun } = useSelector((state) => state.constructorBurger);
 
   const countIngredient = useMemo(() => {
     if (ingredient.type !== bunString) {
       const sameIngredients = toppings.filter(
-        (topping: TConstuctorElement) => topping.data._id === ingredient._id
+        (topping) => topping.data._id === ingredient._id
       );
       return sameIngredients.length;
     }
@@ -74,4 +76,4 @@ export const Ingredient: FC<TIngredientProps> = ({ ingredient, onRightClick }) =
       </Link>
     </li>
   );
-}
+};

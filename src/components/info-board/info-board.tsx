@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { useEffect, useRef, FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../types/store';
 import { hideInfoBoard } from '../../services/actions/user';
 
 import styles from './info-board.module.css';

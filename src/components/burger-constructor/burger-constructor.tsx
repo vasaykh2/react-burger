@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, FC } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import {
@@ -7,12 +7,12 @@ import {
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { OrderDetails, Modal, Topping } from '../../components';
+import { OrderDetails, Modal, Topping } from '..';
 
 import styles from './burger-constructor-styles.module.css';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from '../../types/store';
+import { useNavigate } from 'react-router-dom';
 
 import {
   addIngredient,
@@ -20,20 +20,19 @@ import {
   resetConstructor,
 } from '../../services/actions/constructor';
 
-import {
-  postOrder, closeOrderInfo,
-} from '../../services/actions/order';
+import { postOrder, closeOrderInfo } from '../../services/actions/order';
 
 import { useDrop } from 'react-dnd';
+import { TConstuctorElement } from '../../types/constructor';
+import { TIngredient } from '../../types/ingredients';
+import { TOrder } from '../../types/order';
 
-//let listId = '';
-
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleDeleteButton = useCallback(
-    (ingredient) => {
+    (ingredient: TConstuctorElement) => {
       dispatch(deleteIngredient(ingredient));
     },
     [dispatch]
@@ -43,23 +42,29 @@ function BurgerConstructor() {
 
   const { bun, toppings } = useSelector((state) => state.constructorBurger);
 
-  const { order, isLoading, isModalOrderDetails } = useSelector(
-    (state) => state.orderDetails
+  const { orderNumber, postOrderRequest, isOrderInfoOpened } = useSelector(
+    (state) => state.order
   );
-  // console.log(orderDetails);
 
-  const handleOrder = () => {
-    const ingredientsIds = [
-      bun.data._id,
-      ...toppings.map((item) => item.data._id),
-      bun.data._id,
-    ];
+  const ingredientsIds = useMemo(
+    () =>
+      toppings.length && bun
+        ? {
+            ingredients: [
+              bun.data._id,
+              ...toppings.map((item: TConstuctorElement) => item.data._id),
+              bun.data._id,
+            ],
+          }
+        : null,
+    [bun, toppings]
+  );
+
+  const handleOrder = (order: TOrder | null) => {
     if (!userInfo) {
       navigate('/login');
-      
     } else {
-      dispatch(postOrder(ingredientsIds));
-      //console.log(ingredientsIds);
+      dispatch(postOrder(order));
     }
   };
 
@@ -77,13 +82,13 @@ function BurgerConstructor() {
     return totalPrice;
   }, [bun, toppings]);
 
-  const handleOnDrop = (ingredient) => {
+  const handleOnDrop = (ingredient: TIngredient) => {
     dispatch(addIngredient(ingredient));
   };
 
   const [{ isHover, canDrop }, dropTarget] = useDrop({
     accept: 'ingredients',
-    drop(ingredient) {
+    drop(ingredient: TIngredient) {
       handleOnDrop(ingredient);
     },
     collect: (monitor) => ({
@@ -92,24 +97,18 @@ function BurgerConstructor() {
     }),
   });
 
-  function renderedIngredients() {
-    return !toppings
-      ? null
-      : toppings.map((item, i) => {
-          if (item.data.type === 'sauce' || item.data.type === 'main') {
-            return (
-              <Topping
-                ingredient={item}
-                key={item.id}
-                index={i}
-                handleClose={() => handleDeleteButton(item)}
-              ></Topping>
-            );
-          }
-        });
-  }
-
-  const rendererIngredients = useMemo(() => renderedIngredients(), [toppings]);
+  const rendererIngredients = useMemo(
+    () =>
+      toppings.map((item, i) => (
+        <Topping
+          ingredient={item}
+          key={item.id}
+          index={i}
+          handleClose={() => handleDeleteButton(item)}
+        ></Topping>
+      )),
+    [toppings, handleDeleteButton]
+  );
 
   return (
     <section className={styles.section}>
@@ -130,7 +129,7 @@ function BurgerConstructor() {
               thumbnail={bun.data.image}
               price={bun.data.price}
               type='top'
-              isLocked='undefined'
+              isLocked={true}
             />
           )}
         </div>
@@ -148,12 +147,12 @@ function BurgerConstructor() {
               thumbnail={bun.data.image}
               price={bun.data.price}
               type='bottom'
-              isLocked='undefined'
+              isLocked={true}
             />
           )}
         </div>
         <div className={styles.blockPrice + ' mt-6 mb-10 pr-4'}>
-          {isLoading && (
+          {postOrderRequest && (
             <Oval
               ariaLabel='loading-indicator'
               height={70}
@@ -171,8 +170,11 @@ function BurgerConstructor() {
             <CurrencyIcon type='primary' />
           </div>
           <Button
-            className={styles.button + ` ${(!toppings.length || !bun) && styles.buttonInvisible}`}
-            onClick={handleOrder}
+            className={
+              styles.button +
+              ` ${(!toppings.length || !bun) && styles.buttonInvisible}`
+            }
+            onClick={() => handleOrder(ingredientsIds)}
             htmlType='button'
             type='primary'
             size='large'
@@ -182,13 +184,13 @@ function BurgerConstructor() {
           </Button>
         </div>
       </div>
-      {isModalOrderDetails && (
+      {isOrderInfoOpened && (
         <Modal closeModal={closeModal}>
-          <OrderDetails orderNumber={order.number} />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
     </section>
   );
-}
+};
 
-export {BurgerConstructor} ;
+export { BurgerConstructor };
