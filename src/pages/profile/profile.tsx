@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { NavLink, useLocation, Outlet, useNavigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../types/store';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logOut } from '../../services/actions/user';
 import styles from './profile.module.css';
 
-const Profile = () => {
+const Profile: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Profile = () => {
       localStorage.setItem('stateFrom', location.state.from.pathname);
     }
     if (location.state && location.state.background) {
-      localStorage.setItem('stateFrom', location);
+      localStorage.setItem('stateFrom', location.state);
     }
 
     //console.log(location);

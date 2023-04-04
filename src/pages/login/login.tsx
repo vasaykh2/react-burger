@@ -3,8 +3,8 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-//import { useEffect } from 'react';
+import { useDispatch } from '../../types/store';
+import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from '../../services/hooks/useForm';
@@ -12,33 +12,17 @@ import { logIn } from '../../services/actions/user';
 
 import styles from './login.module.css';
 
-const Login = () => {
+const Login: FC = () => {
   const dispatch = useDispatch();
-  //const navigate = useNavigate();
-  //const location = useLocation();
-
-  //console.log(localStorage.getItem('stateFrom'));
-
-  //const { userInfo,  } = useSelector((state) => state.user);
   const { values, handleChange, isValid } = useForm(
     { email: '', password: '' },
     false
   );
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(logIn(values));
-    //console.log(document.cookie);
   };
-
-  /*useEffect(() => {
-    //console.log(location);
-    if (userInfo) {
-      location.state && location.state.from
-        ? navigate(location.state.from.pathname)
-        : navigate('/');
-    }
-  }, [userInfo, navigate, location]);*/
 
   return (
     <div className={`${styles.container}`}>

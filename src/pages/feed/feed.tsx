@@ -1,5 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from '../../types/store';
+import { useEffect, FC } from 'react';
 import OrdersBriefList from '../../components/orders-brief-list/orders-brief-list';
 import OrdersSummary from '../../components/orders-summary/orders-summary';
 import { Oval } from 'react-loader-spinner';
@@ -9,7 +9,7 @@ import {
 } from '../../services/actions/ws-public-orders';
 import styles from './feed.module.css';
 
-const Feed = () => {
+const Feed: FC = () => {
   const dispatch = useDispatch();
 
   const { publicOrders, publicConnectionError } = useSelector(
