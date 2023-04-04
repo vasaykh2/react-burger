@@ -1,6 +1,4 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/types';
+import { useRef, FC } from 'react';
 
 import {
   DragIcon,
@@ -9,19 +7,36 @@ import {
 
 import toppingStyles from './topping-styles.module.css';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import { useSelector, useDispatch } from '../../types/store';
+import { XYCoord, useDrag, useDrop } from 'react-dnd';
 import { sortConstructor } from '../../services/actions/constructor';
 
-function Topping({ ingredient, index, handleClose }) {
+import { TConstuctorElement } from '../../types/constructor';
+
+type TToppingProps = {
+  ingredient: TConstuctorElement;
+  index: number;
+  handleClose: () => void;
+};
+
+type TDropItem = {
+  id: string;
+  index: number;
+};
+
+const Topping: FC<TToppingProps> = ({ ingredient, index, handleClose }) => {
   const dispatch = useDispatch();
 
   const { toppings } = useSelector((state) => state.constructorBurger);
   const id = ingredient.id;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<
+    TDropItem,
+    unknown,
+    { item: TDropItem; handlerId: string | symbol | null }
+  >({
     accept: 'burgerConstructor',
     collect(monitor) {
       return {
@@ -47,7 +62,7 @@ function Topping({ ingredient, index, handleClose }) {
 
       const clientOffset = monitor.getClientOffset();
 
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -93,12 +108,6 @@ function Topping({ ingredient, index, handleClose }) {
       </div>
     </li>
   );
-}
+};
 
-Topping.propTypes = {
-  ingredient: { data: ingredientType, id: PropTypes.string },
-  index: PropTypes.number,
-  handleClose: PropTypes.func,
-}.isRequired;
-
-export  {Topping}
+export { Topping };

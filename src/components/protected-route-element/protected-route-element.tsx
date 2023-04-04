@@ -1,6 +1,6 @@
 //import { useAuth } from '../services/auth';
 import { Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../types/store';
 import { Oval } from 'react-loader-spinner';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';

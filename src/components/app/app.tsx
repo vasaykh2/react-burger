@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../types/store';
 
 import {
   BurgerMain,
@@ -23,12 +23,12 @@ import {
   OderDetailsFromList,
   ProfileForm,
   ProfileOrders,
-} from '../../components';
+} from '..';
 
 import { getIngredientsList } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
 
-function App() {
+const App: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
