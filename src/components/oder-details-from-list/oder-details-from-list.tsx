@@ -3,13 +3,20 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from '../../types/store';
+import { useMemo, useEffect, FC } from 'react';
 import { getOrder } from '../../services/actions/order';
 import NotFound from '../../pages/not-found/not-found';
 import styles from './oder-details-from-list.module.css';
 
-const OderDetailsFromList = () => {
+import { TIngredientsCount } from '../order-brief/order-brief';
+
+type TTotalPrice = {
+  ingredients: Array<TIngredientsCount>;
+  totalPrice: number;
+};
+
+const OderDetailsFromList: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state?.background;
@@ -18,11 +25,11 @@ const OderDetailsFromList = () => {
   ];
   //console.log(number);
 
-  const {  publicOrders } = useSelector((state) => state.wsPublic);
+  const { publicOrders } = useSelector((state) => state.wsPublic);
   const { userOrders } = useSelector((state) => state.wsUser);
   //console.log(location);
 
-  const { orderInfo } = useSelector((state) => state.oder);
+  const { orderInfo } = useSelector((state) => state.order);
   //console.log(stateOder);
 
   const { ingredients } = useSelector((state) => state.ingredients);
@@ -57,7 +64,7 @@ const OderDetailsFromList = () => {
       order &&
       order !== 'notFound' &&
       order?.ingredients?.reduce(
-        (object, id) => {
+        (object: TTotalPrice, id) => {
           let orderIngredient = object.ingredients.find(
             (ingredient) => ingredient._id === id
           );
@@ -90,14 +97,6 @@ const OderDetailsFromList = () => {
     pending: 'Готовится',
     done: 'Выполнен',
   };
-
-  /*useEffect(() => {
-        if (location.state && location.state.background) {
-      localStorage.setItem('stateFrom', 'background' + location.pathname);
-      console.log(localStorage.getItem('stateFrom'));
-    }
-    //console.log(location);
-  }, [location]);*/
 
   return (
     <>

@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useMemo, FC } from 'react';
+import { useSelector } from '../../types/store';
 import { Link, useLocation, useResolvedPath } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { oderType } from '../../utils/types';
+
 import {
   FormattedDate,
   CurrencyIcon,
@@ -10,7 +9,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './order-brief.module.css';
 
-const OrderBrief = ({ order, forUser }) => {
+import { TOrderInfo } from '../../types/order';
+import { TIngredient } from '../../types/ingredients';
+
+type TOrderBriefProps = {
+  order: TOrderInfo;
+  forUser: boolean;
+};
+
+export type TIngredientsCount = {
+  count: number;
+} & TIngredient;
+
+const OrderBrief: FC<TOrderBriefProps> = ({ order, forUser }) => {
   const location = useLocation();
 
   const path = useResolvedPath('').pathname;
@@ -19,28 +30,34 @@ const OrderBrief = ({ order, forUser }) => {
   const ingredientsInfo = useSelector((state) => state.ingredients.ingredients);
 
   const selectedIngredients = useMemo(() => {
-    const ingredientsList = ingredients.reduce((arr, ingredient) => {
-      const myIngredient = ingredientsInfo.find(
-        (ingredientInfo) => ingredientInfo._id === ingredient
-      );
-      return myIngredient ? [...arr, myIngredient] : arr;
-    }, []);
+    const ingredientsList = ingredients.reduce(
+      (arr: TIngredient[], ingredient) => {
+        const myIngredient = ingredientsInfo.find(
+          (ingredientInfo) => ingredientInfo._id === ingredient
+        );
+        return myIngredient ? [...arr, myIngredient] : arr;
+      },
+      []
+    );
 
-    const ingredientsCount = ingredientsList.reduce((arr, ingredient) => {
-      let currentIngredient = arr.find(
-        (arrIngrredient) => arrIngrredient._id === ingredient._id
-      );
-      if (currentIngredient) {
-        currentIngredient.count += 1;
-      } else {
-        let currentIngredient = {
-          count: 1,
-          ...ingredient,
-        };
-        arr.push(currentIngredient);
-      }
-      return arr;
-    }, []);
+    const ingredientsCount = ingredientsList.reduce(
+      (arr: Array<TIngredientsCount>, ingredient) => {
+        let currentIngredient = arr.find(
+          (arrIngrredient) => arrIngrredient._id === ingredient._id
+        );
+        if (currentIngredient) {
+          currentIngredient.count += 1;
+        } else {
+          let currentIngredient = {
+            count: 1,
+            ...ingredient,
+          };
+          arr.push(currentIngredient);
+        }
+        return arr;
+      },
+      []
+    );
     return ingredientsCount;
   }, [ingredients, ingredientsInfo]);
 
@@ -144,8 +161,3 @@ const OrderBrief = ({ order, forUser }) => {
 };
 
 export default OrderBrief;
-
-OrderBrief.propTypes = {
-  order: oderType.isRequired,
-  forUser: PropTypes.string.isRequired,
-}.isRequired;

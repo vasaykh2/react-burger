@@ -27,6 +27,8 @@ import { TConstuctorElement } from '../../types/constructor';
 import { TIngredient } from '../../types/ingredients';
 import { TOrder } from '../../types/order';
 
+//declare module './burger-constructor';
+
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

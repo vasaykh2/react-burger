@@ -1,10 +1,12 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 import orderAccpetedDone from '../../images/order accpeted-done.png';
 import styles from './order-details-styles.module.css';
 
-function OrderDetails({ orderNumber }) {
+type TOrderDetailsProps = {
+  orderNumber: number | null;
+};
+
+const OrderDetails: FC<TOrderDetailsProps> = ({ orderNumber }) => {
   return (
     <div className={styles.block}>
       <p className='text text_type_digits-large pt-2 pb-8'>{orderNumber}</p>
@@ -18,10 +20,6 @@ function OrderDetails({ orderNumber }) {
       </p>
     </div>
   );
-}
+};
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
-}.isRequired;

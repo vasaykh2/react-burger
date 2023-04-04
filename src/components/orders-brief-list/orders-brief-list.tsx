@@ -1,11 +1,14 @@
 import OrderBrief from '../order-brief/order-brief';
 import { useResolvedPath } from 'react-router-dom';
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { oderType } from '../../utils/types';
+import { useMemo, FC } from 'react';
 import styles from './orders-brief-list.module.css';
+import { TOrderInfo } from '../../types/order';
 
-const OrdersBriefList = ({ orders }) => {
+type TOrderBriefListProps = {
+  orders: Array<TOrderInfo>;
+};
+
+const OrdersBriefList: FC<TOrderBriefListProps> = ({ orders }) => {
   //const { path1 } = useRouteMatch();
   const path = useResolvedPath('').pathname;
   //console.log(path)
@@ -21,5 +24,3 @@ const OrdersBriefList = ({ orders }) => {
 };
 
 export default OrdersBriefList;
-
-OrdersBriefList.propTypes = PropTypes.shape(oderType.isRequired).isRequired;

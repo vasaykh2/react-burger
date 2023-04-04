@@ -1,7 +1,12 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, FC } from 'react';
 import styles from './orders-summary.module.css';
+import { TWsOrders } from '../../types/ws-public-orders';
 
-const OrdersSummary = ({ orders }) => {
+type TOrdersSummaryProps = {
+  orders: TWsOrders;
+};
+
+const OrdersSummary: FC<TOrdersSummaryProps> = ({ orders }) => {
   const { total, totalToday } = orders;
 
   const doneOrders = useMemo(
@@ -13,7 +18,10 @@ const OrdersSummary = ({ orders }) => {
     [orders]
   );
 
-  const renderNumber = useCallback(number => number.toString().padStart(6, '0'), []);
+  const renderNumber = useCallback(
+    (number: number) => number.toString().padStart(6, '0'),
+    []
+  );
 
   return (
     <section className={styles.ordersSummary}>
