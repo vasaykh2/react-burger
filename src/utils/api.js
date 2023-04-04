@@ -63,9 +63,8 @@ class Api {
         'Content-type': 'application/json',
         authorization: token,
       },
-      body: JSON.stringify({
-        ingredients: order,
-      }),
+      body: JSON.stringify( order
+      ),
     });
   }
 
