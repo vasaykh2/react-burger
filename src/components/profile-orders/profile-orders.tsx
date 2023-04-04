@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, FC } from 'react';
+import { useSelector, useDispatch } from '../../types/store';
 import {
   startUserWsConnection,
   closeUserWsConnection,
@@ -12,7 +12,7 @@ import { getCookie } from '../../utils/cookie';
 import { refreshToken } from '../../services/actions/user';
 import styles from './profile-orders.module.css';
 
-const ProfileOrders = () => {
+const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.userInfo);
   const { userOrders, userConnectionError } = useSelector(

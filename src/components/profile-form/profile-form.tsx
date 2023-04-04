@@ -1,5 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import { useSelector, useDispatch } from '../../types/store';
+import { useMemo, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   EmailInput,
@@ -11,7 +11,7 @@ import { patchUserInfo } from '../../services/actions/user';
 import { useForm } from '../../services/hooks/useForm';
 import styles from './profile-form.module.css';
 
-const ProfileForm = () => {
+const ProfileForm: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -26,8 +26,8 @@ const ProfileForm = () => {
     true
   );
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(patchUserInfo(values));
     setValues({ ...values, password: '' });
     navigate('/profile', { state: { from: { pathname: '/profile' } } });
@@ -49,22 +49,22 @@ const ProfileForm = () => {
         type='text'
         placeholder='Имя'
         name='name'
-        onChange={(evt) => handleChange(evt)}
+        onChange={(e) => handleChange(e)}
         value={values.name || ''}
         icon={'EditIcon'}
       />
       <EmailInput
         placeholder='E-mail'
         name='email'
-        onChange={(evt) => handleChange(evt)}
+        onChange={(e) => handleChange(e)}
         value={values.email || ''}
         isIcon={true}
       />
       <PasswordInput
         placeholder='Пароль'
         name='password'
-        onChange={(evt) => {
-          handleChange(evt);
+        onChange={(e) => {
+          handleChange(e);
         }}
         value={values.password || ''}
         icon={'EditIcon'}
