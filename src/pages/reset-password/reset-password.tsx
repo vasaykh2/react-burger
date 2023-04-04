@@ -4,14 +4,15 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../types/store';
 import { Link } from 'react-router-dom';
+import { FormEvent, FC } from 'react';
 import { resetPassword } from '../../services/actions/user';
 
 import { useForm } from '../../services/hooks/useForm';
 import styles from './reset-password.module.css';
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
   const dispatch = useDispatch();
 
   const { values, handleChange, isValid } = useForm(
@@ -19,8 +20,8 @@ const ResetPassword = () => {
     false
   );
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(resetPassword(values));
   };
 

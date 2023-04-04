@@ -7,7 +7,9 @@ import {
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { OrderDetails, Modal, Topping } from '..';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import { Topping } from '../topping/topping';
 
 import styles from './burger-constructor-styles.module.css';
 
@@ -33,8 +35,6 @@ const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
- 
-
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const { bun, toppings } = useSelector((state) => state.constructorBurger);
@@ -49,10 +49,6 @@ const BurgerConstructor: FC = () => {
     },
     [dispatch]
   );
-
-
-
-
 
   const ingredientsIds = useMemo(
     () =>
@@ -201,4 +197,4 @@ const BurgerConstructor: FC = () => {
   );
 };
 
-export  {BurgerConstructor};
+export { BurgerConstructor };

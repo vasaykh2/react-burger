@@ -1,5 +1,5 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from '../../types/store';
+import { useEffect, FC, FormEvent } from 'react';
 import {
   EmailInput,
   PasswordInput,
@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../services/hooks/useForm';
 import styles from './register.module.css';
 
-const Register = () => {
+const Register: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
@@ -20,8 +20,8 @@ const Register = () => {
     false
   );
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(register(values));
     navigate('/login', { state: { from: { pathname: '/login' } } });
   };
