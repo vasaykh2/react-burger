@@ -1,22 +1,26 @@
 //import { useAuth } from '../services/auth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, /*RouteProps*/ } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../types/store';
 import { Oval } from 'react-loader-spinner';
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, FC } from 'react';
 
 import { getUserInfo } from '../../services/actions/user';
 
 import styles from './protected-route-element.module.css';
 
-export default function ProtectedRouteElement({ onlyForAuth, children }) {
+type TProtectedRouteElementProps = {
+  onlyForAuth: boolean;
+  children: JSX.Element;
+}
+
+const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, children }) => {
   const user = useSelector((state) => state.user);
   //const location = useLocation();
   //console.log(children.type.name);
-  //const [isUserLoaded, setUserLoaded] = useState(false);
+  //const [isUserLoaded, setUserLoaded] = useState(false); 
 
   //let awaitUserInfo = true;
-
+//const childrenName = children?.type;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,8 +31,7 @@ export default function ProtectedRouteElement({ onlyForAuth, children }) {
   //console.log(localStorage.getItem('stateFrom'));
   //console.log(location.state);
 
-  if (
-    children.type.name === 'ResetPassword' &&
+  if (children.type.name === 'ResetPassword' &&
     !(user.forgotPasswordSuccess || user.forgotPasswordRequest)
   ) {
     return <Navigate to='/forgot-password' replace />;
@@ -80,7 +83,4 @@ export default function ProtectedRouteElement({ onlyForAuth, children }) {
   return children;
 }
 
-ProtectedRouteElement.propTypes = {
-  onlyForAuth: PropTypes.bool,
-  children: PropTypes.node,
-}.isRequired;
+export default ProtectedRouteElement;

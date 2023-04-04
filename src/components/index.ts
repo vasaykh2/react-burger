@@ -1,5 +1,5 @@
 import AppHeader from './app-header/app-header';
-import { BurgerConstructor } from './burger-constructor/burger-constructor';
+import {BurgerConstructor} from './burger-constructor/burger-constructor';
 import BurgerIngredients from './burger-ingredients/burger-ingredients';
 import InfoBoard from './info-board/info-board';
 import { Ingredient } from './ingredient/ingredient';

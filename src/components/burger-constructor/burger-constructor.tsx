@@ -31,12 +31,7 @@ const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDeleteButton = useCallback(
-    (ingredient: TConstuctorElement) => {
-      dispatch(deleteIngredient(ingredient));
-    },
-    [dispatch]
-  );
+ 
 
   const userInfo = useSelector((state) => state.user.userInfo);
 
@@ -45,6 +40,17 @@ const BurgerConstructor: FC = () => {
   const { orderNumber, postOrderRequest, isOrderInfoOpened } = useSelector(
     (state) => state.order
   );
+
+  const handleDeleteButton = useCallback(
+    (ingredient: TConstuctorElement) => {
+      dispatch(deleteIngredient(ingredient));
+    },
+    [dispatch]
+  );
+
+
+
+
 
   const ingredientsIds = useMemo(
     () =>
@@ -193,4 +199,4 @@ const BurgerConstructor: FC = () => {
   );
 };
 
-export { BurgerConstructor };
+export  {BurgerConstructor};
