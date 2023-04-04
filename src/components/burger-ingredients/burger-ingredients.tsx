@@ -1,12 +1,13 @@
 import React, { useMemo, useRef, useEffect, useCallback, FC } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Ingredient } from '../ingredient/ingredient';
 import burgerIngredientsStyles from './burger-ingredients-styles.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { TIngredient } from "../../types/ingredients";
+import { TIngredient } from '../../types/ingredients';
 import { addIngredient } from '../../services/actions/constructor';
-import { IngredientEnum } from "../../types/ingredients";
+import { IngredientEnum } from '../../types/ingredients';
 
 const BurgerIngredients: FC = () => {
   const bun = IngredientEnum.bun;
@@ -26,25 +27,28 @@ const BurgerIngredients: FC = () => {
     [dispatch]
   );
 
-  const renderedIngredients = useCallback((typeIngredients: IngredientEnum) => {
-    return ingredients.map(
-      (ingredient: TIngredient) =>
-        ingredient.type === typeIngredients && (
-          <Ingredient
-            ingredient={ingredient}
-            key={ingredient._id}
-            onRightClick={(evt) => {
-              evt.preventDefault();
-              handleRightClick(ingredient);
-            }}
-          ></Ingredient>
-        )
-    );
-  }, [handleRightClick, ingredients]) 
+  const renderedIngredients = useCallback(
+    (typeIngredients: IngredientEnum) => {
+      return ingredients.map(
+        (ingredient: TIngredient) =>
+          ingredient.type === typeIngredients && (
+            <Ingredient
+              ingredient={ingredient}
+              key={ingredient._id}
+              onRightClick={(evt) => {
+                evt.preventDefault();
+                handleRightClick(ingredient);
+              }}
+            ></Ingredient>
+          )
+      );
+    },
+    [handleRightClick, ingredients]
+  );
 
   const rendererBun = useMemo(
     () => renderedIngredients(bun),
-    [ renderedIngredients, bun]
+    [renderedIngredients, bun]
   );
 
   const rendererSauce = useMemo(
@@ -57,68 +61,45 @@ const BurgerIngredients: FC = () => {
     [renderedIngredients, main]
   );
 
-  const refeHeder = useRef<HTMLInputElement>('heder');
-  const refBun = useRef<HTMLInputElement>(bun);
-  const refSauce = useRef(sauce);
-  const refMain = useRef(main);
-
   function handleOnClickCurrent(el: IngredientEnum) {
     //console.log(refMain.current);
 
     setCurrent(el);
-    switch (el) {
-      case bun:
-        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
-        break;
-      case sauce:
-        refSauce.current.scrollIntoView(true, { behavior: 'smooth' });
-        break;
-      case main:
-        refMain.current.scrollIntoView(true, { behavior: 'smooth' });
-        break;
-      default:
-        refBun.current.scrollIntoView(true, { behavior: 'smooth' });
-    }
+    const element = document.getElementById(el);
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
+  //const refeHeder = useRef(null);
+
+  const [refBun, inViewBun] = useInView({
+    threshold: 0,
+  });
+
+  const [refSauce, inViewMain] = useInView({
+    threshold: 0,
+  });
+  const [refMain, inViewSauce] = useInView({
+    threshold: 0,
+  });
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, true);
-    return () => {
-      window.removeEventListener('scroll', handleScroll, true);
-    };
-  }, []);
-
-  function handleScroll() {
-    const distBun = Math.abs(
-      refBun.current.getBoundingClientRect().top -
-        refeHeder.current.getBoundingClientRect().top
-    );
-
-    const scale = distBun > 800 ? 'three' : distBun < 200 ? 'one' : 'two';
-
-    switch (scale) {
-      case 'one':
-        setCurrent('one');
-        break;
-      case 'two':
-        setCurrent('two');
-        break;
-      case 'three':
-        setCurrent('three');
-        break;
-      default:
-        return;
+    if (inViewBun) {
+      setCurrent(bun);
+    } else if (inViewSauce) {
+      setCurrent(sauce);
+    } else if (inViewMain) {
+      setCurrent(main);
     }
-  }
+  }, [inViewBun, inViewMain, inViewSauce, bun, main, sauce]);
 
   return (
     <section className={burgerIngredientsStyles.section}>
       <p className='text text_type_main-large pt-10 pb-5'>Соберите бургер</p>
-      <div ref={refeHeder} className={burgerIngredientsStyles.blockTab}>
+      <div /*ref={refeHeder}*/ className={burgerIngredientsStyles.blockTab}>
         <Tab
           value={`${bun}`}
           active={current === bun}
-          onClick={() => handleOnClickCurrent (bun)}
+          onClick={() => handleOnClickCurrent(bun)}
         >
           Булки
         </Tab>
@@ -165,6 +146,6 @@ const BurgerIngredients: FC = () => {
       </ul>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;
