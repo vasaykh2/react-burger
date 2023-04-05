@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect, useCallback, FC } from 'react';
+import React, { useMemo, useEffect, useCallback, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -63,7 +63,6 @@ const BurgerIngredients: FC = () => {
 
   function handleOnClickCurrent(el: IngredientEnum) {
     //console.log(refMain.current);
-
     setCurrent(el);
     const element = document.getElementById(el);
     if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -81,13 +80,15 @@ const BurgerIngredients: FC = () => {
   const [refMain, inViewSauce] = useInView({
     threshold: 0,
   });
+//console.log([inViewBun, inViewSauce, inViewMain])
+
 
   useEffect(() => {
     if (inViewBun) {
       setCurrent(bun);
-    } else if (inViewSauce) {
-      setCurrent(sauce);
     } else if (inViewMain) {
+      setCurrent(sauce);
+    } else if (inViewSauce) {
       setCurrent(main);
     }
   }, [inViewBun, inViewMain, inViewSauce, bun, main, sauce]);
@@ -120,7 +121,7 @@ const BurgerIngredients: FC = () => {
       </div>
       <ul className={burgerIngredientsStyles.blockTipes}>
         <li>
-          <p ref={refBun} className='text text_type_main-medium pt-10 pb-6'>
+          <p ref={refBun} id={`${bun}`} className='text text_type_main-medium pt-10 pb-6'>
             Булки
           </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
@@ -128,7 +129,7 @@ const BurgerIngredients: FC = () => {
           </ul>
         </li>
         <li>
-          <p ref={refSauce} className='text text_type_main-medium pt-10 pb-6'>
+          <p ref={refSauce} id={`${sauce}`} className='text text_type_main-medium pt-10 pb-6'>
             Соусы
           </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>
@@ -136,7 +137,7 @@ const BurgerIngredients: FC = () => {
           </ul>
         </li>
         <li>
-          <p ref={refMain} className='text text_type_main-medium pt-10 pb-6'>
+          <p ref={refMain} id={`${main}`} className='text text_type_main-medium pt-10 pb-6'>
             Начинки
           </p>
           <ul className={burgerIngredientsStyles.blockCardsGrid}>

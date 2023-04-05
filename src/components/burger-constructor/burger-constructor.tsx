@@ -64,7 +64,7 @@ const BurgerConstructor: FC = () => {
         : null,
     [bun, toppings]
   );
-  
+
   const handleOrder = (order: TOrder | null) => {
     if (!userInfo) {
       navigate('/login');
@@ -191,7 +191,7 @@ const BurgerConstructor: FC = () => {
           </Button>
         </div>
       </div>
-      {isOrderInfoOpened && (
+      {isOrderInfoOpened && !postOrderRequest && (
         <Modal closeModal={closeModal}>
           <OrderDetails orderNumber={orderNumber} />
         </Modal>

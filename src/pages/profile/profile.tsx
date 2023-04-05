@@ -25,6 +25,7 @@ const Profile: FC = () => {
   };
 
   const handleLogout = () => {
+    console.log(localStorage.getItem('refreshToken'));
     dispatch(logOut());
     localStorage.setItem('stateFrom', '');
     navigate('/login', {

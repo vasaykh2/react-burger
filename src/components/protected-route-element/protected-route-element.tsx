@@ -23,11 +23,12 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
 //const childrenName = children?.type;
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(getUserInfo());
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   const userInfo = user.userInfo;
+  const logoutRequest = user.logoutRequest;
   //console.log(localStorage.getItem('stateFrom'));
   //console.log(location.state);
 
@@ -45,7 +46,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
     //awaitUserInfo = setTimeout(() => false, 8000);
     //console.log(user.getUserRequest);
     //console.log(awaitUserInfo);
-    return !user.getUserFailed ? (
+    return (!user.getUserFailed && user.getUserRequest) ? (
       <div className={styles.loader}>
         <Oval
           ariaLabel='loading-indicator'
@@ -71,7 +72,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
     return children;
   }
 
-  if (!onlyForAuth && userInfo) {
+  if (!onlyForAuth && userInfo && !logoutRequest) {
     //console.log(localStorage.getItem('stateFrom'));
     return <Navigate to='/' replace />;
   }
