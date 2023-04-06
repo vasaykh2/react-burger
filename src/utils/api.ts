@@ -1,30 +1,55 @@
 import { BASE_URL } from './constants';
-import { setCookie } from '../utils/cookie';
+import { setCookie } from './cookie';
+import { TOrder } from '../types/order';
 
 class Api {
-  constructor(url) {
+  private url: string;
+
+  constructor(url: string) {
     this.url = url;
   }
-  _checkResponse(res) {
+  _checkResponse(res: Response) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
-  _request(url, options) {
+  _request(
+    url: string,
+    options?: {
+      method?: string;
+      headers?: {
+        'Content-type': 'application/json';
+        authorization?: string;
+      };
+      body?: string;
+    }
+  ) {
     return fetch(url, options).then(this._checkResponse);
   }
 
-  async _fetchWithRefresh(url, options) {
+  async _fetchWithRefresh(
+    url: string,
+    options: {
+      method: string;
+      headers: {
+        'Content-type': 'application/json';
+        authorization: string;
+      };
+      body?: string;
+    }
+  ) {
     try {
       const res = await fetch(url, options);
       return await this._checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
       if (err.message === 'jwt expired') {
-        const refreshData = await this.refreshToken(
-          localStorage.getItem('refreshToken')
-        );
+        const refreshData: {
+          accessToken: string;
+          success: boolean;
+          refreshToken: string;
+        } = await this.refreshToken(localStorage.getItem('refreshToken'));
         if (!refreshData.success) {
           Promise.reject(refreshData);
         }
@@ -43,7 +68,7 @@ class Api {
     return this._request(`${this.url}/ingredients`);
   }
 
-  postOrderDetails(listId, token = '') {
+  postOrderDetails(listId: TOrder, token = '') {
     return this._fetchWithRefresh(`${this.url}/orders`, {
       method: 'POST',
       headers: {
@@ -56,19 +81,18 @@ class Api {
     });
   }
 
-  postOrder(order, token = '') {
+  postOrder(order: TOrder, token = '') {
     return this._fetchWithRefresh(`${this.url}/orders`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
         authorization: token,
       },
-      body: JSON.stringify( order
-      ),
+      body: JSON.stringify(order),
     });
   }
 
-  getOrder(orderNumber) {
+  getOrder(orderNumber: number) {
     return this._request(`${this.url}/orders/${orderNumber}`, {
       method: 'GET',
       headers: {
@@ -90,7 +114,7 @@ class Api {
     });
   }*/
 
-  requestPasswordReset(email) {
+  requestPasswordReset(email: string) {
     return this._request(`${this.url}/password-reset`, {
       method: 'POST',
       headers: {
@@ -100,7 +124,7 @@ class Api {
     });
   }
 
-  resetPassword(password, token) {
+  resetPassword(password: string, token: string) {
     return this._request(`${this.url}/password-reset/reset`, {
       method: 'POST',
       headers: {
@@ -110,7 +134,7 @@ class Api {
     });
   }
 
-  logIn(email, password) {
+  logIn(email:string, password: string) {
     return this._request(`${this.url}/auth/login`, {
       method: 'POST',
       headers: {
@@ -120,7 +144,7 @@ class Api {
     });
   }
 
-  register(email, password, name) {
+  register(email: string, password: string, name: string) {
     return this._request(`${this.url}/auth/register`, {
       method: 'POST',
       headers: {
@@ -130,7 +154,7 @@ class Api {
     });
   }
 
-  logOut(token) {
+  logOut(token: string | null) {
     return this._request(`${this.url}/auth/logout`, {
       method: 'POST',
       headers: {
@@ -140,7 +164,7 @@ class Api {
     });
   }
 
-  refreshToken(token) {
+  refreshToken(token: string | null) {
     return this._request(`${this.url}/auth/token`, {
       method: 'POST',
       headers: {
@@ -162,7 +186,7 @@ class Api {
     });
   }
 
-  patchUserInfo(email, password, name, token = '') {
+  patchUserInfo(email: string, password: string, name: string, token = '') {
     return this._fetchWithRefresh(`${this.url}/auth/user`, {
       method: 'PATCH',
       headers: {
