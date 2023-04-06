@@ -4,7 +4,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from '../../types/store';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from '../../services/hooks/useForm';

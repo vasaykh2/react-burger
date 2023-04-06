@@ -1,7 +1,6 @@
 import { useMemo, useCallback, FC } from 'react';
 import { Oval } from 'react-loader-spinner';
 
-import { getCookie } from '../../utils/cookie';
 import {
   CurrencyIcon,
   Button,
@@ -69,8 +68,8 @@ const BurgerConstructor: FC = () => {
     if (!userInfo) {
       navigate('/login');
     } else {
-      console.log(ingredientsIds);
-      console.log(getCookie('accessToken'));
+      //console.log(ingredientsIds);
+      //console.log(getCookie('accessToken'));
       dispatch(postOrder(order));
     }
   };

@@ -20,15 +20,6 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
   const user = useSelector((state) => state.user);
   //const location = useLocation();
   //console.log(children.type.name);
-  //const [isUserLoaded, setUserLoaded] = useState(false);
-
-  //let awaitUserInfo = true;
-  //const childrenName = children?.type;
-  /*const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserInfo());
-  }, [dispatch]);*/
 
   const userInfo = user.userInfo;
   const logoutRequest = user.logoutRequest;
@@ -47,9 +38,8 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
       children.type.name === 'ProfileOrders') &&
     !userInfo
   ) {
-    //awaitUserInfo = setTimeout(() => false, 8000);
     //console.log(user.getUserRequest);
-    //console.log(awaitUserInfo);
+
     return !user.getUserFailed && user.getUserRequest ? (
       <div className={styles.loader}>
         <Oval
