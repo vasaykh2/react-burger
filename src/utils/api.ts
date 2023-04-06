@@ -101,19 +101,6 @@ class Api {
     });
   }
 
-  /*postOrderDetails(listId, token = '') {
-    return this._request(`${this.url}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        authorization: token,
-      },
-      body: JSON.stringify({
-        ingredients: listId,
-      }),
-    });
-  }*/
-
   requestPasswordReset(email: string) {
     return this._request(`${this.url}/password-reset`, {
       method: 'POST',
@@ -134,7 +121,7 @@ class Api {
     });
   }
 
-  logIn(email:string, password: string) {
+  logIn(email: string, password: string) {
     return this._request(`${this.url}/auth/login`, {
       method: 'POST',
       headers: {
