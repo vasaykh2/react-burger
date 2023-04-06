@@ -1,29 +1,32 @@
 //import { useAuth } from '../services/auth';
-import { Navigate, /*RouteProps*/ } from 'react-router-dom';
-import { useSelector, useDispatch } from '../../types/store';
+import { Navigate /*RouteProps*/ } from 'react-router-dom';
+import { useSelector } from '../../types/store';
 import { Oval } from 'react-loader-spinner';
-import { useEffect, FC } from 'react';
+import { FC } from 'react';
 
-import { getUserInfo } from '../../services/actions/user';
+//import { getUserInfo } from '../../services/actions/user';
 
 import styles from './protected-route-element.module.css';
 
 type TProtectedRouteElementProps = {
   onlyForAuth: boolean;
   children: JSX.Element;
-}
+};
 
-const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, children }) => {
+const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({
+  onlyForAuth,
+  children,
+}) => {
   const user = useSelector((state) => state.user);
   //const location = useLocation();
   //console.log(children.type.name);
-  //const [isUserLoaded, setUserLoaded] = useState(false); 
+  //const [isUserLoaded, setUserLoaded] = useState(false);
 
   //let awaitUserInfo = true;
-//const childrenName = children?.type;
-  const dispatch = useDispatch();
+  //const childrenName = children?.type;
+  /*const dispatch = useDispatch();
 
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);*/
 
@@ -32,7 +35,8 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
   //console.log(localStorage.getItem('stateFrom'));
   //console.log(location.state);
 
-  if (children.type.name === 'ResetPassword' &&
+  if (
+    children.type.name === 'ResetPassword' &&
     !(user.forgotPasswordSuccess || user.forgotPasswordRequest)
   ) {
     return <Navigate to='/forgot-password' replace />;
@@ -46,7 +50,7 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
     //awaitUserInfo = setTimeout(() => false, 8000);
     //console.log(user.getUserRequest);
     //console.log(awaitUserInfo);
-    return (!user.getUserFailed && user.getUserRequest) ? (
+    return !user.getUserFailed && user.getUserRequest ? (
       <div className={styles.loader}>
         <Oval
           ariaLabel='loading-indicator'
@@ -82,6 +86,6 @@ const ProtectedRouteElement: FC<TProtectedRouteElementProps> = ({ onlyForAuth, c
   }
 
   return children;
-}
+};
 
 export default ProtectedRouteElement;
