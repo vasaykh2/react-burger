@@ -3,8 +3,8 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from '../../types/store';
-import { FC, FormEvent } from 'react';
+import { useDispatch, useSelector } from '../../types/store';
+import { FC, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from '../../services/hooks/useForm';
@@ -14,6 +14,7 @@ import styles from './login.module.css';
 
 const Login: FC = () => {
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user.userInfo);
   const { values, handleChange, isValid } = useForm(
     { email: '', password: '' },
     false
@@ -44,7 +45,7 @@ const Login: FC = () => {
           htmlType='submit'
           type='primary'
           size='medium'
-          disabled={!isValid}
+          disabled={!isValid && !!userInfo}
         >
           Войти
         </Button>
