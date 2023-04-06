@@ -8,7 +8,7 @@
 
 **Интро**
 
-Это студенческий проект Yandex-Практикума курса web-разработки+ "Космическая Бургерная". На 7-м спринте создана главная страница бургерной. На 8-м - добавлена функциональность, контекст перенесён в Redux, реализован DnD. На 9-м - подключены роутинк и WebSocket.
+Это студенческий проект Yandex-Практикума курса web-разработки+ "Космическая Бургерная". На 7-м спринте создана главная страница бургерной. На 8-м - добавлена функциональность, контекст перенесён в Redux, реализован DnD. На 9-м - подключены роутинк и WebSocket. На 10-м - все компоненты и утилитарные функции переведены на TypeScript.
 
 **Методы**
 
@@ -46,6 +46,14 @@ Context заменен на Redux, реализован роутинг и WebSoc
 - Разработаны новые страницы и компоненты для реализации структуры маршрутов.
 - За счёт WebSocket обновляются списки заказов общие и пользователя в реальном времени.
 
+## New! New! New! New!
+
+Файлы Javascript заменены на файлы с расширениями tsx, ts:
+
+- Типизацированы все блоки кода (компоненты и утилиты).
+- Типизировано хранилище Redux.
+- Проведен дебагинг.
+
 **Инструменты**
 
 Использован вновь созданный проект React, установленный через CRA.
@@ -54,6 +62,6 @@ Context заменен на Redux, реализован роутинг и WebSoc
 
 Использованы ресурсы библиотеки https://lodash.com/.
 
-Подключены с npm: redux react-redux, redux-devtools-extension, react-dnd react-dnd-html5-backend, nanoid, react-router-dom...
+Подключены с npm: redux, react-redux, redux-devtools-extension, react-dnd, react-dnd-html5-backend, nanoid, react-router-dom, typescript, @types/node, @types/react, @types/react-dom, @types/jest, react-intersection-observer...
 
 Ссылка на "React-burger" в GitHub Pages: https://vasaykh2.github.io/react-burger/.
