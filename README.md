@@ -60,5 +60,5 @@ Context заменен на Redux, реализован роутинг и WebSoc
 Использованы ресурсы библиотеки https://lodash.com/.
 Подключены с npm: redux, react-redux, redux-devtools-extension, react-dnd, react-dnd-html5-backend, nanoid, react-router-dom, typescript, @types/node, @types/react, @types/react-dom, @types/jest, react-intersection-observer...
 
-* [Ссылка на "React-burger" в GitHub Pages] (https://vasaykh2.github.io/react-burger/)
-* [Ссылка в vercel.com] (https://react-burger-mu.vercel.app/)
+* [Ссылка на "React-burger" в GitHub Pages](https://vasaykh2.github.io/react-burger/)
+* [Ссылка в vercel.com](https://react-burger-mu.vercel.app/)
